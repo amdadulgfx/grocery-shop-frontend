@@ -1,5 +1,5 @@
 import { Footer, Header } from './components';
-import { AboutUs, LandingPage } from './pages';
+import { AboutUs, ContactUs, LandingPage } from './pages';
 import ROUTES from './routes';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css';
@@ -12,6 +12,7 @@ function App() {
         <Routes>
           <Route exact path={ROUTES.LANDINGPAGE} element={<LandingPage />} />
           <Route exact path={ROUTES.ABOUTUS} element={<AboutUs />} />
+          <Route exact path={ROUTES.CONTACTUS} element={<ContactUs />} />
         </Routes>
       </Router>
       <Footer />
