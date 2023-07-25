@@ -1,5 +1,4 @@
-import Header from "./Header/Header.view";
-import Footer from "./Footer/Footer.view";
-import CustomTextField from "./Tags/CustomTextField.view";
+import Header from "./Header";
+import Footer from "./Footer";
 
-export {Header, Footer, CustomTextField};
+export {Header, Footer};
