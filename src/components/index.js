@@ -1,5 +1,4 @@
-import Header from "./Header";
-import Footer from "./Footer";
-import ContactInfo from "./ContactInfo";
+import Header from "./Header/Header.view";
+import Footer from "./Footer/Footer.view";
 
-export { Header, Footer, ContactInfo };
+export { Header, Footer };
