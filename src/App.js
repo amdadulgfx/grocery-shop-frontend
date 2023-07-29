@@ -3,8 +3,6 @@ import { AboutUs, ContactUs, LandingPage } from './pages';
 import ROUTES from './routes';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { setCounting } from './reduxMine/features/authApi';
 
 function App() {
   return (
