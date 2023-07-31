@@ -1,7 +1,7 @@
 import React from "react";
 import TextField from "@mui/material/TextField";
 
-const CustomTextField = (props) => {
+const TextFieldOutLine = (props) => {
   return (
     <TextField
       disableUnderline
@@ -25,4 +25,4 @@ const CustomTextField = (props) => {
   );
 };
 
-export default CustomTextField;
+export default TextFieldOutLine;
