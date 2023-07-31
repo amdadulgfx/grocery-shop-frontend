@@ -6,17 +6,17 @@ import './App.css';
 
 function App() {
   return (
-    <div /* className="App" */>
-      <Header />
-      <Router>
+    <Router>
+      <div>
+        <Header />
         <Routes>
           <Route exact path={ROUTES.LANDINGPAGE} element={<LandingPage />} />
           <Route exact path={ROUTES.ABOUTUS} element={<AboutUs />} />
           <Route exact path={ROUTES.CONTACTUS} element={<ContactUs />} />
         </Routes>
-      </Router>
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </Router>
   );
 };
 
