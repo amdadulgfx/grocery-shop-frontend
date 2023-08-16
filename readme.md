@@ -1,9 +1,17 @@
 # Getting Started with Create React App
 
-1. Yarn install
-2. npm i react-router-dom
-3. yarn add @mui/material @emotion/react @emotion/styled
-4. yarn add @mui/icons-material
+*  Yarn install
+* npm i react-router-dom
+* yarn add @mui/material @emotion/react @emotion/styled
+* yarn add @mui/icons-material
+* yarn add @material-ui/core @material-ui/icons @material-ui/styles
+* yarn add react-helmet-async
+* yarn add interweave
+* yarn add axios
+* 
+* 
+* 
+* 
 
 
 # Folder Structure 
