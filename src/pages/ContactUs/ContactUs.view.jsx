@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Divider, Grid, InputLabel } from '@mui/material';
+import { Box, Button, Divider, Grid, InputLabel } from '@mui/material';
 import { TextFiledBorderLess, TypographyHeadingOne, TypographyParagraph, TypographySubtitle } from '../../CustomTags';
 import FmdGoodIcon from '@mui/icons-material/FmdGood';
 import CallIcon from '@mui/icons-material/Call';
@@ -7,7 +7,7 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 
 const ContactUs = () => {
   return (
-    <Box sx={{ bgcolor: "#FAFAFA", pb: 10 }}>
+    <Box sx={{ bgcolor: "#FAFAFA", pb: 10, px: 2 }}>
       <Box maxWidth="lg" sx={{ mx: "auto" }}>
         <Box sx={{ py: 3, mb: 4 }}>
           <Box sx={{ textAlign: "center", mb: 4 }}>
@@ -85,10 +85,12 @@ const ContactUs = () => {
         </Box>
         <Box sx={{
           bgcolor: "#ffffff",
-          px: { lg: 20, md: 10, sm: 5 },
-          py: { lg: 8, md: 5, sm: 2 },
           border: "1px solid #eeeeee",
+          py: { lg: 8, md: 5, xs: 5 },
+          px: { lg: 20, md: 8, xs: 3 },
           borderRadius: 2,
+          // px: 2,
+          // py: 3,
         }}
         >
           <Box sx={{ textAlign: "center", mb: 4 }}>
@@ -104,7 +106,7 @@ const ContactUs = () => {
             container
             justifyContent="center"
             alignItems="center"
-            spacing={4}
+            spacing={3}
           >
             <Grid item xs={12} md={6}>
               <Box>
@@ -141,6 +143,16 @@ const ContactUs = () => {
                   multiline
                   rows={5}
                 />
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={12}>
+              <Box>
+                <Button
+                  variant="contained"
+                  sx={{ py: 1.2, px: 5, borderRadius: 16 }}
+                >
+                  Send Message
+                </Button>
               </Box>
             </Grid>
           </Grid>
