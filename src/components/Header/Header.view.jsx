@@ -2,12 +2,8 @@ import {
     AppBar,
     Box,
     Button,
-    Container,
-    List,
-    ListItem,
     Typography,
     useMediaQuery,
-    Paper,
     Divider,
     useTheme,
     IconButton,
@@ -15,58 +11,24 @@ import {
     InputAdornment,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import MenuIcon from "@mui/icons-material/Menu";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import MuiAlert from "@mui/material/Alert";
-import CloseIcon from '@mui/icons-material/Close';
-import SearchIcon from '@mui/icons-material/Search';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import Slide from '@mui/material/Slide';
-import CircleIcon from '@mui/icons-material/Circle';
-import TypographySubtitle from "../../CustomTags/CustomTypography/TypographySubtitle.view";
 import HandshakeIcon from '@mui/icons-material/Handshake';
 import HeaderLogo from "../../assets/Logos/header_logo.png"
 import SearchSharpIcon from '@mui/icons-material/SearchSharp';
-import { TurnedInOutlined } from "@mui/icons-material";
-import styled from "@emotion/styled";
+import MenuIcon from '@mui/icons-material/Menu';
+import { ResponsiveHeader } from "./HeaderMenus.view";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
-
-
-const SearchButton = styled(Button)(() => ({
-    border: "none !important",
-}));
-
-const inactiveRouteStyle = { px: "1rem !important", py: "0rem !important" };
-const activeRouteStyle = {
-    ...inactiveRouteStyle,
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    gap: "0.2rem",
-    pt: "0.6rem"
-};
-const optionStyle = {
-    fontWeight: 600,
-    cursor: "pointer",
-    fontSize: "1rem",
-    lineHeight: 1.5
-};
-
 
 const InfoRoutes = [
     { label: "About Us", path: "/about" },
     { label: "My Account", path: "/profile" },
     { label: "Wishlist", path: "/saved" },
     { label: "Order Tracking", path: "/tracking" },
-]
+];
 
 const MainNavigation = [
     { label: "Home", path: "/" },
@@ -74,7 +36,7 @@ const MainNavigation = [
     { label: "Blog", path: "/blog" },
     { label: "Conact", path: "/contact-us" },
     { label: "More", path: "/saved" },
-]
+];
 
 
 
@@ -83,6 +45,7 @@ const Header = () => {
     const theme = useTheme();
     const matches = useMediaQuery(theme.breakpoints.down('md'));
     const [showSearchBar, setShowSearchBar] = useState(false);
+    const [openDrawer, setOpenDrawer] = useState(false);
 
     return (
         <AppBar
@@ -114,16 +77,14 @@ const Header = () => {
                             gap: 1,
                         }}
                     >
-                        <HandshakeIcon />
-                    </Box>
-                    <Box
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: 1,
-                        }}
-                    >
-
+                        <ResponsiveHeader
+                            openDrawer={openDrawer}
+                            setOpenDrawer={setOpenDrawer}
+                        />
+                        <IconButton
+                            onClick={() => setOpenDrawer(true)}                        >
+                            <MenuIcon fontSize="medium" />
+                        </IconButton>
                     </Box>
                 </Box>
             </>) : (
