@@ -34,7 +34,7 @@ const MainNavigation = [
     { label: "Home", path: "/" },
     { label: "Shop", path: "/recomanded" },
     { label: "Blog", path: "/blog" },
-    { label: "Conact", path: "/contact-us" },
+    { label: "Contact", path: "/contact-us" },
     { label: "More", path: "/saved" },
 ];
 
