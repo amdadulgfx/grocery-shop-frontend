@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import Categories from "./CategoriesBottom";
+import Coupon from "./Coupon";
 
 const titles = {
   subTitle: "Exclusive offer",
@@ -59,6 +60,7 @@ const LandingPage = () => {
           </Button>
         </Box>
       </Box>
+      <Coupon />
       <Categories />
     </>
   );
