@@ -8,5 +8,10 @@ import FAQ from "./FAQ.view.jsx";
 import TermsAndConditions from "./TermsAndConditions";
 import AdminSignIn from "./AdminSignIn";
 import AdminPostAProduct from "./AdminPostAProduct";
+import AdminDashboard from "./AdminDashboard";
+import AdminAddCategory from "./AdminAddCategory";
+import AdminAllCategories from "./AdminAllCategories";
+import AdminAddSubCategory from "./AdminAddSubCategory";
+import AdminAllSubCategories from "./AdminAllSubCategories";
 
-export { AboutUs, LandingPage, ContactUs, LoginSignup, Products, PrivacyPolicy, FAQ, TermsAndConditions, AdminSignIn, AdminPostAProduct };
+export { AboutUs, LandingPage, ContactUs, LoginSignup, Products, PrivacyPolicy, FAQ, TermsAndConditions, AdminSignIn, AdminPostAProduct, AdminDashboard, AdminAddCategory, AdminAllCategories, AdminAddSubCategory, AdminAllSubCategories };

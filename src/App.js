@@ -1,14 +1,16 @@
 import { Footer, Header } from './components';
-import { AboutUs, AdminPostAProduct, AdminSignIn, ContactUs, FAQ, LandingPage, LoginSignup, PrivacyPolicy, Products, TermsAndConditions } from './pages';
+import { AboutUs, AdminAddCategory, AdminAddSubCategory, AdminAllCategories, AdminAllSubCategories, AdminDashboard, AdminPostAProduct, AdminSignIn, ContactUs, FAQ, LandingPage, LoginSignup, PrivacyPolicy, Products, TermsAndConditions } from './pages';
 import ROUTES from './routes';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css';
 
 function App() {
+  const pathname = window.location.pathname
+
   return (
     <Router>
       <div>
-        <Header />
+        {pathname === "/admin-dashboard" ? <></> : <Header />} 
         <Routes>
           <Route exact path={ROUTES.LANDINGPAGE} element={<LandingPage />} />
           <Route exact path={ROUTES.ABOUTUS} element={<AboutUs />} />
@@ -20,9 +22,14 @@ function App() {
           <Route exact path={ROUTES.PRIVACYPOLICY} element={<PrivacyPolicy />} />
           <Route exact path={ROUTES.FAQ} element={<FAQ />} />
           <Route exact path={ROUTES.TERMSANDCONDITIONS} element={<TermsAndConditions />} />
+          <Route exact path={ROUTES.ADMINDASHBOARD} element={<AdminDashboard />} />
           <Route exact path={ROUTES.ADMINPOSTAPRODUCT} element={<AdminPostAProduct />} />
+          <Route exact path={ROUTES.ADMINADDCATEGORY} element={<AdminAddCategory />} />
+          <Route exact path={ROUTES.ADMINALLCATEGORIES} element={<AdminAllCategories />} />
+          <Route exact path={ROUTES.ADMINADDSUBCATEGORY} element={<AdminAddSubCategory />} />
+          <Route exact path={ROUTES.ADMINALLSUBCATEGORIES} element={<AdminAllSubCategories />} />
         </Routes>
-        <Footer />
+        {pathname === "/admin-dashboard" ? <></> : <Footer />} 
       </div>
     </Router>
   );

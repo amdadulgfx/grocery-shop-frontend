@@ -9,7 +9,12 @@ const ROUTES = {
   FAQ: "/faq",
   TERMSANDCONDITIONS: "/terms-&-conditions",
   ADMINSIGNIN: "/admin-login",
+  ADMINDASHBOARD : "/admin-dashboard",
   ADMINPOSTAPRODUCT : "/post-product",
+  ADMINADDCATEGORY : "/Add-Category",
+  ADMINALLCATEGORIES : "/categories",
+  ADMINADDSUBCATEGORY : "/add-subCategory",
+  ADMINALLSUBCATEGORIES : "/SubCategories",
 };
 
 export default ROUTES;
