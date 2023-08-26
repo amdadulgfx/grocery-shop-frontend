@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import Categories from "./CategoriesBottom";
 import Coupon from "./Coupon";
+import HealthTips from "./HealthTips";
 
 const titles = {
   subTitle: "Exclusive offer",
@@ -60,6 +61,7 @@ const LandingPage = () => {
           </Button>
         </Box>
       </Box>
+      <HealthTips/>
       <Coupon />
       <Categories />
     </>
