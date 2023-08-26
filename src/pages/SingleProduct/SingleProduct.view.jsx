@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
 import React from 'react'
-import ProductBody from './ProductBody'
+import ProductBody from './Components/ProductBody'
 
 function SingleProduct() {
     return (
