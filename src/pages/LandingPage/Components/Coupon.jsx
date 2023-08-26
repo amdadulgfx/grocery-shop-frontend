@@ -3,12 +3,12 @@ import React from "react";
 
 function Coupon() {
     return (
-        <Box display="flex" justifyContent="center" alignItems="center">
+        <Box display="flex" justifyContent="center" alignItems="center" mt="2rem" mb="2rem">
             <Box
                 sx={{
                     backgroundColor: "#ffeef2",
                     height: "4.375rem",
-                    width: "80%", //put 100% after adding the grids
+                    width: "100%", //put 100% after adding the grids
                     borderRadius: "0.5rem",
                     display: "flex",
                     justifyContent: "center",
@@ -18,6 +18,7 @@ function Coupon() {
                 <Box
                     sx={{
                         display: "flex",
+                        flexWrap: "wrap",
                         justifyContent: "center",
                         alignItems: "center",
                     }}

@@ -5,20 +5,22 @@ function HealthTips() {
     return (
         <Box display="flex" justifyContent="center" alignItems="center">
             <Box sx={{
-                width: '80%',
+                width: '100%',
                 backgroundColor: "#f8efea",
-                height: "8rem",
+                height: ["18rem", "8rem"],
                 borderRadius: "0.5rem",
                 display: "flex",
-                justifyContent: "left",
-                alignItems: "center",
+                justifyContent: ["", "left"],
+                alignItems: ["", "center"],
                 paddingLeft: "2rem",
                 backgroundImage: `url("https://klbtheme.com/bacola/wp-content/plugins/bacola-core/elementor/images/banner-box2.jpg")`,
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition: "right",
-                m: 1
+                mt: '2rem'
             }}>
-                <Box>
+                <Box sx={{
+                    textAlign: ['center', "left"]
+                }}>
 
                     <Typography sx={{
                         color: "#9b9bb4",

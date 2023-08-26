@@ -90,7 +90,8 @@ const Categories = () => {
           border: "1px solid #e4e5ee",
           display: "flex",
           flexDirection: ["column", "row"],
-          margin: ["1rem", "3rem", "5rem"],
+          // margin: ["1rem", "3rem", "5rem"],
+          mt: "3rem"
         }}
       >
         <Box

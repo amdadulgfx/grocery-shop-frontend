@@ -20,7 +20,7 @@ const titles = {
 
 const LandingPage = () => {
   const [heroMasterData, setHeroMasterData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   useEffect(() => {
     async function fetchData() {
       try {
@@ -31,7 +31,7 @@ const LandingPage = () => {
       } catch (err) {
         console.log(err);
       } finally {
-        setLoading(false);
+        // setLoading(false);
       }
     }
 
@@ -42,12 +42,12 @@ const LandingPage = () => {
 
   return (
     <>
-      <Box sx={{ mx: "auto", my: 5, px: 3, py: 3 }}>
+      <Box sx={{ mx: ["auto", "2rem"], my: 5, px: 3, py: 3 }}>
         <Grid container spacing={2}>
-          <Grid item xs={3}>
+          <Grid item xs={12} md={3}>
             <AdvertisementAndAllCategory />
           </Grid>
-          <Grid item xs={9}>
+          <Grid item xs={12} md={9}>
             <Box>
               <Typography variant="subtitle2">
                 {titles.subTitle.toUpperCase()}
@@ -71,9 +71,9 @@ const LandingPage = () => {
             <HealthTips />
             <Coupon />
             <DiscountCard />
-            <Categories />
           </Grid>
         </Grid>
+        <Categories />
       </Box>
     </>
   );
