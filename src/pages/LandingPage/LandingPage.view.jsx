@@ -5,6 +5,7 @@ import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import Categories from "./CategoriesBottom";
 import Coupon from "./Coupon";
 import HealthTips from "./HealthTips";
+import DiscountCard from "./DiscountCard";
 
 const titles = {
   subTitle: "Exclusive offer",
@@ -61,8 +62,9 @@ const LandingPage = () => {
           </Button>
         </Box>
       </Box>
-      <HealthTips/>
+      <HealthTips />
       <Coupon />
+      <DiscountCard />
       <Categories />
     </>
   );
