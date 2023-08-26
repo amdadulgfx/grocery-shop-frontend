@@ -5,6 +5,7 @@ import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import HealthTips from "./Components/HealthTips";
 import Coupon from "./Components/Coupon";
 import Categories from "./Components/CategoriesBottom";
+import DiscountCard from "./Components/DiscountCard";
 
 
 const titles = {
