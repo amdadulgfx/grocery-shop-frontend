@@ -2,10 +2,10 @@ import { Box, Button, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
-import Categories from "./CategoriesBottom";
-import Coupon from "./Coupon";
-import HealthTips from "./HealthTips";
-import DiscountCard from "./DiscountCard";
+import HealthTips from "./Components/HealthTips";
+import Coupon from "./Components/Coupon";
+import Categories from "./Components/CategoriesBottom";
+
 
 const titles = {
   subTitle: "Exclusive offer",
