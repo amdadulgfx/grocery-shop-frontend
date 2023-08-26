@@ -3,6 +3,7 @@ import { AboutUs, AdminAddCategory, AdminAddSubCategory, AdminAllCategories, Adm
 import ROUTES from './routes';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css';
+import SingleProduct from './pages/SingleProduct';
 
 function App() {
   const pathname = window.location.pathname
@@ -10,7 +11,7 @@ function App() {
   return (
     <Router>
       <div>
-        {pathname === "/admin-dashboard" ? <></> : <Header />} 
+        {pathname === "/admin-dashboard" ? <></> : <Header />}
         <Routes>
           <Route exact path={ROUTES.LANDINGPAGE} element={<LandingPage />} />
           <Route exact path={ROUTES.ABOUTUS} element={<AboutUs />} />
@@ -19,6 +20,7 @@ function App() {
           <Route exact path={ROUTES.SIGNUP} element={<LoginSignup />} />
           <Route exact path={ROUTES.ADMINSIGNIN} element={<AdminSignIn />} />
           <Route exact path={ROUTES.PRODUCTS} element={<Products />} />
+          <Route exact path={ROUTES.SINGLEPRODUCT} element={<SingleProduct />} />
           <Route exact path={ROUTES.PRIVACYPOLICY} element={<PrivacyPolicy />} />
           <Route exact path={ROUTES.FAQ} element={<FAQ />} />
           <Route exact path={ROUTES.TERMSANDCONDITIONS} element={<TermsAndConditions />} />
@@ -29,7 +31,7 @@ function App() {
           <Route exact path={ROUTES.ADMINADDSUBCATEGORY} element={<AdminAddSubCategory />} />
           <Route exact path={ROUTES.ADMINALLSUBCATEGORIES} element={<AdminAllSubCategories />} />
         </Routes>
-        {pathname === "/admin-dashboard" ? <></> : <Footer />} 
+        {pathname === "/admin-dashboard" ? <></> : <Footer />}
       </div>
     </Router>
   );

@@ -19,8 +19,8 @@ function DiscountCard() {
 
     return (
         <Box sx={{
-            display: "flex",
-            justifyContent: "center"
+            display: ["block", "flex"],
+            justifyContent: "center",
         }}>
             {
                 discountDetails.map(item =>
@@ -28,7 +28,7 @@ function DiscountCard() {
                         backgroundImage: `url("${item.image}")`,
                         backgroundRepeat: "no-repeat",
                         borderRadius: "1rem",
-                        width: "26.25rem",
+                        width: ["21rem", "26.25rem"],
                         height: "13.375rem",
                         paddingLeft: "2.5rem",
                         m: 2,
