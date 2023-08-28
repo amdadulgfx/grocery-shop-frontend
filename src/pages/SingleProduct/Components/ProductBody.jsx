@@ -61,10 +61,10 @@ function ProductBody() {
             </Box>
             <Box my={2}>
                 <Grid container spacing={2}>
-                    <Grid md={4}>
+                    <Grid item md={4}>
                         <img src={item.productPicture} width="100%" alt="" />
                     </Grid>
-                    <Grid md={4}>
+                    <Grid item md={4}>
                         <Typography sx={{
                             fontSize: "1.625rem",
                             color: "#d51243",
@@ -172,11 +172,11 @@ function ProductBody() {
                             <FavoriteBorderIcon sx={{ mr: 1 }} />  Add to Wishlist
                         </Button>
                     </Grid>
-                    <Grid md={4}>
+                    <Grid item md={4}>
                         <Typography sx={{
                             backgroundColor: "#ffeef2",
                             color: "#c02971",
-                            width: "100%",
+                            // width: "100%",
                             textAlign: "center",
                             padding: "1rem",
                             mx: 2,
@@ -190,11 +190,10 @@ function ProductBody() {
                                 backgroundColor: "#f7f8fd",
                                 height: '10rem',
                                 p: "1rem",
-                                width: "100%",
+                                // width: "100%",
                                 mx: 2,
                                 mt: 2,
-                                color: "#202435"
-                                ,
+                                color: "#202435",
                                 fontSize: '.7rem',
                             }}
                         >
