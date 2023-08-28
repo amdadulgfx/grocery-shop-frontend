@@ -69,7 +69,7 @@ const AdminAllCategories = () => {
 
     const confirmDelete = () => {
         setDeleteConfirmationOpen(false);
-        axios.delete(`http://localhost:5000/api/v1/category/delete/${selectedCategoryId}`)
+        axios.delete(`http://localhost:5000/api/v1/category/${selectedCategoryId}`)
             .then((response) => {
                 console.log('Category deleted successfully', response.data);
                 fetchCategories();

@@ -84,7 +84,7 @@ const AdminAllSubCategories = () => {
             category: selectedCategories.map(cat => cat._id)
         };
 
-        axios.put(`http://localhost:5000/api/v1/subcategory/update/${selectedSubCategory._id}`, requestData)
+        axios.put(`http://localhost:5000/api/v1/subCategory/update/${selectedSubCategory._id}`, requestData)
             .then((response) => {
                 console.log('Subcategory updated successfully', response.data);
                 fetchSubCategories();
@@ -102,7 +102,7 @@ const AdminAllSubCategories = () => {
 
     const confirmDelete = () => {
         setDeleteConfirmationOpen(false);
-        axios.delete(`http://localhost:5000/api/v1/subcategory/delete/${selectedSubCategory}`)
+        axios.delete(`http://localhost:5000/api/v1/subCategory/${selectedSubCategory}`)
             .then((response) => {
                 console.log('Subcategory deleted successfully', response.data);
                 fetchSubCategories();
