@@ -4,6 +4,7 @@ import ROUTES from './routes';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css';
 import SingleProduct from './pages/SingleProduct';
+import MyAccount from './pages/MyAccount';
 
 function App() {
   const pathname = window.location.pathname
@@ -16,6 +17,7 @@ function App() {
           <Route exact path={ROUTES.LANDINGPAGE} element={<LandingPage />} />
           <Route exact path={ROUTES.ABOUTUS} element={<AboutUs />} />
           <Route exact path={ROUTES.CONTACTUS} element={<ContactUs />} />
+          <Route exact path={ROUTES.MYACCOUNT} element={<MyAccount />} />
           <Route exact path={ROUTES.LOGIN} element={<LoginSignup />} />
           <Route exact path={ROUTES.SIGNUP} element={<LoginSignup />} />
           <Route exact path={ROUTES.ADMINSIGNIN} element={<AdminSignIn />} />

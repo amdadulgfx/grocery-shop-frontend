@@ -19,10 +19,8 @@ const ROUTES = {
   PRIVACYPOLICY: "/privacy-policy",
   FAQ: "/faq",
   TERMSANDCONDITIONS: "/terms-&-conditions",
+  MYACCOUNT: "/my-account",
   ...AdminRoutes
 };
-
-
-
 
 export default ROUTES;
