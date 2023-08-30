@@ -4,6 +4,9 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import { useFormik } from 'formik';
+import { Button, FormControlLabel, Grid, Radio, RadioGroup, TextField } from '@mui/material';
+import * as yup from 'yup';
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -78,14 +81,187 @@ function AdditionalDetailsTab() {
                 Coming Soon...
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-
-                Quisque varius diam vel metus mattis, id aliquam diam rhoncus. Proin vitae magna in dui finibus malesuada et at nulla. Morbi elit ex, viverra vitae ante vel, blandit feugiat ligula. Fusce fermentum iaculis nibh, at sodales leo maximus a. Nullam ultricies sodales nunc, in pellentesque lorem mattis quis. Cras imperdiet est in nunc tristique lacinia. Nullam aliquam mauris eu accumsan tincidunt. Suspendisse velit ex, aliquet vel ornare vel, dignissim a tortor.
-
-                Morbi ut sapien vitae odio accumsan gravida. Morbi vitae erat auctor, eleifend nunc a, lobortis neque. Praesent aliquam dignissim viverra. Maecenas lacus odio, feugiat eu nunc sit amet, maximus sagittis dolor. Vivamus nisi sapien, elementum sit amet eros sit amet, ultricies cursus ipsum. Sed consequat luctus ligula. Curabitur laoreet rhoncus blandit. Aenean vel diam ut arcu pharetra dignissim ut sed leo. Vivamus faucibus, ipsum in vestibulum vulputate, lorem orci convallis quam, sit amet consequat nulla felis pharetra lacus. Duis semper erat mauris, sed egestas purus commodo vel.
+                <AccountDetailsForm />
             </CustomTabPanel>
         </Box>
     );
 }
+
+const validationSchema = yup.object({
+    email: yup.string().email('Invalid email').required('Required'),
+    currentPassword: yup.string().min(8, 'Password must be at least 8 characters').required('Required'),
+    newPassword: yup.string().min(8, 'Password must be at least 8 characters').required('Required'),
+    phoneNumber: yup.string().required('Required'),
+    name: yup.object().shape({
+        firstName: yup.string().required('Required'),
+        lastName: yup.string().required('Required'),
+    }),
+    address: yup.string().required('Required'),
+    gender: yup.string().required('Required'),
+    age: yup.number().min(18, 'Must be at least 18').required('Required'),
+});
+
+const initialValues = {
+    email: '',
+    newPassword: '',
+    currentPassword: '',
+    phoneNumber: '',
+    name: {
+        firstName: '',
+        lastName: '',
+    },
+    address: '',
+    gender: '',
+    age: '',
+};
+
+const AccountDetailsForm = () => {
+    const formik = useFormik({
+        initialValues,
+        validationSchema,
+        onSubmit: (values) => {
+            console.log(values);
+            alert(JSON.stringify(values, null, 2));
+        },
+    });
+
+    return (
+        <div>
+            <form onSubmit={formik.handleSubmit}>
+                <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                        <TextField
+                            label="First Name"
+                            name="name.firstName"
+                            value={formik.values.name.firstName}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.name?.firstName && Boolean(formik.errors.name?.firstName)}
+                            helperText={formik.touched.name?.firstName && formik.errors.name?.firstName}
+                            fullWidth
+                        />
+
+                    </Grid>
+                    <Grid item xs={6}>
+                        <TextField
+                            label="Last Name"
+                            name="name.lastName"
+                            value={formik.values.name.lastName}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.name?.lastName && Boolean(formik.errors.name?.lastName)}
+                            helperText={formik.touched.name?.lastName && formik.errors.name?.lastName}
+                            fullWidth
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            label="Address"
+                            name="address"
+                            value={formik.values.address}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.address && Boolean(formik.errors.address)}
+                            helperText={formik.touched.address && formik.errors.address}
+                            fullWidth
+                        />
+                    </Grid>
+
+                    <Grid item xs={6}>
+                        <RadioGroup
+                            aria-label="gender"
+                            name="gender"
+                            value={formik.values.gender}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                        >
+                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                <Typography mr={1} fontWeight={600} fontSize=".9rem">
+                                    Gender
+                                </Typography>
+
+                                <FormControlLabel value="male" control={<Radio />} label="Male" />
+                                <FormControlLabel value="female" control={<Radio />} label="Female" />
+                            </Box>
+                        </RadioGroup>
+                    </Grid>
+
+                    <Grid item xs={6}>
+                        <TextField
+                            fullWidth
+                            id="age"
+                            name="age"
+                            label="Age"
+                            type="number"
+                            value={formik.values.age}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.age && Boolean(formik.errors.age)}
+                            helperText={formik.touched.age && formik.errors.age}
+                            inputProps={{
+                                min: 18,
+                                max: 99,
+                            }}
+                        />
+                    </Grid>
+                    <Grid item xs={6}>
+                        <TextField
+                            label="Email"
+                            name="email"
+                            value={formik.values.email}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.email && Boolean(formik.errors.email)}
+                            helperText={formik.touched.email && formik.errors.email}
+                            fullWidth
+                        />
+                    </Grid>
+
+                    <Grid item xs={6}>
+                        <TextField
+                            label="Phone Number"
+                            name="phoneNumber"
+                            value={formik.values.phoneNumber}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)}
+                            helperText={formik.touched.phoneNumber && formik.errors.phoneNumber}
+                            fullWidth
+                        />
+                    </Grid>
+
+                    <Grid item xs={6}>
+                        <TextField
+                            label="Current Password"
+                            type="password"
+                            name="currentPassword"
+                            value={formik.values.currentPassword}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.currentPassword && Boolean(formik.errors.currentPassword)}
+                            helperText={formik.touched.currentPassword && formik.errors.currentPassword}
+                            fullWidth
+                        />
+                    </Grid>
+                    <Grid item xs={6}>
+                        <TextField
+                            label="New Password"
+                            type="password"
+                            name="newPassword"
+                            value={formik.values.newPassword}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.newPassword && Boolean(formik.errors.newPassword)}
+                            helperText={formik.touched.newPassword && formik.errors.newPassword}
+                            fullWidth
+                        />
+                    </Grid>
+                </Grid>
+                <Button type="submit">Save Changes</Button>
+            </form>
+        </div>
+    );
+};
 
 export default function MyAccount() {
     return (
