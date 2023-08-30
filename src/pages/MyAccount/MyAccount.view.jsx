@@ -90,7 +90,9 @@ function AdditionalDetailsTab() {
 const validationSchema = yup.object({
     email: yup.string().email('Invalid email').required('Required'),
     currentPassword: yup.string().min(8, 'Password must be at least 8 characters').required('Required'),
-    newPassword: yup.string().min(8, 'Password must be at least 8 characters').required('Required'),
+    newPassword: yup.string().min(8, 'Password must be at least 8 characters')
+        .notOneOf([yup.ref('currentPassword')], 'New password cannot be the same as the current password')
+        .required('Required'),
     phoneNumber: yup.string().required('Required'),
     name: yup.object().shape({
         firstName: yup.string().required('Required'),
