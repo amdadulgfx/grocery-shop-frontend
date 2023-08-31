@@ -5,7 +5,7 @@ import SearchSharpIcon from '@mui/icons-material/SearchSharp';
 
 const InfoRoutes = [
   { label: "About Us", path: "/about" },
-  { label: "My Account", path: "/profile" },
+  { label: "My Account", path: "/my-account" },
   { label: "Wishlist", path: "/saved" },
   { label: "Order Tracking", path: "/tracking" },
 ];
@@ -61,7 +61,7 @@ export const ResponsiveHeader = (props) => {
                 >
                   {route.label}
                 </Typography>
-                <Divider sx={{display: "block"}} />
+                <Divider sx={{ display: "block" }} />
               </>
             ))}
           </Box>
@@ -72,7 +72,7 @@ export const ResponsiveHeader = (props) => {
               gap: 2,
             }}
           >
-       
+
 
             <Button
               variant="contained"
@@ -95,30 +95,30 @@ export const ResponsiveHeader = (props) => {
             </Button>
           </Box>
         </Box>
-        <Box maxWidth="md" sx={{ mx: "auto", my: 2, px: "20px"  }}>
-              <form /* onSubmit={handleJobsSearch} */>
-                <Input
-                  sx={{
-                    borderRadius: 16,
-                    padding: "5px 0px 5px 27px  !important",
-                    backgroundColor: "#F3F4F7"
-                  }}
-                  disableUnderline
-                  fullWidth
-                  placeholder="Search Product"
-                  endAdornment={
-                    <InputAdornment position="end" style={{ outline: "none" }}>
-                      <IconButton
-                        size="small"
-                        sx={{ border: "2px solid #2BBEF9" }}
-                      >
-                        <SearchSharpIcon sx={{ color: "#2BBEF9" }} />
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
-              </form>
-            </Box>
+        <Box maxWidth="md" sx={{ mx: "auto", my: 2, px: "20px" }}>
+          <form /* onSubmit={handleJobsSearch} */>
+            <Input
+              sx={{
+                borderRadius: 16,
+                padding: "5px 0px 5px 27px  !important",
+                backgroundColor: "#F3F4F7"
+              }}
+              disableUnderline
+              fullWidth
+              placeholder="Search Product"
+              endAdornment={
+                <InputAdornment position="end" style={{ outline: "none" }}>
+                  <IconButton
+                    size="small"
+                    sx={{ border: "2px solid #2BBEF9" }}
+                  >
+                    <SearchSharpIcon sx={{ color: "#2BBEF9" }} />
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+          </form>
+        </Box>
       </Box>
       <Divider />
       <Box maxWidth="lg" sx={{ mx: 5, py: 0.5, }}>

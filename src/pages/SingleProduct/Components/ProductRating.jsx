@@ -13,17 +13,15 @@
 
 // export default ProductRating;
 
+import { Rating } from '@mui/material';
 import React from 'react';
-import RatingStars from 'react-rating-stars-component';
 
-function ProductRating({ rating }) {
+const ProductRating = ({ rating }) => {
     return (
-        <RatingStars
-            count={5}
+        <Rating
+            sx={{ mt: 0.6 }}
+            readOnly
             value={rating}
-            edit={false} // Disable editing
-            size={20}   // Size of the stars
-            isHalf={true} // Enable half-star ratings
         />
     );
 }
