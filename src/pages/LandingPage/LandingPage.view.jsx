@@ -1,12 +1,12 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import HealthTips from "./Components/HealthTips";
 import Coupon from "./Components/Coupon";
 import Categories from "./Components/CategoriesBottom";
 import DiscountCard from "./Components/DiscountCard";
 import AdvertisementAndAllCategory from "./Components/AdvertisementAndAllCategory.view";
+import HomeCarousel from "./Components/HomeCarousel";
 
 
 const titles = {
@@ -41,32 +41,16 @@ const LandingPage = () => {
   console.log(heroMasterData);
 
   return (
-    <>
-      <Box sx={{ mx: ["auto", "2rem"], my: 5, px: 3, py: 3 }}>
+    <Container maxWidth="lg" sx={{ py: 0.5, }}>
+      <Box sx={{ /* mx: ["auto", "2rem"], */ my: 5,/*  px: 3, */ py: 3 }}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={3}>
             <AdvertisementAndAllCategory />
           </Grid>
           <Grid item xs={12} md={9}>
             <Box>
-              <Typography variant="subtitle2">
-                {titles.subTitle.toUpperCase()}
-                <span>{titles.offer.toUpperCase()}</span>
-              </Typography>
-              <Typography variant="h3">{titles.heading}</Typography>
-              <Typography variant="subtitle1">{titles.message}</Typography>
-              <Typography variant="h5">from {titles.price}</Typography>
-              <Button
-                variant="contained"
-                sx={{
-                  textTransform: "none",
-                  borderRadius: 16,
-                  px: 3,
-                }}
-              >
-                Shop Now &nbsp;
-                <ArrowRightAltIcon />
-              </Button>
+              <HomeCarousel />
+              
             </Box>
             <HealthTips />
             <Coupon />
@@ -75,7 +59,7 @@ const LandingPage = () => {
         </Grid>
         <Categories />
       </Box>
-    </>
+    </Container>
   );
 };
 
