@@ -8,18 +8,9 @@ import demo from "./product-image.jpg"
 
 const useStyles = makeStyles((theme) => ({
   main: {
-    '&:hover': {
-      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-    },
-  },
-  root: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    height: "100%",
-    padding: "1rem",
     border: "1px solid #E3E3E3",
-    borderRadius: "4px",
+    borderRadius: "4px", padding: "1rem", height: "100%",
+    marginBottom: "-50px",
     "&:hover": {
       border: "1px solid #B2B2B2 !important",
       borderRadius: "10px",
@@ -28,6 +19,13 @@ const useStyles = makeStyles((theme) => ({
       display: "block",
     },
   },
+  /* root: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+   
+   
+  }, */
   mediaContainer: {
     display: "flex",
     alignItems: "flex-start",
@@ -127,6 +125,7 @@ const ProductCard = ({ product }) => {
                   padding: "0.2rem 0.8rem",
                   borderRadius: 2,
                   mt: 0.5,
+                  mb: -2
                 }}
               >
                 {product.productPlan}

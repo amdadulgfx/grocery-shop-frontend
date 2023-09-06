@@ -86,7 +86,7 @@ const HomeCarousel = () => {
         style={{
           backgroundImage: `url(${CarouselDatas[currentIndex].bgImgSrc})`,
           backgroundSize: "cover",
-          height: "18rem",
+          height: "auto",
           padding: "60px 50px 100px"
         }}
       >

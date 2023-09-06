@@ -7,6 +7,7 @@ import Categories from "./Components/CategoriesBottom";
 import DiscountCard from "./Components/DiscountCard";
 import AdvertisementAndAllCategory from "./Components/AdvertisementAndAllCategory.view";
 import HomeCarousel from "./Components/HomeCarousel";
+import BestSellers from "./Components/BestSellers";
 
 
 const titles = {
@@ -50,8 +51,8 @@ const LandingPage = () => {
           <Grid item xs={12} md={9}>
             <Box>
               <HomeCarousel />
-              
             </Box>
+            <BestSellers />
             <HealthTips />
             <Coupon />
             <DiscountCard />

@@ -39,7 +39,13 @@ const Products = () => {
         </Grid>
         <Grid item xs={12} md={9}>
           <Box>
-            <Grid container>
+            <Grid
+              container
+              rowSpacing={4}
+              columnSpacing={0}
+              justifyContent="center"
+              alignItems="stretch"
+            >
               {groceryItems.map((item) => (
                 <Grid key={item.productCode} item xs={12} sm={6} md={3}>
                   <ProductCard product={item} />
