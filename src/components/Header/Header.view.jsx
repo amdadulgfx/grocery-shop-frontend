@@ -9,6 +9,7 @@ import {
     IconButton,
     Input,
     InputAdornment,
+    Container,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -88,8 +89,8 @@ const Header = () => {
                     </Box>
                 </Box>
             </>) : (
-                <>
-                    <Box maxWidth="lg" sx={{ mx: 5, py: 0.5, }}>
+                <Container maxWidth="lg" sx={{ py: 0.5, }}>
+                    <Box maxWidth="lg" sx={{ /* mx: 5 ,*/ py: 0.5, }}>
                         <Box
                             sx={{
                                 display: "flex",
@@ -157,8 +158,8 @@ const Header = () => {
                             </Box>
                         </Box>
                     </Box>
-                    <Divider />
-                    <Box maxWidth="lg" sx={{ mx: 5, }}>
+                    <Divider sx={{mx: -100}} />
+                    <Box maxWidth="lg" sx={{ /* mx: 5, */ }}>
                         <Box
                             sx={{
                                 display: "flex",
@@ -262,7 +263,7 @@ const Header = () => {
                             </Box>
                         </Box>
                     </Box>
-                </>
+                </Container>
             )}
         </AppBar >
     );
