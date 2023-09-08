@@ -8,7 +8,7 @@
 * yarn add react-helmet-async
 * yarn add interweave
 * yarn add axios
-* 
+* npm install @mui/x-date-pickers dayjs @mui/material @mui/icons-material @mui/lab
 * 
 * 
 * 

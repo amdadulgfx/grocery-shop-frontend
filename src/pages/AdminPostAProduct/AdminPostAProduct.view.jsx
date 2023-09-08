@@ -7,9 +7,22 @@ import {
     Select,
     Button,
     Typography,
+    Container,
+    Autocomplete,
+    TextField,
 } from "@mui/material";
 import axios from "axios";
 import CustomTextField from "../../CustomTags/CustomTextField.view";
+import dayjs from 'dayjs';
+import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { useEffect } from "react";
+// import { DatePicker, LocalizationProvider } from "@mui/lab";
+// import AdapterDateFns from "@mui/lab/AdapterDateFns";
+// import LocalizationProvider from "@mui/lab/LocalizationProvider";
+// import DatePicker from "@mui/lab/DatePicker";
 
 const initialValues = {
     title: "",
@@ -20,8 +33,8 @@ const initialValues = {
     price: "",
     quantity: "",
     discount: "",
-    production: "",
-    expired: "",
+    productionDate: "",
+    expiredDate: "",
     status: "",
     category: "",
     subcategory: "",
@@ -38,6 +51,37 @@ const productPlanOptions = ["Recommended", "Organic"];
 
 const AdminPostAProduct = () => {
     const [values, setValues] = useState(initialValues);
+    const [categories, setCategories] = useState([]);
+    const [subCategories, setSubCategories] = useState([]);
+
+    useEffect(() => {
+        // Fetch categories from API
+        axios.get('http://localhost:5000/api/v1/category/')
+            .then((response) => {
+                console.log("res", response)
+                setCategories(response?.data?.data);
+            })
+            .catch((error) => {
+                console.error('Error fetching categories', error);
+            });
+    }, []);
+
+    useEffect(() => {
+        // Define the API URL
+        const apiUrl = `http://localhost:5000/api/v1/category/subCategory/${values?.category?._id}`;
+        console.log("coming here")
+
+        // Make the GET request using Axios
+        axios.get(apiUrl)
+            .then(response => {
+                console.log("response", response)
+                setSubCategories(response.data); // Set the API response data to the state
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }, [values?.category?._id]);
+    console.log("subce", subCategories)
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -45,6 +89,14 @@ const AdminPostAProduct = () => {
             ...prevValues,
             [name]: value,
         }));
+    };
+
+    const handleCategoryChange = (event, value) => {
+        setValues({ ...values, "category": value });
+    };
+
+    const handleSubCategoryChange = (event, value) => {
+        setValues({ ...values, "subcategory": value });
     };
 
     const handleSubmit = async () => {
@@ -70,10 +122,12 @@ const AdminPostAProduct = () => {
         }
     };
 
+    console.log("values", values);
+
     return (
-        <Box sx={{ px: { xs: 1.25, md: 3 } }}>
-            <Typography sx={{mt: 1, mb: 1, textAlign:"center", fontSize:"20px"}}>Post A Product</Typography>
-            <Grid container spacing={2}>
+        <Container minWidth="md">
+            <Typography sx={{ mt: 1, mb: 1, textAlign: "center", fontSize: "20px" }}>Post A Product</Typography>
+            <Grid container rowSpacing={2} columnSpacing={10}>
                 <Grid item xs={12} md={6}>
                     <InputLabel>Title</InputLabel>
                     <CustomTextField
@@ -98,7 +152,6 @@ const AdminPostAProduct = () => {
                         onChange={handleChange}
                     />
                 </Grid>
-
                 <Grid item xs={12} md={6}>
                     <InputLabel>Weight (g)</InputLabel>
                     <CustomTextField
@@ -126,38 +179,62 @@ const AdminPostAProduct = () => {
                         onChange={handleChange}
                     />
                 </Grid>
-
                 <Grid item xs={12} md={6}>
                     <InputLabel>Production Date</InputLabel>
-                    <CustomTextField
-                        name="production"
-                        value={values.production}
-                        onChange={handleChange}
-                    />
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DemoContainer
+                            components={[
+                                'DatePicker'
+                            ]}
+                        >
+                            <DemoItem>
+                                <DatePicker
+                                    fullWidth
+                                    name="productionDate"
+                                    defaultValue={dayjs(values.productionDate)}
+                                />
+                            </DemoItem>
+                        </DemoContainer>
+                    </LocalizationProvider>
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <InputLabel>Expiration Date</InputLabel>
-                    <CustomTextField
-                        name="expired"
-                        value={values.expired}
-                        onChange={handleChange}
-                    />
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DemoContainer
+                            components={[
+                                'DatePicker'
+                            ]}
+                        >
+                            <DemoItem>
+                                <DatePicker defaultValue={dayjs(values.expiredDate)} />
+                            </DemoItem>
+                        </DemoContainer>
+                    </LocalizationProvider>
                 </Grid>
-
                 <Grid item xs={12} md={6}>
                     <InputLabel>Category</InputLabel>
-                    <CustomTextField
-                        name="category"
-                        value={values.category}
-                        onChange={handleChange}
+                    <Autocomplete
+                        id="category-autocomplete"
+                        options={categories}
+                        getOptionLabel={(option) => option.name}
+                        value={values?.category}
+                        onChange={handleCategoryChange}
+                        renderInput={(params) => (
+                            <TextField {...params} fullWidth />
+                        )}
                     />
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <InputLabel>Subcategory</InputLabel>
-                    <CustomTextField
-                        name="subcategory"
-                        value={values.subcategory}
-                        onChange={handleChange}
+                    <Autocomplete
+                        id="category-autocomplete"
+                        options={subCategories}
+                        getOptionLabel={(option) => option.name}
+                        value={values?.subcategory}
+                        onChange={handleSubCategoryChange}
+                        renderInput={(params) => (
+                            <TextField {...params} fullWidth />
+                        )}
                     />
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -238,7 +315,7 @@ const AdminPostAProduct = () => {
                         ))}
                     </Select>
                 </Grid>
-                <Grid item xs={12} md={12}>
+                <Grid item xs={12} md={6}>
                     <InputLabel>Description</InputLabel>
                     <CustomTextField
                         name="description"
@@ -248,7 +325,7 @@ const AdminPostAProduct = () => {
                         onChange={handleChange}
                     />
                 </Grid>
-                <Grid item xs={12} md={12}>
+                <Grid item xs={12} md={6}>
                     <Box mt={2}>
                         <Button variant="contained" color="primary" onClick={handleSubmit}>
                             Submit
@@ -256,7 +333,7 @@ const AdminPostAProduct = () => {
                     </Box>
                 </Grid>
             </Grid>
-        </Box>
+        </Container>
     );
 };
 
