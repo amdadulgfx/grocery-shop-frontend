@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -7,6 +7,10 @@ import Box from '@mui/material/Box';
 import { useFormik } from 'formik';
 import { Button, FormControlLabel, Grid, Radio, RadioGroup, TextField } from '@mui/material';
 import * as yup from 'yup';
+import axios from 'axios';
+
+const access_token = localStorage.getItem("accessToken");
+console.log("access_token", access_token);
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -103,7 +107,7 @@ const validationSchema = yup.object({
     age: yup.number().min(18, 'Must be at least 18').required('Required'),
 });
 
-const initialValues = {
+const initialValues1 = {
     email: '',
     newPassword: '',
     currentPassword: '',
@@ -117,15 +121,54 @@ const initialValues = {
     age: '',
 };
 
+
 const AccountDetailsForm = () => {
+    // const dataFetchedRef = useRef(false);
+    const [initialValues, setinInitialValues] = useState(initialValues1);
+
     const formik = useFormik({
         initialValues,
         validationSchema,
         onSubmit: (values) => {
             console.log(values);
-            alert(JSON.stringify(values, null, 2));
+            // alert(JSON.stringify(values, null, 2));
         },
     });
+
+    useEffect(() => {
+        // if (dataFetchedRef.current) return;
+        // dataFetchedRef.current = true;
+        axios.get(`${process.env.REACT_APP_API_URI}users/single-user`,
+            {
+                headers: {
+                    authorization: `${access_token}`,
+                },
+            }
+        ).then(res => {
+            console.log(res?.data?.data);
+            const { email } = res?.data?.data;
+            // initialValues.email = email;
+            console.log("Email value before setting:", formik.values.email);
+            setinInitialValues({
+                email: email,
+                newPassword: '',
+                currentPassword: '',
+                phoneNumber: '',
+                name: {
+                    firstName: '',
+                    lastName: '',
+                },
+                address: '',
+                gender: '',
+                age: '',
+            })
+            console.log("Email value after setting:", formik.values.email);
+        })
+    }, [])
+
+    console.log(initialValues);
+
+
 
     return (
         <div>

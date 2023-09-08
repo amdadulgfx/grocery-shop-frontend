@@ -23,6 +23,7 @@ import {
     useParams,
 } from "react-router-dom";
 import VerifySignUp from "./VerifySignUp.view";
+import axios from "axios";
 
 const SignupGrid = styled(Grid)(() => ({
     backgroundColor: "var(--clr-white)",
@@ -459,7 +460,7 @@ const SingupForm = (props) => {
 
     const handleLogIn = async (event, from) => {
         if (event.key === "Enter" || from === "onClick") {
-
+            console.log(values);
             if (
                 values.email === "" ||
                 values.password === "" ||
@@ -475,11 +476,21 @@ const SingupForm = (props) => {
             setProgressLoading(true);
 
             try {
+                let access_token;
+                axios.post(
+                    `${process.env.REACT_APP_API_URI}auth/signin/`,
+                    { email: values.email, password: values.password }
+                )
+                    .then(res => {
+                        access_token = res?.data?.data?.token;
+                        localStorage.setItem("accessToken", access_token);
+                    })
+
                 const user = "await Auth.signIn(values.email, values.password)";
-                var access_token = user["signInUserSession"]["accessToken"]["jwtToken"];
+                // var access_token = user["signInUserSession"]["accessToken"]["jwtToken"];
                 var idToken = user["signInUserSession"]["idToken"]["jwtToken"];
                 var refresh_token = user["signInUserSession"]["refreshToken"]["token"];
-                localStorage.setItem("accessToken", access_token);
+                console.log("hello access tokennnn", access_token);
                 localStorage.setItem("idToken", idToken);
                 localStorage.setItem("refreshToken", refresh_token);
                 localStorage.setItem("flow", "hospital");
