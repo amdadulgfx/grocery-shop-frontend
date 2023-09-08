@@ -124,7 +124,9 @@ const initialValues1 = {
 
 const AccountDetailsForm = () => {
     // const dataFetchedRef = useRef(false);
+    // console.log("initialValues1", initialValues1);
     const [initialValues, setinInitialValues] = useState(initialValues1);
+    // console.log("initalValues", initialValues);
 
     const formik = useFormik({
         initialValues,
@@ -148,6 +150,7 @@ const AccountDetailsForm = () => {
             console.log(res?.data?.data);
             const { email } = res?.data?.data;
             // initialValues.email = email;
+            console.log("email", email)
             console.log("Email value before setting:", formik.values.email);
             setinInitialValues({
                 email: email,
@@ -166,7 +169,7 @@ const AccountDetailsForm = () => {
         })
     }, [])
 
-    console.log(initialValues);
+    console.log("initialValues", initialValues);
 
 
 
@@ -249,11 +252,15 @@ const AccountDetailsForm = () => {
                             }}
                         />
                     </Grid>
+                    {console.log("formik", formik)}
+                    {console.log("initialValuesinitialValues", initialValues)}
                     <Grid item xs={6}>
                         <TextField
                             label="Email"
                             name="email"
-                            value={formik.values.email}
+                            disabled
+                            // value={formik.values.email}
+                            value={initialValues?.email}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             error={formik.touched.email && Boolean(formik.errors.email)}
