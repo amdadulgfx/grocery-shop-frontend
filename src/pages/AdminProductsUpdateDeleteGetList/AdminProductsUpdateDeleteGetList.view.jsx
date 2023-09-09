@@ -87,7 +87,7 @@ const AdminProductsUpdateDeleteGetList = () => {
 
             {/* Delete Confirmation Dialog */}
             {deleteConfirmationOpen && (
-                <DeleteConfirmationDialog deleteConfirmationOpen={deleteConfirmationOpen} setDeleteConfirmationOpen={setDeleteConfirmationOpen} confirmDelete={confirmDelete} deleteTitle={"Category"} />
+                <DeleteConfirmationDialog deleteConfirmationOpen={deleteConfirmationOpen} setDeleteConfirmationOpen={setDeleteConfirmationOpen} confirmDelete={confirmDelete} deleteTitle={"Product"} />
             )}
         </Container>
     );
