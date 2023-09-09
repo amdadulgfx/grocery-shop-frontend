@@ -13,5 +13,6 @@ import AdminAddCategory from "./AdminAddCategory";
 import AdminAllCategories from "./AdminAllCategories";
 import AdminAddSubCategory from "./AdminAddSubCategory";
 import AdminAllSubCategories from "./AdminAllSubCategories";
+import AdminProductsUpdateDeleteGetList from "./AdminProductsUpdateDeleteGetList";
 
-export { AboutUs, LandingPage, ContactUs, LoginSignup, Products, PrivacyPolicy, FAQ, TermsAndConditions, AdminSignIn, AdminPostAProduct, AdminDashboard, AdminAddCategory, AdminAllCategories, AdminAddSubCategory, AdminAllSubCategories };
+export { AboutUs, LandingPage, ContactUs, LoginSignup, Products, PrivacyPolicy, FAQ, TermsAndConditions, AdminSignIn, AdminPostAProduct, AdminDashboard, AdminAddCategory, AdminAllCategories, AdminAddSubCategory, AdminAllSubCategories, AdminProductsUpdateDeleteGetList };

@@ -14,6 +14,7 @@ import {
     Typography,
     Autocomplete
 } from '@mui/material';
+import { DeleteConfirmationDialog } from '../../CustomTags';
 
 const AdminAllSubCategories = () => {
     const [subCategories, setSubCategories] = useState([]);
@@ -205,25 +206,9 @@ const AdminAllSubCategories = () => {
             )}
 
             {/* Delete Confirmation Dialog */}
-            <Dialog
-                open={deleteConfirmationOpen}
-                onClose={() => setDeleteConfirmationOpen(false)}
-            >
-                <DialogTitle>Confirm Deletion</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Are you sure you want to delete this subcategory?
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={() => setDeleteConfirmationOpen(false)} color="primary">
-                        Cancel
-                    </Button>
-                    <Button onClick={confirmDelete} color="error">
-                        Delete
-                    </Button>
-                </DialogActions>
-            </Dialog>
+            {deleteConfirmationOpen && (
+                <DeleteConfirmationDialog deleteConfirmationOpen={deleteConfirmationOpen} setDeleteConfirmationOpen={setDeleteConfirmationOpen}  confirmDelete={confirmDelete} deleteTitle={"Subcategory"} />
+            )}
         </Container>
     );
 };

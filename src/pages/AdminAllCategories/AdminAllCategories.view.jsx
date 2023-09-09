@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Box, Button, Container, Grid, InputLabel, Typography, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 import CustomTextField from '../../CustomTags/CustomTextField.view';
+import { DeleteConfirmationDialog } from '../../CustomTags';
 
 const AdminAllCategories = () => {
     const [categories, setCategories] = useState([]);
@@ -150,25 +151,9 @@ const AdminAllCategories = () => {
 
 
             {/* Delete Confirmation Dialog */}
-            <Dialog
-                open={deleteConfirmationOpen}
-                onClose={() => setDeleteConfirmationOpen(false)}
-            >
-                <DialogTitle>Confirm Deletion</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Are you sure you want to delete this category?
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={() => setDeleteConfirmationOpen(false)} color="primary">
-                        Cancel
-                    </Button>
-                    <Button onClick={confirmDelete} color="error">
-                        Delete
-                    </Button>
-                </DialogActions>
-            </Dialog>
+            {deleteConfirmationOpen && (
+                <DeleteConfirmationDialog deleteConfirmationOpen={deleteConfirmationOpen} setDeleteConfirmationOpen={setDeleteConfirmationOpen}  confirmDelete={confirmDelete} deleteTitle={"Category"} />
+            )}
         </Container>
     );
 };

@@ -1,5 +1,5 @@
 import { Footer, Header } from './components';
-import { AboutUs, AdminAddCategory, AdminAddSubCategory, AdminAllCategories, AdminAllSubCategories, AdminDashboard, AdminPostAProduct, AdminSignIn, ContactUs, FAQ, LandingPage, LoginSignup, PrivacyPolicy, Products, TermsAndConditions } from './pages';
+import { AboutUs, AdminAddCategory, AdminAddSubCategory, AdminAllCategories, AdminAllSubCategories, AdminDashboard, AdminPostAProduct, AdminProductsUpdateDeleteGetList, AdminSignIn, ContactUs, FAQ, LandingPage, LoginSignup, PrivacyPolicy, Products, TermsAndConditions } from './pages';
 import ROUTES from './routes';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css';
@@ -32,6 +32,7 @@ function App() {
           <Route exact path={ROUTES.ADMINALLCATEGORIES} element={<AdminAllCategories />} />
           <Route exact path={ROUTES.ADMINADDSUBCATEGORY} element={<AdminAddSubCategory />} />
           <Route exact path={ROUTES.ADMINALLSUBCATEGORIES} element={<AdminAllSubCategories />} />
+          <Route exact path={ROUTES.ADMINPRODUCTSUPDATEDELETEGETLIST} element={<AdminProductsUpdateDeleteGetList />} />
         </Routes>
         {pathname === "/admin-dashboard" ? <></> : <Footer />}
       </div>

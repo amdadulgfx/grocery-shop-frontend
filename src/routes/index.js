@@ -6,6 +6,7 @@ const AdminRoutes = {
   ADMINALLCATEGORIES: "/categories",
   ADMINADDSUBCATEGORY: "/add-subCategory",
   ADMINALLSUBCATEGORIES: "/SubCategories",
+  ADMINPRODUCTSUPDATEDELETEGETLIST : "/admin-productLists",
 };
 
 const ROUTES = {

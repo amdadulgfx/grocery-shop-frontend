@@ -13,37 +13,30 @@ import {
     Snackbar,
 } from "@mui/material";
 import axios from "axios";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { styled } from "@material-ui/styles";
+// import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import MuiAlert from "@mui/material/Alert";
 // import dayjs from 'dayjs';
-import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import CustomTextField from "../../CustomTags/CustomTextField.view";
 
 const initialValues = {
-    title: "",
+    productName: "",
     brand: "",
-    images: [],
+    productPicture: [],
     description: "",
     weight: "",
-    price: "",
-    quantity: "",
-    discount: "",
-    productionDate: "",
+    price: 0,
+    countInStock: 0,
+    discount: 0,
+    manufacturingDate: "",
     expiredDate: "",
     status: "",
     category: "",
     subcategory: "",
-    discountPercentage: 0,
     type: "",
     productCode: "",
     productPlan: "",
 };
 
-const discountOptions = ["Active"];
 const statusOptions = ["In Stock", "Out Of Stock"];
 const typeOptions = ["Recommended", "Organic"];
 const productPlanOptions = ["Recommended", "Organic"];
@@ -89,14 +82,12 @@ const AdminPostAProduct = () => {
     // Handle input field changes
     const handleChange = (event) => {
         const { name, value } = event.target;
-        console.log("name", name);
-        console.log("value", value);
 
-        if (name === "image") {
+        if (name === "productPicture") {
             // Handle adding image URLs to the images array
             setValues((prevValues) => ({
                 ...prevValues,
-                images: [...prevValues.images, value],
+                productPicture: [...prevValues.productPicture, value],
             }));
         } else {
             // Handle other input fields
@@ -131,31 +122,16 @@ const AdminPostAProduct = () => {
         try {
             // Access the JWT token from local storage (you should implement this)
             const adminToken = localStorage.getItem("adminToken");
-            // console.log("admin", adminToken);
-
-            // console.log("values", values);
-            // return;
 
             // Prepare the data to be sent in the POST request
             const postData = {
                 ...values,
-                productName: values?.title,
-                brand: values?.brand,
-                productPicture: values?.images,
-                description: values?.description,
-                weight: values?.weight,
-                price: Number(values?.price),
-                countInStock: Number(values?.quantity),
-                productCode: values?.productCode,
-                discount: Number(values?.discountPercentage),
-                type: values?.type,
-                productPlan: values?.productPlan,
-                status : values?.status,
-                manufacturingDate: values.productionDate.toISOString(),
+                manufacturingDate: values.manufacturingDate.toISOString(),
                 expiredDate: values.expiredDate.toISOString(),
-                category : values?.category?._id,
-                subcategory : values?.subcategory?._id,
+                category: values?.category?._id,
+                subcategory: values?.subcategory?._id,
             };
+
 
             // Send the POST request to add the product
             const response = await axios.post(
@@ -173,6 +149,24 @@ const AdminPostAProduct = () => {
 
             // Show success Snackbar
             showSnackbar("success", "Product added successfully");
+            setValues({
+                productName: "",
+                brand: "",
+                productPicture: null,
+                description: "",
+                weight: "",
+                price: "",
+                countInStock: "",
+                discount: "",
+                manufacturingDate: null,
+                expiredDate: null,
+                status: "",
+                category: "",
+                subcategory: "",
+                type: "",
+                productCode: "",
+                productPlan: "",
+            });
         } catch (error) {
             // Handle error
             console.error("Error:", error);
@@ -207,11 +201,12 @@ const AdminPostAProduct = () => {
             </Typography>
             <Grid container rowSpacing={2} columnSpacing={10}>
                 <Grid item xs={12} md={6}>
-                    <InputLabel>Title</InputLabel>
+                    <InputLabel>Product Name</InputLabel>
                     <CustomTextField
-                        name="title"
-                        value={values.title}
+                        name="productName"
+                        value={values.productName}
                         onChange={handleChange}
+                        placeholder="Enter the product name"
                     />
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -220,14 +215,16 @@ const AdminPostAProduct = () => {
                         name="brand"
                         value={values.brand}
                         onChange={handleChange}
+                        placeholder="Enter the brand name"
                     />
                 </Grid>
                 <Grid item xs={12} md={6}>
-                    <InputLabel>Images</InputLabel>
-                    <CustomTextField
-                        name="image"
-                        // value={values.images}
+                    <InputLabel>Product Pictures</InputLabel>
+                    <CustomTextField 
+                        name="productPicture"
+                        // value={values.productPicture}
                         onChange={handleChange}
+                        placeholder="Enter the image URL"
                     />
                     {/* <Button
                         component="label"
@@ -251,56 +248,53 @@ const AdminPostAProduct = () => {
                     <InputLabel>Weight (g)</InputLabel>
                     <CustomTextField
                         name="weight"
-                        type="number"
+                        type="text"
                         value={values.weight}
                         onChange={handleChange}
+                        placeholder="Enter the weight"
                     />
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <InputLabel>Price</InputLabel>
                     <CustomTextField
                         name="price"
-                        type="number"
+                        type="text"
                         value={values.price}
                         onChange={handleChange}
+                        placeholder="Enter the price"
                     />
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <InputLabel>Quantity</InputLabel>
                     <CustomTextField
-                        name="quantity"
-                        type="number"
-                        value={values.quantity}
+                        name="countInStock"
+                        type="text"
+                        value={values.countInStock}
                         onChange={handleChange}
+                        placeholder="Enter the image quantity"
                     />
                 </Grid>
                 <Grid item xs={12} md={6}>
-                    <InputLabel>Production Date</InputLabel>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DemoContainer components={["DatePicker"]}>
-                            <DemoItem>
-                                <DatePicker
-                                    fullWidth
-                                    name="productionDate"
-                                    value={values.productionDate}
-                                    onChange={(date) => handleDateChange("productionDate", date)}
-                                />
-                            </DemoItem>
-                        </DemoContainer>
-                    </LocalizationProvider>
+                    <InputLabel>Manufacturing Date</InputLabel>
+                    <CustomTextField
+                        type="date"
+                        name="manufacturingDate"
+                        onChange={(event) =>
+                            handleDateChange("manufacturingDate", new Date(event.target.value))
+                        }
+                        placeholder="Enter manufacturing Date"
+                    />
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <InputLabel>Expiration Date</InputLabel>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DemoContainer components={["DatePicker"]}>
-                            <DemoItem>
-                                <DatePicker
-                                    value={values.expiredDate}
-                                    onChange={(date) => handleDateChange("expiredDate", date)}
-                                />
-                            </DemoItem>
-                        </DemoContainer>
-                    </LocalizationProvider>
+                    <CustomTextField
+                        type="date"
+                        name="expiredDate"
+                        onChange={(event) =>
+                            handleDateChange("expiredDate", new Date(event.target.value))
+                        }
+                        placeholder="Enter expired Date"
+                    />
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <InputLabel>Category</InputLabel>
@@ -311,7 +305,7 @@ const AdminPostAProduct = () => {
                         value={values?.category}
                         onChange={handleCategoryChange}
                         renderInput={(params) => (
-                            <TextField {...params} fullWidth />
+                            <TextField {...params} fullWidth placeholder="Select Category" />
                         )}
                     />
                 </Grid>
@@ -325,26 +319,27 @@ const AdminPostAProduct = () => {
                         onChange={handleSubCategoryChange}
                         disabled={values?.category ? false : true}
                         renderInput={(params) => (
-                            <TextField {...params} fullWidth />
+                            <TextField {...params} fullWidth placeholder="Select Category" />
                         )}
                     />
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <InputLabel>Discount Percentage</InputLabel>
                     <CustomTextField
-                        name="discountPercentage"
+                        name="discount"
                         type="text"
-                        value={values.discountPercentage}
+                        value={values.discount}
                         onChange={handleChange}
+                        placeholder="Enter discount percentage"
                     />
                 </Grid>
-
                 <Grid item xs={12} md={6}>
                     <InputLabel>Product Code</InputLabel>
                     <CustomTextField
                         name="productCode"
                         value={values.productCode}
                         onChange={handleChange}
+                        placeholder="Enter product Code"
                     />
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -354,23 +349,12 @@ const AdminPostAProduct = () => {
                         value={values.status}
                         onChange={handleChange}
                         fullWidth
+                        displayEmpty
                     >
+                        <MenuItem disabled value="">
+                               Select Status
+                        </MenuItem>
                         {statusOptions.map((option) => (
-                            <MenuItem key={option} value={option}>
-                                {option}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <InputLabel>Discount</InputLabel>
-                    <Select
-                        name="discount"
-                        value={values.discount}
-                        onChange={handleChange}
-                        fullWidth
-                    >
-                        {discountOptions.map((option) => (
                             <MenuItem key={option} value={option}>
                                 {option}
                             </MenuItem>
@@ -384,7 +368,11 @@ const AdminPostAProduct = () => {
                         value={values.type}
                         onChange={handleChange}
                         fullWidth
+                        displayEmpty
                     >
+                        <MenuItem disabled value="">
+                               Select Type
+                        </MenuItem>
                         {typeOptions.map((option) => (
                             <MenuItem key={option} value={option}>
                                 {option}
@@ -399,7 +387,11 @@ const AdminPostAProduct = () => {
                         value={values.productPlan}
                         onChange={handleChange}
                         fullWidth
+                        displayEmpty
                     >
+                        <MenuItem disabled value="">
+                               Select Product Plan
+                        </MenuItem>
                         {productPlanOptions.map((option) => (
                             <MenuItem key={option} value={option}>
                                 {option}
@@ -415,6 +407,7 @@ const AdminPostAProduct = () => {
                         row={4}
                         value={values.description}
                         onChange={handleChange}
+                        placeholder="Enter Description"
                     />
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -446,7 +439,7 @@ const AdminPostAProduct = () => {
 
 export default AdminPostAProduct;
 
-const VisuallyHiddenInput = styled('input')`
+/* const VisuallyHiddenInput = styled('input')`
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
   height: 1px;
@@ -456,4 +449,4 @@ const VisuallyHiddenInput = styled('input')`
   left: 0;
   white-space: nowrap;
   width: 1px;
-`;
+`; */
