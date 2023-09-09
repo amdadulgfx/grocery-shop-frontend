@@ -89,8 +89,8 @@ const Header = () => {
                     </Box>
                 </Box>
             </>) : (
-                <Container maxWidth="lg" sx={{ py: 0.5, }}>
-                    <Box maxWidth="lg" sx={{ /* mx: 5 ,*/ py: 0.5, }}>
+                <>
+                    <Container maxWidth="lg" sx={{ py: 0.5, }}>
                         <Box
                             sx={{
                                 display: "flex",
@@ -134,7 +134,6 @@ const Header = () => {
                                 >
                                     100% Secure delivery without contacting the courier
                                 </Typography>
-
                             </Box>
                             <Box
                                 sx={{
@@ -157,9 +156,54 @@ const Header = () => {
                                 </Typography>
                             </Box>
                         </Box>
-                    </Box>
+                    </Container>
                     <Divider sx={{ mx: -100 }} />
-                    <Box maxWidth="lg" sx={{ /* mx: 5, */ }}>
+                    <Container maxWidth="lg" sx={{ py: 0.5, }}>
+                        <Box maxWidth="lg" sx={{ /* mx: 5, */ }}>
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                    gap: 1,
+                                }}
+                            >
+                                <Box>
+                                    <img
+                                        height="40px"
+                                        width="100%"
+                                        style={{ marginLeft: "8px", marginTop: "-6px" }}
+                                        src={HeaderLogo}
+                                        alt="Main_logo"
+                                    />
+                                </Box>
+                                <Box>
+                                    {MainNavigation.map((route) => (
+                                        <Typography
+                                            variant="subtitle1"
+                                            key={route.path}
+                                            onClick={() => navigate(route.path)}
+                                            sx={{
+                                                display: "inline-block",
+                                                color: "#757575",
+                                                fontSize: "1rem",
+                                                fontWeight: "600",
+                                                p: 2,
+                                                "&:hover": {
+                                                    color: "#2BBEF9"
+                                                }
+                                            }}
+                                        >
+                                            {route.label}
+                                        </Typography>
+                                    ))}
+                                </Box>
+
+                            </Box>
+                        </Box>
+                    </Container>
+                    <Divider /*  sx={{mx: -100}} */ />
+                    <Container maxWidth="lg" sx={{ py: 0.2, }}>
                         <Box
                             sx={{
                                 display: "flex",
@@ -263,8 +307,8 @@ const Header = () => {
                                 </Button>
                             </Box>
                         </Box>
-                    </Box>
-                </Container>
+                    </Container>
+                </>
             )}
         </AppBar >
     );
