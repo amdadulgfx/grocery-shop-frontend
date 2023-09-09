@@ -1,10 +1,7 @@
 import React from 'react';
-import {
-    Box,
-    Typography,
-    makeStyles,
-} from '@material-ui/core';
 import FreshestProductsAdsImage from "../../../assets/LandingPageImages/FreshestProductsAds.jpg";
+import { makeStyles } from '@material-ui/styles';
+import { Box, Typography } from '@mui/material';
 
 const useStyles = makeStyles((theme) => ({
     root: {

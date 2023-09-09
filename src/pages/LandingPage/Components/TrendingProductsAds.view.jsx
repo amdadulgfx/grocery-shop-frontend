@@ -1,12 +1,9 @@
 import React from 'react';
-import {
-  Box,
-  Typography,
-  makeStyles,
-  Grid,
-} from '@material-ui/core';
+
 import SpecialOrganicAdsImage from "../../../assets/LandingPageImages/SpecialOrganicAds.jpg";
 import { Link } from 'react-router-dom';
+import { Box, Grid, Typography } from '@mui/material';
+import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {

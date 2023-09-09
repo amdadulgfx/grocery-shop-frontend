@@ -2,7 +2,8 @@ import React from 'react';
 import SystemUpdateIcon from '@mui/icons-material/SystemUpdate';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import AlarmIcon from '@mui/icons-material/Alarm';
-import { Box } from '@material-ui/core';
+import { Box } from '@mui/material';
+
 
 const DownloadAndOrderAds = () => {
     return (

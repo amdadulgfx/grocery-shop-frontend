@@ -1,15 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import {
-    Box,
-    Typography,
-    Avatar,
-    Grid,
-    IconButton,
-    Paper,
-    makeStyles,
-} from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import { makeStyles } from '@material-ui/styles';
+import { Avatar, Box, Grid, IconButton, Paper, Typography } from '@mui/material';
 
 const useStyles = makeStyles((theme) => ({
     commentBox: {

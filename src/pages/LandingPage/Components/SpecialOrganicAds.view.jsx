@@ -1,10 +1,7 @@
 import React from 'react';
-import {
-    Box,
-    Typography,
-    makeStyles,
-} from '@material-ui/core';
 import SpecialOrganicAdsImage from "../../../assets/LandingPageImages/SpecialOrganicAds.jpg";
+import { Box, Typography } from '@mui/material';
+import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles((theme) => ({
     root: {

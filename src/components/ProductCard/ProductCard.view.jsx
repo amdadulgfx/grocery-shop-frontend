@@ -3,8 +3,9 @@ import { Grid, Card, CardMedia, CardContent, Typography, IconButton, Box, Rating
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import StarIcon from "@mui/icons-material/Star";
-import { makeStyles } from "@material-ui/core/styles";
+
 import demo from "./product-image.jpg"
+import { makeStyles } from "@material-ui/styles";
 
 const useStyles = makeStyles((theme) => ({
   main: {
