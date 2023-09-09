@@ -158,7 +158,7 @@ const Header = () => {
                             </Box>
                         </Box>
                     </Box>
-                    <Divider sx={{mx: -100}} />
+                    <Divider sx={{ mx: -100 }} />
                     <Box maxWidth="lg" sx={{ /* mx: 5, */ }}>
                         <Box
                             sx={{
@@ -257,6 +257,7 @@ const Header = () => {
                                         borderRadius: 16,
                                         px: 3
                                     }}
+                                    onClick={() => navigate('/login')}
                                 >
                                     Login
                                 </Button>

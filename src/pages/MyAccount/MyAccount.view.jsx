@@ -8,6 +8,7 @@ import { useFormik } from 'formik';
 import { Button, FormControlLabel, Grid, Radio, RadioGroup, TextField } from '@mui/material';
 import * as yup from 'yup';
 import axios from 'axios';
+import GroceryAlert from '../../components/GroceryAlert';
 
 const access_token = localStorage.getItem("accessToken");
 console.log("access_token", access_token);
@@ -93,10 +94,10 @@ function AdditionalDetailsTab() {
 
 const validationSchema = yup.object({
     email: yup.string().email('Invalid email').required('Required'),
-    currentPassword: yup.string().min(8, 'Password must be at least 8 characters').required('Required'),
-    newPassword: yup.string().min(8, 'Password must be at least 8 characters')
-        .notOneOf([yup.ref('currentPassword')], 'New password cannot be the same as the current password')
-        .required('Required'),
+    // currentPassword: yup.string().min(8, 'Password must be at least 8 characters').required('Required'),
+    // newPassword: yup.string().min(8, 'Password must be at least 8 characters')
+    //     .notOneOf([yup.ref('currentPassword')], 'New password cannot be the same as the current password')
+    //     .required('Required'),
     phoneNumber: yup.string().required('Required'),
     name: yup.object().shape({
         firstName: yup.string().required('Required'),
@@ -107,10 +108,10 @@ const validationSchema = yup.object({
     age: yup.number().min(18, 'Must be at least 18').required('Required'),
 });
 
-const initialValues1 = {
+const accountDetails = {
     email: '',
-    newPassword: '',
-    currentPassword: '',
+    // newPassword: '',
+    // currentPassword: '',
     phoneNumber: '',
     name: {
         firstName: '',
@@ -123,23 +124,34 @@ const initialValues1 = {
 
 
 const AccountDetailsForm = () => {
-    // const dataFetchedRef = useRef(false);
-    // console.log("initialValues1", initialValues1);
-    const [initialValues, setinInitialValues] = useState(initialValues1);
-    // console.log("initalValues", initialValues);
+    const dataFetchedRef = useRef(false);
+    const [initialValues, setinInitialValues] = useState(accountDetails);
+    const [successAlert, setSuccessAlert] = useState(false);
 
     const formik = useFormik({
         initialValues,
         validationSchema,
+        enableReinitialize: true,
         onSubmit: (values) => {
-            console.log(values);
-            // alert(JSON.stringify(values, null, 2));
+            axios.patch(`${process.env.REACT_APP_API_URI}users/`,
+                values,
+                {
+                    headers: {
+                        authorization: `${access_token}`,
+                    },
+                }
+            )
+                .then((res) => {
+                    if (res.data.success) {
+                        setSuccessAlert(true)
+                    }
+                })
         },
     });
 
     useEffect(() => {
-        // if (dataFetchedRef.current) return;
-        // dataFetchedRef.current = true;
+        if (dataFetchedRef.current) return;
+        dataFetchedRef.current = true;
         axios.get(`${process.env.REACT_APP_API_URI}users/single-user`,
             {
                 headers: {
@@ -147,31 +159,26 @@ const AccountDetailsForm = () => {
                 },
             }
         ).then(res => {
-            console.log(res?.data?.data);
-            const { email } = res?.data?.data;
-            // initialValues.email = email;
-            console.log("email", email)
-            console.log("Email value before setting:", formik.values.email);
+            const { email, phoneNumber, name, address, gender, age } = res?.data?.data;
             setinInitialValues({
                 email: email,
-                newPassword: '',
-                currentPassword: '',
-                phoneNumber: '',
+                // newPassword: '',
+                // currentPassword: '',
+                phoneNumber: phoneNumber,
                 name: {
-                    firstName: '',
-                    lastName: '',
+                    firstName: name.firstName,
+                    lastName: name.lastName,
                 },
-                address: '',
-                gender: '',
-                age: '',
+                address: address,
+                gender: gender,
+                age: age,
             })
-            console.log("Email value after setting:", formik.values.email);
         })
     }, [])
 
-    console.log("initialValues", initialValues);
-
-
+    // const handleSubmit = () => {
+    //     console.log('paisiii');
+    // }
 
     return (
         <div>
@@ -252,15 +259,13 @@ const AccountDetailsForm = () => {
                             }}
                         />
                     </Grid>
-                    {console.log("formik", formik)}
-                    {console.log("initialValuesinitialValues", initialValues)}
                     <Grid item xs={6}>
                         <TextField
                             label="Email"
                             name="email"
                             disabled
-                            // value={formik.values.email}
-                            value={initialValues?.email}
+                            value={formik.values.email}
+                            // value={initialValues?.email}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             error={formik.touched.email && Boolean(formik.errors.email)}
@@ -282,7 +287,7 @@ const AccountDetailsForm = () => {
                         />
                     </Grid>
 
-                    <Grid item xs={6}>
+                    {/* <Grid item xs={6}>
                         <TextField
                             label="Current Password"
                             type="password"
@@ -307,10 +312,19 @@ const AccountDetailsForm = () => {
                             helperText={formik.touched.newPassword && formik.errors.newPassword}
                             fullWidth
                         />
-                    </Grid>
+                    </Grid> */}
                 </Grid>
-                <Button type="submit">Save Changes</Button>
+                <Button
+                    type="submit"
+                // onClick={()}
+                >Save Changes</Button>
             </form>
+            {
+                successAlert &&
+                // <Alert severity="success">Your account details updated successfully </Alert>
+                <GroceryAlert enable={successAlert} msg="Your account details updated successfully" severity="success"
+                />
+            }
         </div>
     );
 };
