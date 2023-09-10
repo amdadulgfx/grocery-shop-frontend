@@ -19,6 +19,8 @@ import HeaderLogo from "../../assets/Logos/header_logo.png"
 import SearchSharpIcon from '@mui/icons-material/SearchSharp';
 import MenuIcon from '@mui/icons-material/Menu';
 import { ResponsiveHeader } from "./HeaderMenus.view";
+import { useDispatch, useSelector } from 'react-redux';
+import { logout, selectUser } from '../../reduxMine/features/authApi';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -33,10 +35,10 @@ const InfoRoutes = [
 
 const MainNavigation = [
     { label: "Home", path: "/" },
-    { label: "Shop", path: "/recomanded" },
+    { label: "Shop", path: "/shop" },
     { label: "Blog", path: "/blog" },
     { label: "Contact", path: "/contact-us" },
-    { label: "More", path: "/saved" },
+    { label: "More", path: "/more" },
 ];
 
 
@@ -47,6 +49,13 @@ const Header = () => {
     const matches = useMediaQuery(theme.breakpoints.down('md'));
     const [showSearchBar, setShowSearchBar] = useState(false);
     const [openDrawer, setOpenDrawer] = useState(false);
+    const user = useSelector(selectUser);
+    const dispatch = useDispatch();
+
+    const handleLogout = () => {
+        dispatch(logout()); // Dispatch the logout action
+        localStorage.removeItem('accessToken');
+    };
 
     return (
         <AppBar
@@ -239,27 +248,41 @@ const Header = () => {
                                         <SearchSharpIcon sx={{ color: "#2BBEF9" }} />
                                     </IconButton>
                                 )}
+                                {
+                                    user?.email ? <Button
+                                        variant="contained"
+                                        sx={{
+                                            borderRadius: 16,
+                                            px: 3
+                                        }}
+                                        onClick={handleLogout}
+                                    >
+                                        Logout
+                                    </Button> : <>
+                                        <Button
+                                            variant="contained"
+                                            sx={{
+                                                borderRadius: 16,
+                                                px: 3
+                                            }}
+                                            onClick={() => navigate('/signup')}
+                                        >
+                                            SignUp
+                                        </Button>
+                                        <Button
+                                            variant="outlined"
+                                            sx={{
+                                                border: "2px solid !important",
+                                                borderRadius: 16,
+                                                px: 3
+                                            }}
+                                            onClick={() => navigate('/login')}
+                                        >
+                                            Login
+                                        </Button>
+                                    </>
+                                }
 
-                                <Button
-                                    variant="contained"
-                                    sx={{
-                                        borderRadius: 16,
-                                        px: 3
-                                    }}
-                                >
-                                    SignUp
-                                </Button>
-                                <Button
-                                    variant="outlined"
-                                    sx={{
-                                        border: "2px solid !important",
-                                        borderRadius: 16,
-                                        px: 3
-                                    }}
-                                    onClick={() => navigate('/login')}
-                                >
-                                    Login
-                                </Button>
                             </Box>
                         </Box>
                     </Container>

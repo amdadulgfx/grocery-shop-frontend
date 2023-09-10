@@ -9,6 +9,8 @@ import { Button, FormControlLabel, Grid, Radio, RadioGroup, TextField } from '@m
 import * as yup from 'yup';
 import axios from 'axios';
 import GroceryAlert from '../../components/GroceryAlert';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../reduxMine/features/authApi';
 
 const access_token = localStorage.getItem("accessToken");
 console.log("access_token", access_token);
@@ -48,7 +50,7 @@ function a11yProps(index) {
 
 function AdditionalDetailsTab() {
     const [value, setValue] = React.useState(0);
-
+    const user = useSelector(selectUser);
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
@@ -84,6 +86,7 @@ function AdditionalDetailsTab() {
             </Box>
             <CustomTabPanel value={value} index={0}>
                 Coming Soon...
+                {user?.email}
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
                 <AccountDetailsForm />
@@ -166,8 +169,8 @@ const AccountDetailsForm = () => {
                 // currentPassword: '',
                 phoneNumber: phoneNumber,
                 name: {
-                    firstName: name.firstName,
-                    lastName: name.lastName,
+                    firstName: name?.firstName,
+                    lastName: name?.lastName,
                 },
                 address: address,
                 gender: gender,
@@ -188,7 +191,7 @@ const AccountDetailsForm = () => {
                         <TextField
                             label="First Name"
                             name="name.firstName"
-                            value={formik.values.name.firstName}
+                            value={formik.values?.name?.firstName}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             error={formik.touched.name?.firstName && Boolean(formik.errors.name?.firstName)}
@@ -201,7 +204,7 @@ const AccountDetailsForm = () => {
                         <TextField
                             label="Last Name"
                             name="name.lastName"
-                            value={formik.values.name.lastName}
+                            value={formik.values?.name?.lastName}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             error={formik.touched.name?.lastName && Boolean(formik.errors.name?.lastName)}
@@ -213,7 +216,7 @@ const AccountDetailsForm = () => {
                         <TextField
                             label="Address"
                             name="address"
-                            value={formik.values.address}
+                            value={formik.values?.address}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             error={formik.touched.address && Boolean(formik.errors.address)}
@@ -226,7 +229,7 @@ const AccountDetailsForm = () => {
                         <RadioGroup
                             aria-label="gender"
                             name="gender"
-                            value={formik.values.gender}
+                            value={formik.values?.gender}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                         >
@@ -248,7 +251,7 @@ const AccountDetailsForm = () => {
                             name="age"
                             label="Age"
                             type="number"
-                            value={formik.values.age}
+                            value={formik.values?.age}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             error={formik.touched.age && Boolean(formik.errors.age)}
@@ -278,7 +281,7 @@ const AccountDetailsForm = () => {
                         <TextField
                             label="Phone Number"
                             name="phoneNumber"
-                            value={formik.values.phoneNumber}
+                            value={formik.values?.phoneNumber}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             error={formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)}
