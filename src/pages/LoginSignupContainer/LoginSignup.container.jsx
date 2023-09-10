@@ -2,7 +2,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Box, Tabs, Tab } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from "react";
-import SingupForm from "./components/SignupForm.view";
+import Login from "./components/Login.view";
+import Signup from "./components/Signup.view";
 
 const TabPanel = (props) => {
     const { children, value, index, ...other } = props;
@@ -78,10 +79,11 @@ function LoginSignup() {
                 </Box>
                 <Box sx={{ border: '1px solid #E4EEF5', width: '100%', mt: 1.3 }} />
                 <TabPanel value={value} index={0} key={'Login'}>
-                    <SingupForm pageType="LogIn" source='signup' />
+                    {/* <SingupForm pageType="LogIn" source='signup' /> */}
+                    <Login />
                 </TabPanel>
                 <TabPanel value={value} index={1} key={'Sign Up'}>
-                    <SingupForm pageType="SignUp" source='signup' />
+                    <Signup />
                 </TabPanel>
             </Box>
         </Box>
