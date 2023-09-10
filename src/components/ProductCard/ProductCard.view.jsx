@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Card, CardMedia, CardContent, Typography, IconButton, Box, Rating, Button } from "@mui/material";
+import { Grid, Card, CardMedia, CardContent, Typography, IconButton, Box, Rating, Button, Tooltip } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import StarIcon from "@mui/icons-material/Star";
@@ -16,17 +16,7 @@ const useStyles = makeStyles((theme) => ({
       border: "1px solid #B2B2B2 !important",
       borderRadius: "10px",
     },
-    "&:hover $addToCartBox": {
-      display: "block",
-    },
   },
-  /* root: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-   
-   
-  }, */
   mediaContainer: {
     display: "flex",
     alignItems: "flex-start",
@@ -80,8 +70,8 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "line-through",
   },
   addToCartBox: {
-    display: "none",
-    padding: "0 1rem 0.5rem",
+    padding: "0 0rem 1rem",
+    marginTop: "-5px"
   },
 }));
 
@@ -103,7 +93,7 @@ const ProductCard = ({ product }) => {
       <Box className={classes.root}>
         <Box className={classes.mediaContainer}>
           <Box>
-          {product.countInStock > 0 && (
+            {product.countInStock > 0 && (
               <Typography
                 variant="caption"
                 sx={{
@@ -111,7 +101,7 @@ const ProductCard = ({ product }) => {
                   color: "#FFFFFF",
                   padding: "0.2rem 0.8rem",
                   borderRadius: 2,
-                  fontSize: "14px", 
+                  fontSize: "14px",
                 }}
               >
                 {product.countInStock}
@@ -132,12 +122,12 @@ const ProductCard = ({ product }) => {
                 {product.productPlan}
               </Typography>
             )}
-            
+
           </Box>
           <Box>
             <IconButton
               sx={{
-                border: "none",
+                border: "1px solid #00000000",
                 "&:hover": {
                   color: "#233A95",
                   border: "1px solid #233A95",
@@ -148,7 +138,6 @@ const ProductCard = ({ product }) => {
             </IconButton>
           </Box>
         </Box>
-
         <Box>
           <CardMedia
             className={classes.media}
@@ -156,7 +145,7 @@ const ProductCard = ({ product }) => {
             title={"Demo_Image"}
           />
         </Box>
-        <CardContent sx={{ pb: 3 }}>
+        <Box sx={{ pb: 2 }}>
           <Typography
             variant="subtitle1"
             component="h2"
@@ -164,23 +153,22 @@ const ProductCard = ({ product }) => {
           >
             {product.productName}
           </Typography>
-          <Typography
-            variant="body2"
-            className={classes.status}
-          >
-            {product.status}
-          </Typography>
-          <Box className={classes.priceContainer}>
+          <Box className={classes.priceContainer} sx={{justifyContent: "space-between !important", alignItems: "center !important"}}>
+            <Tooltip title={product.reviewPoint.toFixed(1)}>
+              <Rating
+                value={parseInt(product.reviewPoint)}
+                readOnly
+                sx={{
+                  fontSize: '16px',
+                }}
+              />
+            </Tooltip>
             <Typography
               variant="body2"
-              className={classes.rate}
+              className={classes.status}
             >
-              {product.reviewPoint.toFixed(1)}
+              {product.status}
             </Typography>
-            <Rating
-              value={parseInt(product.reviewPoint)}
-              readOnly
-            />
           </Box>
           {product.discountPercentage > 0 ? (
             <Box className={classes.priceContainer}>
@@ -206,14 +194,14 @@ const ProductCard = ({ product }) => {
               ${product.price.toFixed(2)}
             </Typography>
           )}
-        </CardContent>
+        </Box>
         <Box className={classes.addToCartBox}>
           <Button
             onClick={handleAddToCart}
             variant="contained"
             color="primary"
             fullWidth
-            sx={{ py: 1.4, borderRadius: 16 }}
+            sx={{ py: 0.6, borderRadius: 16,  textTransform: "none", }}
 
           >
             Add to Cart

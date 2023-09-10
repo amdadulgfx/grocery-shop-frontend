@@ -8,6 +8,7 @@ import DiscountCard from "./Components/DiscountCard";
 import AdvertisementAndAllCategory from "./Components/AdvertisementAndAllCategory.view";
 import HomeCarousel from "./Components/HomeCarousel";
 import BestSellers from "./Components/BestSellers";
+import NewProducts from "./Components/NewProducts";
 
 
 const titles = {
@@ -44,7 +45,7 @@ const LandingPage = () => {
   return (
     <Container maxWidth="lg" sx={{ py: 0.5, }}>
       <Box sx={{ /* mx: ["auto", "2rem"], */ my: 5,/*  px: 3, */ py: 3 }}>
-        <Grid container spacing={2}>
+        <Grid container spacing={3}>
           <Grid item xs={12} md={3}>
             <AdvertisementAndAllCategory />
           </Grid>
@@ -56,6 +57,7 @@ const LandingPage = () => {
             <HealthTips />
             <Coupon />
             <DiscountCard />
+            <NewProducts />
           </Grid>
         </Grid>
         <Categories />
