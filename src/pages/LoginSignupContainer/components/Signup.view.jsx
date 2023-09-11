@@ -5,6 +5,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import GroceryAlert from "../../../components/GroceryAlert";
+import { useDispatch } from "react-redux";
+import { login } from "../../../reduxMine/features/authApi";
+import jwtDecode from "jwt-decode";
 
 const validationSchema = yup.object({
     email: yup.string().email('Invalid email').required('Required'),
@@ -29,6 +32,11 @@ const Signup = () => {
     // const [initialValues, setinInitialValues] = useState(accountDetails);
     const [successAlert, setSuccessAlert] = useState(false);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const handleLogin = (user) => {
+        dispatch(login(user));
+    };
 
     const formik = useFormik({
         initialValues: accountDetails,
@@ -42,7 +50,13 @@ const Signup = () => {
                     if (res.data.success) {
                         let access_token = res?.data?.data?.token;
                         localStorage.setItem("accessToken", access_token);
+                        let user;
+                        if (access_token) {
+                            user = jwtDecode(access_token);
+                        }
+                        handleLogin(user);
                         setSuccessAlert(true);
+                        navigate("/");
                     }
                 })
         },

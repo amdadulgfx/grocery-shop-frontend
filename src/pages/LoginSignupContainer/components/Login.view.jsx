@@ -22,23 +22,18 @@ const Login = () => {
     // const [initialValues, setinInitialValues] = useState(accountDetails);
     const [successAlert, setSuccessAlert] = useState(false);
     const navigate = useNavigate();
-
     const dispatch = useDispatch();
 
     const handleLogin = (user) => {
-        // Simulated user data for demonstration
-        //   const user = { username: 'exampleUser' };
-        dispatch(login(user)); // Dispatch the login action with user data
+        dispatch(login(user));
     };
 
     const formik = useFormik({
         initialValues: accountDetails,
         validationSchema,
         onSubmit: (values) => {
-            console.log(values);
             axios.post(`${process.env.REACT_APP_API_URI}auth/signin/`, values)
                 .then((res) => {
-                    console.log(res);
                     if (res.data.success) {
                         let access_token = res?.data?.data?.token;
                         localStorage.setItem("accessToken", access_token);
@@ -48,7 +43,7 @@ const Login = () => {
                         }
                         handleLogin(user);
                         setSuccessAlert(true);
-                        navigate("/")
+                        navigate("/");
                     }
                 })
         },
