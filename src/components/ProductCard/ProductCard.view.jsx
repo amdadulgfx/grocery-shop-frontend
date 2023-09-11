@@ -141,7 +141,7 @@ const ProductCard = ({ product }) => {
         <Box>
           <CardMedia
             className={classes.media}
-            image={demo}
+            image={product.productPicture.length > 35 ? product.productPicture : demo}
             title={"Demo_Image"}
           />
         </Box>
@@ -153,7 +153,7 @@ const ProductCard = ({ product }) => {
           >
             {product.productName}
           </Typography>
-          <Box className={classes.priceContainer} sx={{justifyContent: "space-between !important", alignItems: "center !important"}}>
+          <Box className={classes.priceContainer} sx={{ justifyContent: "space-between !important", alignItems: "center !important" }}>
             <Tooltip title={product.reviewPoint.toFixed(1)}>
               <Rating
                 value={parseInt(product.reviewPoint)}
@@ -201,7 +201,7 @@ const ProductCard = ({ product }) => {
             variant="contained"
             color="primary"
             fullWidth
-            sx={{ py: 0.6, borderRadius: 16,  textTransform: "none", }}
+            sx={{ py: 0.6, borderRadius: 16, textTransform: "none", }}
 
           >
             Add to Cart

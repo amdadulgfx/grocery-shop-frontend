@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from "react";
 import Login from "./components/Login.view";
 import Signup from "./components/Signup.view";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../reduxMine/features/authApi";
 
 const TabPanel = (props) => {
     const { children, value, index, ...other } = props;
@@ -31,11 +33,19 @@ function LoginSignup() {
     const { pathname } = useLocation();
     const navigate = useNavigate();
     const [value, setValue] = useState(0);
+    const user = useSelector(selectUser);
+
 
     useEffect(() => {
+        if (user.email) {
+            console.log(user.email);
+            navigate("/")
+        }
         if (pathname === "/login") setValue(0);
         if (pathname === "/signup") setValue(1);
-    }, [pathname])
+    }, [pathname, navigate, user.email])
+
+
 
     const tabStyle = { fontWeight: 700, width: "auto !important", fontSize: '16px' }
 
