@@ -50,9 +50,10 @@ const RelatedProducts = () => {
                 columnSpacing={0}
                 justifyContent="center"
                 alignItems="stretch"
+                spacing={2}
             >
                 {products?.map((item) => (
-                    <Grid key={item.productCode} item xs={12} sm={6} md={3}>
+                    <Grid key={item.productCode} item xs={12} sm={6} md={3} >
                         <ProductCard product={item} />
                     </Grid>
                 ))}
