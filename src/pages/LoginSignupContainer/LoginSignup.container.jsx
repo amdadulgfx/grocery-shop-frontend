@@ -1,11 +1,11 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import { Box, Tabs, Tab } from '@mui/material';
+import { Box, Tab, Tabs } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import { selectUser } from "../../reduxMine/features/authApi";
 import Login from "./components/Login.view";
 import Signup from "./components/Signup.view";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../reduxMine/features/authApi";
 
 const TabPanel = (props) => {
     const { children, value, index, ...other } = props;
