@@ -10,7 +10,7 @@ import { Box } from '@mui/material';
 const AdvertisementAndAllCategory = () => {
     return (
         <div>
-            <Box sx={{ mt: 3, mb: 4 }}>
+            <Box sx={{ mb: 4 }}>
                 <AllCategoriesAds />
             </Box>
             <Box sx={{ mt: 3, mb: 4 }}>

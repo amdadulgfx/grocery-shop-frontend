@@ -1,28 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import { makeStyles } from '@material-ui/styles';
 import { Avatar, Box, Grid, IconButton, Paper, Typography } from '@mui/material';
 
-const useStyles = makeStyles((theme) => ({
-    commentBox: {
-        backgroundColor: '#FFFBEC',
-        padding: '15px',
-    },
-    avatar: {
-        width: '60px',
-        height: '60px',
-        borderRadius: '50%',
-    },
-    sliderContainer: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-    },
-}));
 
 const CustomerCommentSection = () => {
-    const classes = useStyles();
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const handlePrevClick = () => {
@@ -49,15 +31,15 @@ const CustomerCommentSection = () => {
 
     return (
         <Box>
-            <Typography>Customer Comment</Typography>
-            <Paper className={classes.commentBox}>
-                <Typography variant="h6">{fakeComments[currentIndex].title}</Typography>
-                <Typography>{fakeComments[currentIndex].comment}</Typography>
-                <Grid container alignItems="center" className={classes.sliderContainer}>
+            <Typography sx={{ fontSize: "16px", fontWeight: 600, mb: 1 }} >Customer Comment</Typography>
+            <Paper sx={commentBox}>
+                <Typography sx={commentTitle} >{fakeComments[currentIndex].title}</Typography>
+                <Typography sx={commentDes} >{fakeComments[currentIndex].comment}</Typography>
+                <Grid container alignItems="center" sx={sliderContainer}>
                     <Avatar
                         src={fakeComments[currentIndex].avatar}
                         alt="User Avatar"
-                        className={classes.avatar}
+                        sx={avatar}
                     />
                     <Box ml={2}>
                         <Typography variant="subtitle1">
@@ -69,18 +51,49 @@ const CustomerCommentSection = () => {
                     </Box>
                 </Grid>
             </Paper>
-            <IconButton onClick={handlePrevClick}>
-                <ArrowBackIcon />
-            </IconButton>
-            <IconButton onClick={handleNextClick}>
-                <ArrowForwardIcon />
-            </IconButton>
+            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <IconButton onClick={handlePrevClick}>
+                    <ArrowBackIcon />
+                </IconButton>
+                <IconButton onClick={handleNextClick}>
+                    <ArrowForwardIcon />
+                </IconButton>
+            </Box>
         </Box>
     );
 };
 
 export default CustomerCommentSection;
 
+
+const commentBox = {
+    backgroundColor: '#FFFBEC',
+    padding: '30px',
+};
+
+const commentTitle = {
+    fontSize: "16px",
+    fontWeight: 600,
+    color: "black"
+};
+
+const commentDes = {
+    fontSize: "14px",
+    fontWeight: 500,
+    color: "grey"
+};
+
+const avatar = {
+    width: '60px',
+    height: '60px',
+    borderRadius: '50%',
+};
+
+const sliderContainer = {
+    display: 'flex',
+    alignItems: 'center',
+    mt: 3
+};
 
 const fakeComments = [
     {

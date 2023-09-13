@@ -44,10 +44,11 @@ const AdminProductsUpdateDeleteGetList = () => {
 
     const confirmDelete = () => {
         setDeleteConfirmationOpen(false);
-        axios.delete(`http://localhost:5000/api/v1/product/update/${selectedProduct}`)
+        axios.delete(`http://localhost:5000/api/v1/product/${selectedProduct}`)
             .then((response) => {
                 console.log('Subcategory deleted successfully', response.data);
-                setUpdate((prev) => !prev);
+                const newProducts = products?.filter(product => product?._id !== selectedProduct);
+                setProducts(newProducts);
             })
             .catch((error) => {
                 console.error('Error deleting subcategory', error);

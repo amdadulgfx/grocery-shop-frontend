@@ -1,49 +1,50 @@
-import React, { useState } from 'react';
-import { Grid, Paper, Typography } from '@mui/material';
-import { styled } from '@mui/system';
-
-const CategoryPaper = styled(Paper)(({ theme }) => ({
-  padding: theme.spacing(2),
-  cursor: 'pointer',
-  '&:hover': {
-    backgroundColor: theme?.palette?.primary?.light,
-  },
-}));
-
-const SubCategoryPaper = styled(Paper)(({ theme }) => ({
-  padding: theme.spacing(2),
-  backgroundColor: '#e0e0e0', // Use color string directly
-}));
+import React, { useEffect, useState } from 'react';
+import { Box, Grid, Typography } from '@mui/material';
+import axios from 'axios';
+import { KeyboardArrowRight } from '@material-ui/icons';
 
 const AllCategoriesAds = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [categories, setCategories] = useState([]);
 
-  const categories = [
-    { id: 1, name: 'Category 1', subCategories: ['Subcategory 1.1', 'Subcategory 1.2', 'Subcategory 1.3'] },
-    { id: 2, name: 'Category 2', subCategories: ['Subcategory 2.1', 'Subcategory 2.2'] },
-    { id: 3, name: 'Category 3', subCategories: ['Subcategory 3.1', 'Subcategory 3.2', 'Subcategory 3.3'] },
-  ];
+  useEffect(() => {
+    // Fetch categories from API
+    axios
+      .get("http://localhost:5000/api/v1/category/")
+      .then((response) => {
+        setCategories(response?.data?.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching categories", error);
+      });
+  }, []);
 
   return (
-    <Grid container spacing={2}>
-      {categories.map((category) => (
-        <Grid item xs={12} key={category.id}>
-          <CategoryPaper
-            onMouseEnter={() => setSelectedCategory(category.id)}
-            onMouseLeave={() => setSelectedCategory(null)}
-            onClick={() => setSelectedCategory(selectedCategory === category.id ? null : category.id)}
-          >
-            <Typography variant="h6">{category.name}</Typography>
-            {selectedCategory === category.id &&
-              category.subCategories.map((subCategory, index) => (
-                <SubCategoryPaper key={index}>
-                  <Typography variant="body1">{subCategory}</Typography>
-                </SubCategoryPaper>
-              ))}
-          </CategoryPaper>
-        </Grid>
-      ))}
-    </Grid>
+    <Box sx={{ border: "1px solid gray", borderRadius: "0px 0px 6px 6px" }}>
+      <Grid container>
+        {categories?.map((category) => (
+          <Grid item xs={12} key={category._id}>
+            <Box
+              onMouseEnter={() => setSelectedCategory(category._id)}
+              onMouseLeave={() => setSelectedCategory(null)}
+              onClick={() => setSelectedCategory(selectedCategory === category?._id ? null : category?._id)}
+              sx={{ borderBottom: "1px solid gray", px: "20px", py: "20px", display:"flex", alignItems:"center", justifyContent:"space-between" }}
+            >
+              <Box>
+                <Typography sx={{ fontSize: "18px", fontWeight: 600, color: "black" }}>{category.name}</Typography>
+                {selectedCategory === category?._id &&
+                  category?.subcategory?.map((subCategory, index) => (
+                    <Box key={index} >
+                      <Typography sx={{ borderBottom: "1px solid gray", px: "5px", py: "5px", fontSize: "14px", fontWeight: 400 }}>{subCategory?.name}</Typography>
+                    </Box>
+                  ))}
+              </Box>
+              {selectedCategory === null && <KeyboardArrowRight />}
+            </Box>
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
   );
 };
 
