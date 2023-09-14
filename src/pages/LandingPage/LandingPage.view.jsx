@@ -1,4 +1,4 @@
-import { Box, Button, Container, Grid, Typography } from "@mui/material";
+import { Box, Container, Grid, useMediaQuery, useTheme } from "@mui/material";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import HealthTips from "./Components/HealthTips";
@@ -8,20 +8,21 @@ import DiscountCard from "./Components/DiscountCard";
 import AdvertisementAndAllCategory from "./Components/AdvertisementAndAllCategory.view";
 import HomeCarousel from "./Components/HomeCarousel";
 import BestSellers from "./Components/BestSellers";
-import NewProducts from "./Components/NewProducts";
 
 
-const titles = {
-  subTitle: "Exclusive offer",
-  offer: "-20% off",
-  heading: "Specialist in the grocery store",
-  message: "Only this week. Don't miss...",
-  price: "$7.99",
-  route: "/shop",
-};
+// const titles = {
+//   subTitle: "Exclusive offer",
+//   offer: "-20% off",
+//   heading: "Specialist in the grocery store",
+//   message: "Only this week. Don't miss...",
+//   price: "$7.99",
+//   route: "/shop",
+// };
 
 const LandingPage = () => {
   const [heroMasterData, setHeroMasterData] = useState([]);
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down('md'));
   // const [loading, setLoading] = useState(true);
   useEffect(() => {
     async function fetchData() {
@@ -43,13 +44,13 @@ const LandingPage = () => {
   console.log(heroMasterData);
 
   return (
-    <Container maxWidth="lg" sx={{ py: 0.5, }}>
-      <Box sx={{ /* mx: ["auto", "2rem"], */ my: 5,/*  px: 3, */ py: 3 }}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={3}>
+    <Container maxWidth="lg">
+      <Box sx={{ mb: 4}}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={3} order={matches ? 2 : 1}>
             <AdvertisementAndAllCategory />
           </Grid>
-          <Grid item xs={12} md={9}>
+          <Grid item xs={12} md={9} order={matches ? 1 : 2} sx={{mt: 2.5}}>
             <Box>
               <HomeCarousel />
             </Box>
@@ -57,7 +58,6 @@ const LandingPage = () => {
             <HealthTips />
             <Coupon />
             <DiscountCard />
-            <NewProducts />
           </Grid>
         </Grid>
         <Categories />

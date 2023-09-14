@@ -1,133 +1,137 @@
 import React from 'react';
 
 import SpecialOrganicAdsImage from "../../../assets/LandingPageImages/SpecialOrganicAds.jpg";
-import { Link } from 'react-router-dom';
 import { Box, Grid, Typography } from '@mui/material';
-import { makeStyles } from '@material-ui/styles';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: '#F5F5F5',
-    minHeight: '100vh',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    border: '1px solid #DD2C00',
-    borderRadius: '10px',
-  },
-  productBox: {
-    padding: '20px',
-    width: '80%',
-    backgroundColor: 'white',
-  },
-  productName: {
-    fontSize: '16px',
-    '&:hover': {
-      color: '#DD2C00',
-      cursor: 'pointer',
-    },
-  },
-  productImage: {
-    width: '70px',
-    height: '70px',
-  },
-  priceContainer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  normalPrice: {
-    color: 'gray',
-    fontSize: '16px',
-    flex: 1,
-    marginRight: '10px',
-    textDecoration:"line-through"
-  },
-  discountPrice: {
-    color: '#DD2C00',
-    fontSize: '16px',
-  },
-}));
 
 const TrendingProductsAds = () => {
-  const classes = useStyles();
 
   return (
-    <Box className={classes.root}>
-      {trendingProducts.map((product) => (
-        <Box className={classes.productBox} key={product.id}>
-          <Grid container spacing={2}>
-            <Grid item xs={4}>
-              <img
-                src={SpecialOrganicAdsImage}
-                alt={product.name}
-                className={classes.productImage}
-              />
-            </Grid>
-            <Grid item xs={8}>
-              <Typography
-                variant="h6"
-                // component={Link}
-                color="textPrimary"
-                className={classes.productName}
+    <Box>
+      <Typography sx={{ fontSize: "16px", fontWeight: 600, mb: 1 }}>TRENDING PRODUCTS</Typography>
+      <Box sx={root}>
+        {trendingProducts.map((product) => (
+          <Box sx={productBox} key={product.id}>
+            <Grid container spacing={2}>
+              <Grid item xs={4}>
+                <Box sx={{ ...priceContainer, justifyContent: "center", pt: 1.5 }}>
+                  <img
+                    src={SpecialOrganicAdsImage}
+                    alt={product.name}
+                    style={productImage}
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={8}>
+                <Typography
+                  variant="h6"
+                  // component={Link}
+                  color="textPrimary"
+                  sx={productName}
                 // to={`/products/${product.id}`} // Replace with your route
-              >
-                {product.name}
-              </Typography>
-              <Box className={classes.priceContainer}>
-                <Typography className={classes.normalPrice}>
-                  {product.normalPrice}
+                >
+                  {product.name}
                 </Typography>
-                <Typography className={classes.discountPrice}>
-                  {product.discountPrice}
-                </Typography>
-              </Box>
+                <Box sx={priceContainer}>
+                  <Typography sx={normalPrice}>
+                    {product.normalPrice}
+                  </Typography>
+                  <Typography sx={discountPrice}>
+                    {product.discountPrice}
+                  </Typography>
+                </Box>
+              </Grid>
             </Grid>
-          </Grid>
-        </Box>
-      ))}
+          </Box>
+        ))}
+      </Box>
     </Box>
   );
 };
 
 export default TrendingProductsAds;
 
+const root = {
+  backgroundColor: '#F5F5F5',
+  minHeight: '100vh',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  border: '1px solid grey',
+  borderRadius: '6px',
+};
+const productBox = {
+  padding: '20px',
+  backgroundColor: 'white',
+  borderRadius: "6px"
+};
+const productName = {
+  fontSize: '16px',
+  color: "black",
+  fontWeight: 550,
+  '&:hover': {
+    color: '#DD2C00',
+    cursor: 'pointer',
+    fontWeight: 550,
+  },
+};
+const productImage = {
+  width: '50px',
+  height: '50px',
+  borderRadius: "8px"
+};
+const priceContainer = {
+  display: 'flex',
+  alignItems: 'center',
+};
+const normalPrice = {
+  color: 'gray',
+  fontSize: '16px',
+  marginRight: '10px',
+  textDecoration: "line-through",
+  fontWeight: 600,
+};
+const discountPrice = {
+  color: '#DD2C00',
+  fontSize: '16px',
+  fontWeight: 600,
+};
+
 const trendingProducts = [
-    {
-      id: 1,
-      name: 'Deluxe Chocolate Cake',
-      normalPrice: '$39.99',
-      discountPrice: '$29.99',
-      image: 'path/to/product-image1.jpg',
-    },
-    {
-      id: 2,
-      name: 'Organic Fruit Basket',
-      normalPrice: '$49.99',
-      discountPrice: '$39.99',
-      image: 'path/to/product-image2.jpg',
-    },
-    {
-      id: 3,
-      name: 'Premium Coffee Blend',
-      normalPrice: '$12.99',
-      discountPrice: '$9.99',
-      image: 'path/to/product-image3.jpg',
-    },
-    {
-      id: 4,
-      name: 'Gourmet Cheese Selection',
-      normalPrice: '$24.99',
-      discountPrice: '$19.99',
-      image: 'path/to/product-image4.jpg',
-    },
-    {
-      id: 5,
-      name: 'Artisan Bread Collection',
-      normalPrice: '$8.99',
-      discountPrice: '$6.99',
-      image: 'path/to/product-image5.jpg',
-    },
-  ];
-  
+  {
+    id: 1,
+    name: 'Deluxe Chocolate Cake',
+    normalPrice: '$39.99',
+    discountPrice: '$29.99',
+    image: 'path/to/product-image1.jpg',
+  },
+  {
+    id: 2,
+    name: 'Organic Fruit Basket',
+    normalPrice: '$49.99',
+    discountPrice: '$39.99',
+    image: 'path/to/product-image2.jpg',
+  },
+  {
+    id: 3,
+    name: 'Premium Coffee Blend',
+    normalPrice: '$12.99',
+    discountPrice: '$9.99',
+    image: 'path/to/product-image3.jpg',
+  },
+  {
+    id: 4,
+    name: 'Gourmet Cheese Selection',
+    normalPrice: '$24.99',
+    discountPrice: '$19.99',
+    image: 'path/to/product-image4.jpg',
+  },
+  {
+    id: 5,
+    name: 'Artisan Bread Collection',
+    normalPrice: '$8.99',
+    discountPrice: '$6.99',
+    image: 'path/to/product-image5.jpg',
+  },
+];

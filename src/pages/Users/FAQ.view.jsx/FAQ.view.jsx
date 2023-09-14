@@ -17,7 +17,7 @@ const FAQ = () => {
   document.title = "FAQ's";
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window?.scrollTo(0, 0);
   }, [pathname]);
 
   const handleClick = orgEvent => {

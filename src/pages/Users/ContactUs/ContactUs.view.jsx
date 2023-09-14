@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Button, Divider, Grid, InputLabel } from '@mui/material';
-import { TextFiledBorderLess, TypographyHeadingOne, TypographyParagraph, TypographySubtitle } from '../../CustomTags';
+import { TextFiledBorderLess, TypographyHeadingOne, TypographyParagraph, TypographySubtitle } from '../../../CustomTags';
 import FmdGoodIcon from '@mui/icons-material/FmdGood';
 import CallIcon from '@mui/icons-material/Call';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';

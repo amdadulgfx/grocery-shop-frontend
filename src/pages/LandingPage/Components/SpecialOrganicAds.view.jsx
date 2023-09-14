@@ -1,56 +1,27 @@
 import React from 'react';
 import SpecialOrganicAdsImage from "../../../assets/LandingPageImages/SpecialOrganicAds.jpg";
 import { Box, Typography } from '@mui/material';
-import { makeStyles } from '@material-ui/styles';
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        backgroundImage: `url(${SpecialOrganicAdsImage})`, // Use backticks here
-        backgroundSize: 'cover', // Adjust the background size if needed
-        backgroundPosition: 'center',
-        height: '80vh', // Adjust the height if needed
-        width: "100%",
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    content: {
-        padding: '10px',
-        textAlign: 'center',
-        color: 'white',
-    },
-    organicTitle: {
-        color: 'black',
-        fontWeight: 'bold',
-        fontSize: '16px', // Set font size to 16px
-    },
-    price: {
-        color: '#E20000', // Deep red color
-        fontSize: '16px', // Set font size to 16px
-    },
-}));
 
 const SpecialOrganicAds = () => {
-    const classes = useStyles();
 
     return (
         <Box>
-            <Box className={classes.root}>
-                <Box className={classes.content}>
-                    <Typography variant="h4" gutterBottom className={classes.organicTitle}>
+            <Box sx={root}>
+                <Box sx={content}>
+                    <Typography sx={organicTitle}>
                         Bacola Natural Foods
                     </Typography>
-                    <Typography variant="h5" gutterBottom className={classes.organicTitle}>
+                    <Typography sx={organicSpecial}>
                         Special Organic
                     </Typography>
-                    <Typography variant="h4" gutterBottom className={classes.organicTitle}>
+                    <Typography sx={organicRoatsBurger}>
                         Roats Burger
                     </Typography>
-                    <Typography variant="h6" gutterBottom className={classes.organicTitle}>
+                    <Typography sx={organicOnly}>
                         only-from
                     </Typography>
-                    <Typography variant="h4" gutterBottom className={classes.price}>
+                    <Typography sx={price}>
                         $14.99
                     </Typography>
                 </Box>
@@ -60,3 +31,48 @@ const SpecialOrganicAds = () => {
 };
 
 export default SpecialOrganicAds;
+
+const root = {
+    backgroundImage: `url(${SpecialOrganicAdsImage})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    height: {xs: "40vh", md: '80vh'},
+    width: "100%",
+    borderRadius: "6px"
+};
+
+const content = {
+    padding: '30px'
+};
+
+const organicTitle = {
+    color: 'White',
+    fontWeight: '500px',
+    fontSize: '14px',
+    mb: "8px"
+};
+
+const organicSpecial = {
+    color: 'black',
+    fontWeight: 400,
+    fontSize: '18px',
+};
+
+const organicRoatsBurger = {
+    color: 'black',
+    fontWeight: 600,
+    fontSize: '1.5rem',
+    mb: "10px"
+};
+
+const organicOnly = {
+    color: 'black',
+    fontWeight: '400',
+    fontSize: '11px',
+};
+
+const price = {
+    color: '#E20000',
+    fontSize: '26px',
+    fontWeight: 600
+};

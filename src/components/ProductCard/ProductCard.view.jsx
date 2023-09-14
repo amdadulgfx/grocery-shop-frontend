@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Grid, Card, CardMedia, CardContent, Typography, IconButton, Box, Rating, Button, Tooltip } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -6,6 +6,8 @@ import StarIcon from "@mui/icons-material/Star";
 
 import demo from "./product-image.jpg"
 import { makeStyles } from "@material-ui/styles";
+import axios from "axios";
+import { CustomSnackbar } from "../../CustomTags";
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -77,10 +79,48 @@ const useStyles = makeStyles((theme) => ({
 
 const ProductCard = ({ product }) => {
   const classes = useStyles();
+  const [quantity, setQuantity] = useState(1);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState('success');
 
-  const handleAddToCart = () => {
-    // Implement your add to cart functionality here
-    console.log("Adding to cart:", product.productName);
+  const handleAddToCart = async (productId) => {
+    // Retrieve the access token from local storage
+    const accessToken = localStorage.getItem('accessToken');
+
+    try {
+      const response = await axios.post('http://localhost:5000/api/v1/cart/', {
+        productId,
+        quantity,
+      },
+      {
+        headers: {
+          Authorization: `${accessToken}`, // Include the access token in the Authorization header
+        },
+      });
+
+      // Handle the response as needed
+      console.log('Response:', response);
+      // Show success Snackbar
+      setSnackbarSeverity('success');
+      setSnackbarMessage('Product added to cart successfully');
+      setSnackbarOpen(true);
+    } catch (error) {
+      // Handle any errors here
+      console.error('Error:', error);
+      // Show error Snackbar
+      setSnackbarSeverity('error');
+      setSnackbarMessage('Failed to add product to cart');
+      setSnackbarOpen(true);
+    }
+  };
+
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setSnackbarOpen(false);
   };
 
   const handleAddToWishlist = () => {
@@ -154,7 +194,7 @@ const ProductCard = ({ product }) => {
             {product.productName}
           </Typography>
           <Box className={classes.priceContainer} sx={{ justifyContent: "space-between !important", alignItems: "center !important" }}>
-            <Tooltip title={product.reviewPoint.toFixed(1)}>
+            <Tooltip title={product?.reviewPoint?.toFixed(1)}>
               <Rating
                 value={parseInt(product.reviewPoint)}
                 readOnly
@@ -173,31 +213,31 @@ const ProductCard = ({ product }) => {
           {product.discountPercentage > 0 ? (
             <Box className={classes.priceContainer}>
               <Typography variant="h6" className={classes.price}>
-                ${(product.price * (1 - product.discountPercentage / 100)).toFixed(2)}
+                ${(product?.price * (1 - product.discountPercentage / 100))?.toFixed(2)}
               </Typography>
               <Typography
                 variant="body1"
                 className={classes.primaryPrice}
               >
-                ${product.price.toFixed(2)}
+                ${product?.price?.toFixed(2)}
               </Typography>
               <Typography
                 variant="body2"
                 className={classes.rate}
                 gutterBottom
               >
-                {product.discountPercentage > 0 ? `${product.discountPercentage}% off` : "No discount"}
+                {product.discountPercentage > 0 ? `${product?.discountPercentage}% off` : "No discount"}
               </Typography>
             </Box>
           ) : (
             <Typography variant="h6" className={classes.price}>
-              ${product.price.toFixed(2)}
+              ${product?.price?.toFixed(2)}
             </Typography>
           )}
         </Box>
         <Box className={classes.addToCartBox}>
           <Button
-            onClick={handleAddToCart}
+            onClick={() => handleAddToCart(product?._id)}
             variant="contained"
             color="primary"
             fullWidth
@@ -208,6 +248,13 @@ const ProductCard = ({ product }) => {
           </Button>
         </Box>
       </Box>
+      {/* Snackbar component */}
+      <CustomSnackbar
+        open={snackbarOpen}
+        message={snackbarMessage}
+        severity={snackbarSeverity}
+        onClose={handleCloseSnackbar}
+      />
     </Box>
   );
 };

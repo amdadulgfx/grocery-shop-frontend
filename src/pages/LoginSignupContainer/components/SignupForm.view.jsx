@@ -115,7 +115,7 @@ const SingupForm = (props) => {
     };
 
     useEffect(() => {
-        window.scrollTo(0, 0);
+        window?.scrollTo(0, 0);
     }, [location.pathname]);
 
     useEffect(() => {

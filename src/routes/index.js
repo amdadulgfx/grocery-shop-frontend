@@ -21,6 +21,7 @@ const ROUTES = {
   FAQ: "/faq",
   TERMSANDCONDITIONS: "/terms-&-conditions",
   MYACCOUNT: "/my-account",
+  PRODUCTCARTLIST: "Cart-lists",
   ...AdminRoutes
 };
 

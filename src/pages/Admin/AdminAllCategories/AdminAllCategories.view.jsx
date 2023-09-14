@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Box, Button, Container, Grid, InputLabel, Typography, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
-import CustomTextField from '../../CustomTags/CustomTextField.view';
-import { DeleteConfirmationDialog } from '../../CustomTags';
+import { Box, Button, Container, Grid, InputLabel, Typography } from '@mui/material';
+import CustomTextField from '../../../CustomTags/CustomTextField.view';
+import { DeleteConfirmationDialog } from '../../../CustomTags';
 
 const AdminAllCategories = () => {
     const [categories, setCategories] = useState([]);
@@ -152,7 +152,7 @@ const AdminAllCategories = () => {
 
             {/* Delete Confirmation Dialog */}
             {deleteConfirmationOpen && (
-                <DeleteConfirmationDialog deleteConfirmationOpen={deleteConfirmationOpen} setDeleteConfirmationOpen={setDeleteConfirmationOpen}  confirmDelete={confirmDelete} deleteTitle={"Category"} />
+                <DeleteConfirmationDialog deleteConfirmationOpen={deleteConfirmationOpen} setDeleteConfirmationOpen={setDeleteConfirmationOpen} confirmDelete={confirmDelete} deleteTitle={"Category"} />
             )}
         </Container>
     );
