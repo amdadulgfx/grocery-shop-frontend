@@ -1,12 +1,15 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Box, Rating, Typography } from '@mui/material'
 import axios from 'axios'
 import { DateTime } from 'luxon'
 import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 
 function Review() {
     const [reviews, setReviews] = useState([])
+    const { productId } = useParams();
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_API_URI}review/64f2d42ab495ff1e017068d2`).then(res => {
+        axios.get(`${process.env.REACT_APP_API_URI}review/${productId}`).then(res => {
             console.log(res);
             if (res.data.success) {
                 setReviews(res.data.data)

@@ -6,7 +6,7 @@ const AdminRoutes = {
   ADMINALLCATEGORIES: "/categories",
   ADMINADDSUBCATEGORY: "/add-subCategory",
   ADMINALLSUBCATEGORIES: "/SubCategories",
-  ADMINPRODUCTSUPDATEDELETEGETLIST : "/admin-productLists",
+  ADMINPRODUCTSUPDATEDELETEGETLIST: "/admin-productLists",
 };
 
 const ROUTES = {
@@ -16,7 +16,7 @@ const ROUTES = {
   LOGIN: "/login",
   SIGNUP: "/signup",
   PRODUCTS: "/products",
-  SINGLEPRODUCT: "/single-product",
+  SINGLEPRODUCT: "/products/:productId",
   PRIVACYPOLICY: "/privacy-policy",
   FAQ: "/faq",
   TERMSANDCONDITIONS: "/terms-&-conditions",

@@ -8,6 +8,7 @@ import demo from "./product-image.jpg"
 import { makeStyles } from "@material-ui/styles";
 import axios from "axios";
 import { CustomSnackbar } from "../../CustomTags";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -83,7 +84,7 @@ const ProductCard = ({ product }) => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState('success');
-
+  const navigate = useNavigate();
   const handleAddToCart = async (productId) => {
     // Retrieve the access token from local storage
     const accessToken = localStorage.getItem('accessToken');
@@ -93,11 +94,11 @@ const ProductCard = ({ product }) => {
         productId,
         quantity,
       },
-      {
-        headers: {
-          Authorization: `${accessToken}`, // Include the access token in the Authorization header
-        },
-      });
+        {
+          headers: {
+            Authorization: `${accessToken}`, // Include the access token in the Authorization header
+          },
+        });
 
       // Handle the response as needed
       console.log('Response:', response);
@@ -190,6 +191,7 @@ const ProductCard = ({ product }) => {
             variant="subtitle1"
             component="h2"
             className={classes.title}
+            onClick={() => navigate(`/products/${product._id}`)}
           >
             {product.productName}
           </Typography>

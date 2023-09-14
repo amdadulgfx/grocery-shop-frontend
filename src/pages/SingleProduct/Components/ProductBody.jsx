@@ -6,34 +6,43 @@ import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined
 import CorporateFareOutlinedIcon from '@mui/icons-material/CorporateFareOutlined';
 import MonetizationOnOutlinedIcon from '@mui/icons-material/MonetizationOnOutlined';
 
-function ProductBody() {
-    const item = {
-        productName: 'Apple',
-        price: 2.99,
-        discountPercentage: 10,
-        status: 'In stock',
-        productDescription: 'Vivamus adipiscing nisl ut dolor dignissim semper. Nulla luctus malesuada tincidunt. Class aptent taciti sociosqu ad litora torquent',
-        type: 'Fruits',
-        manufacturingDate: '2023-08-01',
-        expireDate: '2023-08-15',
-        category: 'Produce',
-        countInStock: 50,
-        productPicture: 'https://klbtheme.com/bacola/wp-content/uploads/2021/04/product-image-12.jpg',
-        brand: 'Fresh Farms',
-        productCode: 'APL001',
-        reviewPoint: 4.5,
-        productPlan: 'Organic',
-        weight: '1 kg',
-    };
-
-
+function ProductBody({ item }) {
+    const data = {
+        "_id": "64fcb3ba8ab402a306042132",
+        "productName": "aaa",
+        "brand": "bbbb",
+        "productPicture": [
+            "https://klbtheme.com/bacola/wp-content/uploads/2021/04/product-image-28.jpg",
+            "https://klbtheme.com/bacola/wp-content/uploads/2021/04/product-image-28.jpg,",
+            "https://klbtheme.com/bacola/wp-content/uploads/2021/04/product-image-28.jpg, ",
+            "https://klbtheme.com/bacola/wp-content/uploads/2021/04/product-image-28.jpg, https://klbtheme.com/bacola/wp-content/uploads/2021/04/product-image-37-346x310.jpg"
+        ],
+        "description": "jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj",
+        "weight": "242",
+        "price": 2323,
+        "countInStock": 32,
+        "productCode": "3ewdsd",
+        "discount": 12,
+        "manufacturingDate": "2023-09-21T00:00:00.000Z",
+        "expiredDate": "2023-09-20T00:00:00.000Z",
+        "type": "Recommended",
+        "productPlan": "Recommended",
+        "status": "In Stock",
+        "review": [],
+        "subcategory": "64e97b5afc2163dda07d08b6",
+        "category": "64e978b1fc2163dda07d085f",
+        "addedBy": "64c5cd6dfad70897e1500eea",
+        "createdAt": "2023-09-09T18:04:42.028Z",
+        "updatedAt": "2023-09-09T18:04:42.028Z",
+        "__v": 0
+    }
     return (
         <Box>
             <Typography sx={{
                 fontSize: "1.5rem",
                 fontWeight: "600",
             }}>
-                {item.productName}
+                {item?.productName}
             </Typography>
             <Box sx={{
                 display: "flex",
@@ -50,19 +59,19 @@ function ProductBody() {
                     <span style={{
                         color: "#9ba3cc",
 
-                    }}> Brands: </span>{item.brand}
+                    }}> Brands: </span>{item?.brand}
                 </Typography>
-                <Typography mr={1} title={item.reviewPoint} >
-                    <ProductRating rating={item.reviewPoint} />
+                <Typography mr={1} title={item?.reviewPoint} >
+                    <ProductRating rating={item?.reviewPoint} />
                 </Typography>
                 <Typography sx={{ borderLeft: "1px solid #9ba3cc", paddingLeft: '0.5rem', fontSize: '.8rem', }}>
-                    Code: {item.productCode}
+                    Code: {item?.productCode}
                 </Typography>
             </Box>
             <Box my={2}>
                 <Grid container spacing={2}>
                     <Grid item md={4}>
-                        <img src={item.productPicture} width="100%" alt="" />
+                        <img src={item.productPicture && item.productPicture[0] ? item.productPicture[0] : ""} width="100%" alt="" />
                     </Grid>
                     <Grid item md={4}>
                         <Typography sx={{
@@ -74,7 +83,7 @@ function ProductBody() {
                                 color: "#9ba3cc",
                                 fontSize: "1.5rem",
                                 textDecoration: "line-through"
-                            }}>$12</span> ${item.price}
+                            }}>$12</span> ${item?.price}
                         </Typography>
                         <Typography sx={{
                             backgroundColor: "#e5f8ed",
@@ -86,7 +95,7 @@ function ProductBody() {
                             borderRadius: "1rem",
                             // marginBottom: "rem"
                         }}>
-                            IN STOCK
+                            {item?.status}
                         </Typography>
                         <Typography
                             sx={{
@@ -95,7 +104,7 @@ function ProductBody() {
                             }}
                         >
                             {
-                                item.productDescription
+                                item?.productDescription
                             }
                         </Typography>
                         <Box sx={{
