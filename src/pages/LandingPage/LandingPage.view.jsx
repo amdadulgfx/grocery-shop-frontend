@@ -8,6 +8,8 @@ import DiscountCard from "./Components/DiscountCard";
 import AdvertisementAndAllCategory from "./Components/AdvertisementAndAllCategory.view";
 import HomeCarousel from "./Components/HomeCarousel";
 import BestSellers from "./Components/BestSellers";
+import NewProducts from "./Components/NewProducts";
+import HotProducts from "./Components/HotProducts";
 
 
 // const titles = {
@@ -56,7 +58,9 @@ const LandingPage = () => {
             </Box>
             <BestSellers />
             <HealthTips />
+            <HotProducts />
             <Coupon />
+            <NewProducts />
             <DiscountCard />
           </Grid>
         </Grid>
