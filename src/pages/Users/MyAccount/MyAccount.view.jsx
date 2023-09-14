@@ -8,9 +8,9 @@ import { useFormik } from 'formik';
 import { Button, FormControlLabel, Grid, Radio, RadioGroup, TextField } from '@mui/material';
 import * as yup from 'yup';
 import axios from 'axios';
-import GroceryAlert from '../../components/GroceryAlert';
+import GroceryAlert from '../../../components/GroceryAlert';
 import { useSelector } from 'react-redux';
-import { selectUser } from '../../reduxMine/features/authApi';
+import { selectUser } from '../../../reduxMine/features/authApi';
 
 const access_token = localStorage.getItem("accessToken");
 console.log("access_token", access_token);

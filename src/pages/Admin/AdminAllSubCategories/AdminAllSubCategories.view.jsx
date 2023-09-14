@@ -4,17 +4,12 @@ import {
     Box,
     Button,
     Container,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
     Grid,
     TextField,
     Typography,
     Autocomplete
 } from '@mui/material';
-import { DeleteConfirmationDialog } from '../../CustomTags';
+import { DeleteConfirmationDialog } from '../../../CustomTags';
 
 const AdminAllSubCategories = () => {
     const [subCategories, setSubCategories] = useState([]);

@@ -16,7 +16,7 @@ import axios from "axios";
 // import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import MuiAlert from "@mui/material/Alert";
 // import dayjs from 'dayjs';
-import CustomTextField from "../../CustomTags/CustomTextField.view";
+import CustomTextField from "../../../CustomTags/CustomTextField.view";
 
 const initialValues = {
     productName: "",

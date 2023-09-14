@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Button, Grid, InputLabel, Typography } from '@mui/material';
 import axios from 'axios';
-import CustomTextField from '../../CustomTags/CustomTextField.view';
+import CustomTextField from '../../../CustomTags/CustomTextField.view';
 
 const AdminAddCategory = () => {
     const [values, setValues] = useState({

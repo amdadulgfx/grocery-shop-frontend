@@ -1,10 +1,9 @@
 import { Footer, Header } from './components';
-import { AboutUs, AdminAddCategory, AdminAddSubCategory, AdminAllCategories, AdminAllSubCategories, AdminDashboard, AdminPostAProduct, AdminProductsUpdateDeleteGetList, AdminSignIn, ContactUs, FAQ, LandingPage, LoginSignup, PrivacyPolicy, ProductCartLists, Products, TermsAndConditions } from './pages';
+import { AboutUs, AdminAddCategory, AdminAddSubCategory, AdminAllCategories, AdminAllSubCategories, AdminDashboard, AdminPostAProduct, AdminProductsUpdateDeleteGetList, AdminSignIn, ContactUs, FAQ, LandingPage, LoginSignup, MyAccount, PrivacyPolicy, ProductCartLists, Products, TermsAndConditions } from './pages';
 import ROUTES from './routes';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css';
 import SingleProduct from './pages/SingleProduct';
-import MyAccount from './pages/MyAccount';
 
 function App() {
   const pathname = window.location.pathname
