@@ -6,7 +6,7 @@ import {
     Typography,
     useMediaQuery,
 } from "@mui/material";
-import aboutUsImage from "../../assets/Images/aboutUs.jpg";
+import aboutUsImage from "../../../assets/Images/aboutUs.jpg";
 import { Link } from "react-router-dom";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
@@ -14,7 +14,7 @@ const AboutUs = () => {
     const matches = useMediaQuery("(max-width: 900px)");
 
     useEffect(() => {
-        window.scrollTo(0, 0);
+        window?.scrollTo(0, 0);
     }, []);
 
     return (

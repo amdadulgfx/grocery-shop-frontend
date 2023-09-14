@@ -40,7 +40,7 @@ const AdminProductsUpdateDeleteGetList = () => {
         setSelectedProduct(productID);
         setDeleteConfirmationOpen(true);
     };
-    console.log("selected", selectedProduct)
+    // console.log("selected", selectedProduct)
 
     const confirmDelete = () => {
         setDeleteConfirmationOpen(false);
@@ -55,7 +55,7 @@ const AdminProductsUpdateDeleteGetList = () => {
             });
     };
 
-    console.log('Products:', products);
+    // console.log('Products:', products);
 
     return (
         <Container sx={{ pt: 3, pb: 5 }}>

@@ -3,14 +3,27 @@ import React, { useEffect, useState } from 'react';
 import { ProductCard } from '../../../components';
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const BestSellers = () => {
   const navigate = useNavigate();
-  const [bestSelling, setBestSelling] = useState([]);
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    setBestSelling(Products)
-  }, [])
+    // Define the URL of the API
+    const apiUrl = 'http://localhost:5000/api/v1/product/';
+
+    // Use Axios to fetch data from the API
+    axios.get(apiUrl)
+        .then((response) => {
+            // Set the fetched data in the state
+            setProducts(response?.data?.data);
+        })
+        .catch((error) => {
+            console.error('Error fetching data:', error);
+        });
+}, []);
+// console.log('Products:', products);
 
   return (
     <Box sx={{ my: 4 }}>
@@ -59,10 +72,10 @@ const BestSellers = () => {
         container
         rowSpacing={4}
         columnSpacing={0}
-        justifyContent="center"
+        justifyContent="start"
         alignItems="stretch"
       >
-        {bestSelling?.map((item) => (
+        {products?.map((item) => (
           <Grid key={item.productCode} item xs={12} sm={6} md={3}>
             <ProductCard product={item} />
           </Grid>

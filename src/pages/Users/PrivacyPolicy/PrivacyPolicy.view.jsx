@@ -12,7 +12,7 @@ const PrivacyPolicy = () => {
   document.title = "Privacy Policy";
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window?.scrollTo(0, 0);
   }, []);
 
   let hashLink = location?.hash;
