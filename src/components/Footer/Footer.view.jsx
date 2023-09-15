@@ -10,7 +10,7 @@ const Footer = () => {
     const mobileView = useMediaQuery(theme.breakpoints.down("md"));
 
     return (
-        <div style={{marginTop:"33px"}}>
+        <div style={{marginTop:"50px"}}>
             <NewsLetter mobileView={mobileView} />
             <FooterTitles mobileView={mobileView} />
             <FooterRoutes mobileView={mobileView} />

@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   main: {
+    position: "relative",
     border: "1px solid #E3E3E3",
     borderRadius: "4px", padding: "1rem", height: "100%",
     marginBottom: "-50px",
@@ -73,8 +74,14 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "line-through",
   },
   addToCartBox: {
-    padding: "0 0rem 1rem",
-    marginTop: "-5px"
+    // display: "flex",
+    // justifyContent: "center",
+    // alignItems: "flex-end",
+    position: "absolute",
+    // padding: "0 0rem 1rem",
+    marginTop: "-5px",
+    minWidth: "200px",
+    bottom: "10px",
   },
 }));
 
@@ -237,18 +244,21 @@ const ProductCard = ({ product }) => {
             </Typography>
           )}
         </Box>
-        <Box className={classes.addToCartBox}>
-          <Button
-            onClick={() => handleAddToCart(product?._id)}
-            variant="contained"
-            color="primary"
-            fullWidth
-            sx={{ py: 0.6, borderRadius: 16, textTransform: "none", }}
+        <Box minHeight={35}>
+          <Box className={classes.addToCartBox}>
+            <Button
+              onClick={() => handleAddToCart(product?._id)}
+              variant="contained"
+              color="primary"
+              fullWidth
+              sx={{ py: 0.6, borderRadius: 16, textTransform: "none", }}
 
-          >
-            Add to Cart
-          </Button>
+            >
+              Add to Cart
+            </Button>
+          </Box>
         </Box>
+
       </Box>
       {/* Snackbar component */}
       <CustomSnackbar
