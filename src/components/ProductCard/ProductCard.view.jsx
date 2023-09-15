@@ -1,9 +1,6 @@
 import React, { useState } from "react";
-import { Grid, Card, CardMedia, CardContent, Typography, IconButton, Box, Rating, Button, Tooltip } from "@mui/material";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { CardMedia, Typography, IconButton, Box, Rating, Button, Tooltip } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import StarIcon from "@mui/icons-material/Star";
-
 import demo from "./product-image.jpg"
 import { makeStyles } from "@material-ui/styles";
 import axios from "axios";
@@ -74,11 +71,7 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "line-through",
   },
   addToCartBox: {
-    // display: "flex",
-    // justifyContent: "center",
-    // alignItems: "flex-end",
     position: "absolute",
-    // padding: "0 0rem 1rem",
     marginTop: "-5px",
     minWidth: "200px",
     bottom: "10px",
@@ -93,7 +86,6 @@ const ProductCard = ({ product }) => {
   const [snackbarSeverity, setSnackbarSeverity] = useState('success');
   const navigate = useNavigate();
   const handleAddToCart = async (productId) => {
-    // Retrieve the access token from local storage
     const accessToken = localStorage.getItem('accessToken');
 
     try {
@@ -103,20 +95,15 @@ const ProductCard = ({ product }) => {
       },
         {
           headers: {
-            Authorization: `${accessToken}`, // Include the access token in the Authorization header
+            Authorization: `${accessToken}`,
           },
         });
-
-      // Handle the response as needed
       console.log('Response:', response);
-      // Show success Snackbar
       setSnackbarSeverity('success');
       setSnackbarMessage('Product added to cart successfully');
       setSnackbarOpen(true);
     } catch (error) {
-      // Handle any errors here
       console.error('Error:', error);
-      // Show error Snackbar
       setSnackbarSeverity('error');
       setSnackbarMessage('Failed to add product to cart');
       setSnackbarOpen(true);
@@ -132,7 +119,6 @@ const ProductCard = ({ product }) => {
   };
 
   const handleAddToWishlist = () => {
-    // Implement your add to wishlist functionality here
     console.log("Adding to wishlist:", product.productName);
   };
 
