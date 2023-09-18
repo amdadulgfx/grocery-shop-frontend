@@ -21,7 +21,10 @@ const ROUTES = {
 =======
   SINGLEPRODUCT: "/single-product",
   PRODUCTORDER: "/checkout/order-recieved",
+<<<<<<< HEAD
 >>>>>>> 1cb6008 (checkout order received pages)
+=======
+>>>>>>> 1cb6008ff1fc31bf48a0fc2c9597ade836bfef8e
   PRIVACYPOLICY: "/privacy-policy",
   FAQ: "/faq",
   TERMSANDCONDITIONS: "/terms-&-conditions",
