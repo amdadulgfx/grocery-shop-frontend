@@ -16,7 +16,12 @@ const ROUTES = {
   LOGIN: "/login",
   SIGNUP: "/signup",
   PRODUCTS: "/products",
+<<<<<<< HEAD
   SINGLEPRODUCT: "/products/:productId",
+=======
+  SINGLEPRODUCT: "/single-product",
+  PRODUCTORDER: "/checkout/order-recieved",
+>>>>>>> 1cb6008 (checkout order received pages)
   PRIVACYPOLICY: "/privacy-policy",
   FAQ: "/faq",
   TERMSANDCONDITIONS: "/terms-&-conditions",
