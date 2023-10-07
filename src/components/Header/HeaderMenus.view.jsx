@@ -96,7 +96,7 @@ export const ResponsiveHeader = (props) => {
           </Box>
         </Box>
         <Box maxWidth="md" sx={{ mx: "auto", my: 2, px: "20px" }}>
-          <form /* onSubmit={handleJobsSearch} */>
+          {/* <form /* onSubmit={handleJobsSearch} >
             <Input
               sx={{
                 borderRadius: 16,
@@ -117,7 +117,7 @@ export const ResponsiveHeader = (props) => {
                 </InputAdornment>
               }
             />
-          </form>
+          </form> */}
         </Box>
       </Box>
       <Divider />

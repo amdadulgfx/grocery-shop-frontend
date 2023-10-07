@@ -10,6 +10,8 @@ import {
     Input,
     InputAdornment,
     Container,
+    Menu,
+    MenuItem,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -48,9 +50,34 @@ const Header = () => {
     const theme = useTheme();
     const matches = useMediaQuery(theme.breakpoints.down('md'));
     const [showSearchBar, setShowSearchBar] = useState(false);
+    const [searchKeyword, setSearchKeyword] = useState('');
     const [openDrawer, setOpenDrawer] = useState(false);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
     const user = useSelector(selectUser);
     const dispatch = useDispatch();
+
+    const options = [
+        'Show all notification content',
+        'Hide sensitive notification content',
+        'Hide all notification content',
+    ];
+
+    const handleShowSearchBar = (event) => {
+        if (searchKeyword === "") {
+            setShowSearchBar((prev) => !prev);
+        } else {
+            setAnchorEl(event.currentTarget);
+        }
+
+    }
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+
+
+
 
     const handleLogout = () => {
         dispatch(logout()); // Dispatch the logout action
@@ -92,7 +119,8 @@ const Header = () => {
                             setOpenDrawer={setOpenDrawer}
                         />
                         <IconButton
-                            onClick={() => setOpenDrawer(true)}                        >
+                            onClick={() => setOpenDrawer(true)}
+                        >
                             <MenuIcon fontSize="medium" />
                         </IconButton>
                     </Box>
@@ -225,12 +253,19 @@ const Header = () => {
                                                 disableUnderline
                                                 fullWidth
                                                 placeholder="Search Product"
+                                                onChange={(event) => setSearchKeyword(event.target.value)}
+                                                value={searchKeyword}
+                                                id="lock-button"
+                                                aria-haspopup="listbox"
+                                                aria-controls="lock-menu"
+                                                aria-label="when device is locked"
+                                                aria-expanded={open ? 'true' : undefined}
                                                 endAdornment={
                                                     <InputAdornment position="end" style={{ outline: "none" }}>
                                                         <IconButton
                                                             size="small"
                                                             sx={{ border: "2px solid #2BBEF9" }}
-                                                            onClick={() => setShowSearchBar(false)}
+                                                            onClick={handleShowSearchBar}
                                                         >
                                                             <SearchSharpIcon sx={{ color: "#2BBEF9" }} />
                                                         </IconButton>
@@ -238,18 +273,35 @@ const Header = () => {
                                                 }
                                             />
                                         </form>
+                                        <Menu
+                                            id="lock-menu"
+                                            anchorEl={anchorEl}
+                                            open={open}
+                                            onClose={handleClose}
+                                            sx={{marginLeft: -29}}
+                                        >
+                                            {options.map((option, index) => (
+                                                <MenuItem
+                                                    key={option}
+                                                >
+                                                    {option}
+                                                </MenuItem>
+                                            ))}
+                                        </Menu>
                                     </Box>
                                 ) : (
                                     <IconButton
                                         size="small"
                                         sx={{ border: "2px solid #2BBEF9" }}
-                                        onClick={() => setShowSearchBar(true)}
+                                        onClick={handleShowSearchBar}
+
                                     >
                                         <SearchSharpIcon sx={{ color: "#2BBEF9" }} />
                                     </IconButton>
                                 )}
-                                {
-                                    user?.email ? <Button
+
+                                {user?.email ? (
+                                    <Button
                                         variant="contained"
                                         sx={{
                                             borderRadius: 16,
@@ -258,7 +310,9 @@ const Header = () => {
                                         onClick={handleLogout}
                                     >
                                         Logout
-                                    </Button> : <>
+                                    </Button>
+                                ) : (
+                                    <>
                                         <Button
                                             variant="contained"
                                             sx={{
@@ -281,8 +335,7 @@ const Header = () => {
                                             Login
                                         </Button>
                                     </>
-                                }
-
+                                )}
                             </Box>
                         </Box>
                     </Container>

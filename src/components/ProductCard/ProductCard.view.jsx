@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { CardMedia, Typography, IconButton, Box, Rating, Button, Tooltip } from "@mui/material";
+import { CardMedia, Typography, IconButton, Box, Rating, Button, Tooltip, CardActions } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import demo from "./product-image.jpg"
 import { makeStyles } from "@material-ui/styles";
@@ -73,7 +73,6 @@ const useStyles = makeStyles((theme) => ({
   addToCartBox: {
     position: "absolute",
     marginTop: "-5px",
-    minWidth: "200px",
     bottom: "10px",
   },
 }));
@@ -230,15 +229,21 @@ const ProductCard = ({ product }) => {
             </Typography>
           )}
         </Box>
-        <Box minHeight={35}>
+        <Box
+          minHeight={35}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "100%",
+          }}
+        >
           <Box className={classes.addToCartBox}>
             <Button
               onClick={() => handleAddToCart(product?._id)}
               variant="contained"
               color="primary"
-              fullWidth
-              sx={{ py: 0.6, borderRadius: 16, textTransform: "none", }}
-
+              sx={{ py: 0.6, px: 4, borderRadius: 16, textTransform: "none", width: "100%" }}
             >
               Add to Cart
             </Button>
