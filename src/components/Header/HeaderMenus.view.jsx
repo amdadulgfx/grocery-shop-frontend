@@ -11,8 +11,7 @@ const InfoRoutes = [
 ];
 
 const MainNavigation = [
-  { label: "Home", path: "/" },
-  { label: "Shop", path: "/recomanded" },
+  { label: "Products", path: "/products" },
   { label: "Blog", path: "/blog" },
   { label: "Contact", path: "/contact-us" },
   { label: "More", path: "/saved" },

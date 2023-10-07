@@ -18,7 +18,7 @@ import HotProducts from "./Components/HotProducts";
 //   heading: "Specialist in the grocery store",
 //   message: "Only this week. Don't miss...",
 //   price: "$7.99",
-//   route: "/shop",
+//   route: "/products",
 // };
 
 const LandingPage = () => {

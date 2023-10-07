@@ -1,7 +1,6 @@
 import React from 'react';
 import FreshestProductsAdsImage from "../../../assets/LandingPageImages/FreshestProductsAds.jpg";
 import { Box, Typography } from '@mui/material';
-import { Button } from '@material-ui/core';
 
 const FreshestProductsAds = () => {
 

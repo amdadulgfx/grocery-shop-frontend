@@ -56,7 +56,7 @@ const BestSellers = () => {
         </Box>
         <Box>
           <Button
-            onClick={() => navigate("/shop")}
+            onClick={() => navigate("/products")}
             variant="outlined"
             sx={{
               textTransform: "none",

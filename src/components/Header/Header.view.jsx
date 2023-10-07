@@ -14,7 +14,7 @@ import {
     MenuItem,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MuiAlert from "@mui/material/Alert";
 import HandshakeIcon from '@mui/icons-material/Handshake';
 import HeaderLogo from "../../assets/Logos/header_logo.png"
@@ -36,8 +36,7 @@ const InfoRoutes = [
 ];
 
 const MainNavigation = [
-    { label: "Home", path: "/" },
-    { label: "Shop", path: "/shop" },
+    { label: "Products", path: "/products" },
     { label: "Blog", path: "/blog" },
     { label: "Contact", path: "/contact-us" },
     { label: "More", path: "/more" },
@@ -100,12 +99,14 @@ const Header = () => {
                     }}
                 >
                     <Box>
+                        <Link to="/">
                         <img
                             height="35px"
                             width="100%"
                             src={HeaderLogo}
                             alt="Main_logo"
                         />
+                        </Link>
                     </Box>
                     <Box
                         sx={{
@@ -205,13 +206,16 @@ const Header = () => {
                             }}
                         >
                             <Box>
-                                <img
-                                    height="40px"
-                                    width="100%"
-                                    style={{ marginLeft: "8px", marginTop: "-6px" }}
-                                    src={HeaderLogo}
-                                    alt="Main_logo"
-                                />
+                                <Link to="/">
+                                    <img
+                                        height="40px"
+                                        width="100%"
+                                        style={{ marginLeft: "8px", marginTop: "-6px" }}
+                                        src={HeaderLogo}
+                                        alt="Main_logo"
+                                    />
+                                </Link>
+
                             </Box>
                             <Box>
                                 {MainNavigation.map((route) => (
@@ -278,7 +282,7 @@ const Header = () => {
                                             anchorEl={anchorEl}
                                             open={open}
                                             onClose={handleClose}
-                                            sx={{marginLeft: -29}}
+                                            sx={{ marginLeft: -29 }}
                                         >
                                             {options.map((option, index) => (
                                                 <MenuItem
