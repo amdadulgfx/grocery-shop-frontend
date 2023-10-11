@@ -51,7 +51,6 @@ const WishLists = () => {
         if (reason === 'clickaway') {
             return;
         }
-
         setSnackbarOpen(false);
     };
 
