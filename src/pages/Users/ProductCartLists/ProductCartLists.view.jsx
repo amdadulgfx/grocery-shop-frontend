@@ -1,42 +1,70 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchCartData } from '../../../reduxMine/features/cartSlice';
-import { Typography, CircularProgress } from '@mui/material';
+import React from 'react';
+import { Typography, Box, IconButton } from '@mui/material';
+import { useDeleteItemFromCartMutation, useGetCartListQuery, useUpdateCartItemQuantityMutation } from '../../../reduxMine/features/cart/cartAPIs';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import DeleteIcon from '@mui/icons-material/Delete';
 
-function ProductCartLists() {
-  const cartData = useSelector((state) => state?.cart?.items);
-  const cartLoading = useSelector((state) => state?.cart?.loading);
-  const cartError = useSelector((state) => state?.cart?.error);
-  const dispatch = useDispatch();
+const ProductCartLists = () => {
+  const { data} = useGetCartListQuery(undefined);
+  const [deleteItemFromCart] = useDeleteItemFromCartMutation();
+  const [updateCartItemQuantity] = useUpdateCartItemQuantityMutation();
 
-  console.log("fetchCartData", fetchCartData)
-
-  useEffect(() => {
-    // Dispatch the fetchCartData action when the component mounts
-    dispatch(fetchCartData());
-  }, [dispatch]);
-
-  if (cartLoading === 'pending') {
-    return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-        <CircularProgress /> {/* Show a loading indicator */}
-      </div>
-    );
+  const handleDeleteItem = (productID) => {
+    if (productID) {
+      deleteItemFromCart(productID);
+    }
   }
 
-  if (cartError) {
-    return <div>Error: {cartError}</div>;
-  }
+  const handleUpdateQuatity = (ProductID, name) => {
+    const existingProduct = data?.data?.find((product) => product._id === ProductID);
+    console.log("productID", ProductID)
+    console.log("name", name)
+
+    let option = {
+      productId: ProductID,
+      quantity: existingProduct?.quantity
+    };
+
+    if (existingProduct && name === "Remove") {
+      if (option?.quantity > 1) {
+        option.quantity = option?.quantity - 1;
+        updateCartItemQuantity(option);
+      };
+    };
+
+    if (existingProduct && name === "Add") {
+      if (option?.quantity > 0) {
+        option.quantity = option?.quantity + 1;
+        updateCartItemQuantity(option);
+      };
+    }
+  };
 
   return (
     <div>
       <Typography variant="h4">Cart Items</Typography>
-      {cartData ? (
-        cartData.map((item) => (
+      {data?.data ? (
+        data?.data?.map((item) => (
           <div key={item?._id}>
-            {/* Render cart item details */}
-            <Typography>{item?.productId?.productName}</Typography>
-            <img src={item?.productId?.productPicture[0]} alt={item?.productId?.productName} />
+            <Box sx={{ display: "flex" }}>
+              <Box>
+                <img src={item?.productId?.productPicture[0]} alt={item?.productId?.productName} style={{ width: "40px", height: "40px" }} />
+              </Box>
+              <Typography>{item?.productId?.productName}</Typography>
+              <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <IconButton onClick={() => handleUpdateQuatity(item?._id, "Remove")}>
+                  <RemoveIcon />
+                </IconButton>
+                <Typography>{item?.quantity}</Typography>
+                <IconButton onClick={() => handleUpdateQuatity(item?._id, "Add")}>
+                  <AddIcon />
+                </IconButton>
+              </Box>
+              <IconButton onClick={() => handleDeleteItem(item?._id)} >
+                <DeleteIcon />
+              </IconButton>
+            </Box>
           </div>
         ))
       ) : (

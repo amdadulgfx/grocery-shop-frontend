@@ -10,7 +10,7 @@ function Review() {
     const { productId } = useParams();
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_URI}review/${productId}`).then(res => {
-            console.log(res);
+            // console.log(res);
             if (res.data.success) {
                 setReviews(res.data.data)
             }

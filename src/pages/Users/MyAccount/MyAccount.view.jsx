@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 import { selectUser } from '../../../reduxMine/features/authApi';
 
 const access_token = localStorage.getItem("accessToken");
-console.log("access_token", access_token);
+// console.log("access_token", access_token);
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;

@@ -1,5 +1,4 @@
 import {combineReducers} from '@reduxjs/toolkit';
-import cartReducer from '../reduxMine/features/cartSlice';
 import { authReducer } from './features/authApi';
 import { api } from './api/api';
 
@@ -8,5 +7,4 @@ import { api } from './api/api';
 export const rootReducer = combineReducers({
   auth: authReducer,
   [api.reducerPath]: api.reducer,
-  cart: cartReducer,
 });

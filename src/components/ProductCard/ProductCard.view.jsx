@@ -1,113 +1,34 @@
 import React, { useState } from "react";
-import { CardMedia, Typography, IconButton, Box, Rating, Button, Tooltip, CardActions } from "@mui/material";
+import { Grid, Card, CardMedia, CardContent, Typography, IconButton, Box, Rating, Button, Tooltip } from "@mui/material";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import StarIcon from "@mui/icons-material/Star";
+
 import demo from "./product-image.jpg"
 import { makeStyles } from "@material-ui/styles";
 import axios from "axios";
 import { CustomSnackbar } from "../../CustomTags";
 import { useNavigate } from "react-router-dom";
+import { useAddToCartMutation } from "../../reduxMine/features/cart/cartAPIs";
 
-const useStyles = makeStyles((theme) => ({
-  main: {
-    position: "relative",
-    border: "1px solid #E3E3E3",
-    borderRadius: "4px", padding: "1rem", height: "100%",
-    marginBottom: "-50px",
-    "&:hover": {
-      border: "1px solid #B2B2B2 !important",
-      borderRadius: "10px",
-    },
-  },
-  mediaContainer: {
-    display: "flex",
-    alignItems: "flex-start",
-    justifyContent: "space-between",
-    gap: "5px",
-  },
-  media: {
-    height: "180px",
-    width: "auto",
-    backgroundSize: "contain",
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center",
-  },
-  iconBox: {
 
-  },
-  title: {
-    fontSize: "1rem",
-    fontWeight: "600",
-    color: "#4D4D4D",
-    "&:hover": {
-      color: "#2BBEF9",
-    }
-  },
-  status: {
-    fontSize: "0.8rem",
-    margin: "0.4rem 0",
-    color: "#00B853",
-    fontWeight: "600",
-  },
-  rate: {
-    fontSize: "0.9rem",
-    color: "#4D4D4D",
-    fontWeight: "600",
-  },
-  priceContainer: {
-    display: "flex",
-    alignItems: "flex-end",
-    justifyContent: "flex-start",
-    gap: "5px",
-  },
-  price: {
-    fontSize: "1.3rem",
-    color: "#D51243",
-  },
-  primaryPrice: {
-    fontSize: "1rem",
-    color: "#C4C4D4",
-    fontWeight: "600",
-    paddingBottom: "0.2rem",
-    textDecoration: "line-through",
-  },
-  addToCartBox: {
-    position: "absolute",
-    marginTop: "-5px",
-    bottom: "10px",
-  },
-}));
 
 const ProductCard = ({ product }) => {
   const classes = useStyles();
-  const [quantity, setQuantity] = useState(1);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState('success');
   const navigate = useNavigate();
-  const handleAddToCart = async (productId) => {
-    const accessToken = localStorage.getItem('accessToken');
 
-    try {
-      const response = await axios.post('http://localhost:5000/api/v1/cart/', {
-        productId,
-        quantity,
-      },
-        {
-          headers: {
-            Authorization: `${accessToken}`,
-          },
-        });
-      console.log('Response:', response);
-      setSnackbarSeverity('success');
-      setSnackbarMessage('Product added to cart successfully');
-      setSnackbarOpen(true);
-    } catch (error) {
-      console.error('Error:', error);
-      setSnackbarSeverity('error');
-      setSnackbarMessage('Failed to add product to cart');
-      setSnackbarOpen(true);
-    }
+  const [addToCart, options] = useAddToCartMutation();
+  const handleAddToCart = (productID) => {
+    const option = {
+      productId : productID,
+      quantity: 1
+    };
+    addToCart(option);
   };
+  
 
   const handleCloseSnackbar = (event, reason) => {
     if (reason === 'clickaway') {
@@ -118,6 +39,7 @@ const ProductCard = ({ product }) => {
   };
 
   const handleAddToWishlist = () => {
+    // Implement your add to wishlist functionality here
     console.log("Adding to wishlist:", product.productName);
   };
 
@@ -229,27 +151,18 @@ const ProductCard = ({ product }) => {
             </Typography>
           )}
         </Box>
-        <Box
-          minHeight={35}
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "100%",
-          }}
-        >
-          <Box className={classes.addToCartBox}>
-            <Button
-              onClick={() => handleAddToCart(product?._id)}
-              variant="contained"
-              color="primary"
-              sx={{ py: 0.6, px: 4, borderRadius: 16, textTransform: "none", width: "100%" }}
-            >
-              Add to Cart
-            </Button>
-          </Box>
-        </Box>
+        <Box className={classes.addToCartBox}>
+          <Button
+            onClick={() => handleAddToCart(product?._id)}
+            variant="contained"
+            color="primary"
+            fullWidth
+            sx={{ py: 0.6, borderRadius: 16, textTransform: "none", }}
 
+          >
+            Add to Cart
+          </Button>
+        </Box>
       </Box>
       {/* Snackbar component */}
       <CustomSnackbar
@@ -263,3 +176,71 @@ const ProductCard = ({ product }) => {
 };
 
 export default ProductCard;
+
+const useStyles = makeStyles((theme) => ({
+  main: {
+    border: "1px solid #E3E3E3",
+    borderRadius: "4px", padding: "1rem", height: "100%",
+    marginBottom: "-50px",
+    "&:hover": {
+      border: "1px solid #B2B2B2 !important",
+      borderRadius: "10px",
+    },
+  },
+  mediaContainer: {
+    display: "flex",
+    alignItems: "flex-start",
+    justifyContent: "space-between",
+    gap: "5px",
+  },
+  media: {
+    height: "180px",
+    width: "auto",
+    backgroundSize: "contain",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+  },
+  iconBox: {
+
+  },
+  title: {
+    fontSize: "1rem",
+    fontWeight: "600",
+    color: "#4D4D4D",
+    "&:hover": {
+      color: "#2BBEF9",
+    }
+  },
+  status: {
+    fontSize: "0.8rem",
+    margin: "0.4rem 0",
+    color: "#00B853",
+    fontWeight: "600",
+  },
+  rate: {
+    fontSize: "0.9rem",
+    color: "#4D4D4D",
+    fontWeight: "600",
+  },
+  priceContainer: {
+    display: "flex",
+    alignItems: "flex-end",
+    justifyContent: "flex-start",
+    gap: "5px",
+  },
+  price: {
+    fontSize: "1.3rem",
+    color: "#D51243",
+  },
+  primaryPrice: {
+    fontSize: "1rem",
+    color: "#C4C4D4",
+    fontWeight: "600",
+    paddingBottom: "0.2rem",
+    textDecoration: "line-through",
+  },
+  addToCartBox: {
+    padding: "0 0rem 1rem",
+    marginTop: "-5px"
+  },
+}));

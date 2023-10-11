@@ -43,7 +43,7 @@ const LandingPage = () => {
     fetchData();
   }, []);
 
-  console.log(heroMasterData);
+  // console.log(heroMasterData);
 
   return (
     <Container maxWidth="lg">
