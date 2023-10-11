@@ -18,8 +18,6 @@ const ProductCartLists = () => {
 
   const handleUpdateQuatity = (ProductID, name) => {
     const existingProduct = data?.data?.find((product) => product._id === ProductID);
-    console.log("productID", ProductID)
-    console.log("name", name)
 
     let option = {
       productId: ProductID,

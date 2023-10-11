@@ -1,15 +1,12 @@
 import React, { useState } from "react";
-import { Grid, Card, CardMedia, CardContent, Typography, IconButton, Box, Rating, Button, Tooltip } from "@mui/material";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { CardMedia, Typography, IconButton, Box, Rating, Button, Tooltip } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import StarIcon from "@mui/icons-material/Star";
-
 import demo from "./product-image.jpg"
 import { makeStyles } from "@material-ui/styles";
-import axios from "axios";
 import { CustomSnackbar } from "../../CustomTags";
 import { useNavigate } from "react-router-dom";
-import { useAddToCartMutation } from "../../reduxMine/features/cart/cartAPIs";
+import { useAddToCartMutation, useGetCartListQuery, useUpdateCartItemQuantityMutation } from "../../reduxMine/features/cart/cartAPIs";
+import { useAddToWishListMutation, useDeleteFromWishListMutation, useGetWishListQuery } from "../../reduxMine/features/wishList/wishListSlice";
 
 
 
@@ -19,16 +16,35 @@ const ProductCard = ({ product }) => {
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState('success');
   const navigate = useNavigate();
+  const { data } = useGetCartListQuery(undefined);
+  const [addToCart] = useAddToCartMutation();
+  const [updateCartItemQuantity] = useUpdateCartItemQuantityMutation();
+  const [addToWishList] = useAddToWishListMutation();
+  const [deleteFromWishList] = useDeleteFromWishListMutation();
+  const { data: wishList } = useGetWishListQuery(undefined);
 
-  const [addToCart, options] = useAddToCartMutation();
   const handleAddToCart = (productID) => {
+    const existingProduct = data?.data?.find((product) => product?.productId?._id === productID);
+
     const option = {
-      productId : productID,
+      productId: productID,
       quantity: 1
     };
-    addToCart(option);
+
+    let optionUpdate = {
+      productId: existingProduct?._id,
+      quantity: existingProduct?.quantity
+    };
+
+    if (existingProduct) {
+      optionUpdate.quantity = optionUpdate?.quantity + 1;
+      console.log("coming here", optionUpdate)
+      // return
+      updateCartItemQuantity(optionUpdate);
+    } else {
+      addToCart(option);
+    }
   };
-  
 
   const handleCloseSnackbar = (event, reason) => {
     if (reason === 'clickaway') {
@@ -38,9 +54,15 @@ const ProductCard = ({ product }) => {
     setSnackbarOpen(false);
   };
 
-  const handleAddToWishlist = () => {
+  const handleAddToWishlist = (productId) => {
     // Implement your add to wishlist functionality here
-    console.log("Adding to wishlist:", product.productName);
+    const existingWishList = wishList?.data?.find((product) => product?.productId?._id === productId);
+    if (existingWishList) {
+      console.log("Adding to wishlist:", productId);
+      deleteFromWishList(existingWishList?._id);
+    } else {
+      addToWishList(productId);
+    }
   };
 
   return (
@@ -80,17 +102,35 @@ const ProductCard = ({ product }) => {
 
           </Box>
           <Box>
-            <IconButton
-              sx={{
-                border: "1px solid #00000000",
-                "&:hover": {
-                  color: "#233A95",
-                  border: "1px solid #233A95",
-                }
-              }}
-            >
-              <FavoriteIcon />
-            </IconButton>
+            {(wishList?.data?.find((wishList) => wishList?.productId?._id === product?._id)) ? (
+              <IconButton
+                sx={{
+                  border: "1px solid #00000000",
+                  color: "red",
+                  "&:hover": {
+                    color: "#233A95",
+                    border: "1px solid #233A95",
+                  }
+                }}
+                onClick={() => handleAddToWishlist(product?._id)}
+              >
+                <FavoriteIcon />
+              </IconButton>
+            ) : (
+              <IconButton
+                sx={{
+                  border: "1px solid #00000000",
+                  // color:  ? "red" : "",
+                  "&:hover": {
+                    color: "#233A95",
+                    border: "1px solid #233A95",
+                  }
+                }}
+                onClick={() => handleAddToWishlist(product?._id)}
+              >
+                <FavoriteIcon />
+              </IconButton>
+            )}
           </Box>
         </Box>
         <Box>

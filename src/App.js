@@ -5,6 +5,7 @@ import { AboutUs, AdminAddCategory, AdminAddSubCategory, AdminAllCategories, Adm
 import SingleProduct from './pages/SingleProduct';
 import { OrderView } from './pages/order/OrderView';
 import ROUTES from "./routes/index.js";
+import WishLists from "./pages/Users/WishLists/WishLists.view";
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route exact path={ROUTES.FAQ} element={<FAQ />} />
           <Route exact path={ROUTES.TERMSANDCONDITIONS} element={<TermsAndConditions />} />
           <Route exact path={ROUTES.PRODUCTCARTLIST} element={<ProductCartLists />} />
+          <Route exact path={ROUTES.WISHLISTS} element={<WishLists />} />
           <Route exact path={ROUTES.ADMINDASHBOARD} element={<AdminDashboard />} />
           <Route exact path={ROUTES.ADMINPOSTAPRODUCT} element={<AdminPostAProduct />} />
           <Route exact path={ROUTES.ADMINADDCATEGORY} element={<AdminAddCategory />} />
