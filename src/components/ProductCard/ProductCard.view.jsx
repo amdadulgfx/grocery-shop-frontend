@@ -8,8 +8,6 @@ import { useNavigate } from "react-router-dom";
 import { useAddToCartMutation, useGetCartListQuery, useUpdateCartItemQuantityMutation } from "../../reduxMine/features/cart/cartAPIs";
 import { useAddToWishListMutation, useDeleteFromWishListMutation, useGetWishListQuery } from "../../reduxMine/features/wishList/wishListSlice";
 
-
-
 const ProductCard = ({ product }) => {
   const classes = useStyles();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -99,7 +97,6 @@ const ProductCard = ({ product }) => {
                 {product.productPlan}
               </Typography>
             )}
-
           </Box>
           <Box>
             {(wishList?.data?.find((wishList) => wishList?.productId?._id === product?._id)) ? (
@@ -141,14 +138,17 @@ const ProductCard = ({ product }) => {
           />
         </Box>
         <Box sx={{ pb: 2 }}>
-          <Typography
-            variant="subtitle1"
-            component="h2"
-            className={classes.title}
-            onClick={() => navigate(`/products/${product._id}`)}
-          >
-            {product.productName}
-          </Typography>
+          <Tooltip title={product.productName}>
+            <Typography
+              variant="subtitle1"
+              component="h2"
+              className={classes.title}
+              onClick={() => navigate(`/products/${product._id}`)}
+            >
+              {product.productName}
+            </Typography>
+          </Tooltip>
+
           <Box className={classes.priceContainer} sx={{ justifyContent: "space-between !important", alignItems: "center !important" }}>
             <Tooltip title={product?.reviewPoint?.toFixed(1)}>
               <Rating
@@ -197,7 +197,7 @@ const ProductCard = ({ product }) => {
             variant="contained"
             color="primary"
             fullWidth
-            sx={{ py: 0.6, borderRadius: 16, textTransform: "none", }}
+            sx={{ py: 0.6, px: 4, borderRadius: 16, textTransform: "none", width: "100%" }}
           >
             Add to Cart
           </Button>
@@ -218,6 +218,7 @@ export default ProductCard;
 
 const useStyles = makeStyles((theme) => ({
   main: {
+    position: "relative",
     border: "1px solid #E3E3E3",
     borderRadius: "4px", padding: "1rem", height: "100%",
     marginBottom: "-50px",
@@ -239,17 +240,17 @@ const useStyles = makeStyles((theme) => ({
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
   },
-  iconBox: {
-
-  },
   title: {
+    cursor: "pointer",
     fontSize: "1rem",
     fontWeight: "600",
     color: "#4D4D4D",
-    cursor: "pointer",
     "&:hover": {
       color: "#2BBEF9",
-    }
+    },
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   },
   status: {
     fontSize: "0.8rem",
@@ -280,7 +281,8 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "line-through",
   },
   addToCartBox: {
-    padding: "0 0rem 1rem",
-    marginTop: "-5px"
+    margin: "-7px 5px 13px",
+    top: "98%",
+    bottom: "10px",
   },
 }));
