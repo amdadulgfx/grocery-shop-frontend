@@ -18,6 +18,7 @@ function SingleProduct() {
             }
         })
     }, [])
+    console.log(productId)
 
     return (
         <Box sx={{

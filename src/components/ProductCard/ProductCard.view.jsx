@@ -198,7 +198,6 @@ const ProductCard = ({ product }) => {
             color="primary"
             fullWidth
             sx={{ py: 0.6, borderRadius: 16, textTransform: "none", }}
-
           >
             Add to Cart
           </Button>
@@ -247,6 +246,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1rem",
     fontWeight: "600",
     color: "#4D4D4D",
+    cursor: "pointer",
     "&:hover": {
       color: "#2BBEF9",
     }
