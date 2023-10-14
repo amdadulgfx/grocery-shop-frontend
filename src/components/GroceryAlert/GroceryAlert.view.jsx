@@ -4,13 +4,9 @@ import Alert from '@mui/material/Alert';
 
 function GroceryAlert({ enable, msg, severity }) {
     const [open, setOpen] = useState(enable);
-    // console.log(enable);
     useEffect(() => {
         if (open) {
-            const timer = setTimeout(() => {
-                setOpen(false);
-            }, 3000); // 3 seconds
-            // enable = false;
+            const timer = setTimeout(() => setOpen(false), 3000);
             return () => clearTimeout(timer);
         }
     }, [open]);
@@ -19,9 +15,6 @@ function GroceryAlert({ enable, msg, severity }) {
         setOpen(false);
     };
 
-    // const handleOpen = () => {
-    //     setOpen(true);
-    // };
 
     return (
         <Snackbar

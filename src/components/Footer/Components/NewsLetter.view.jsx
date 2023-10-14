@@ -18,7 +18,6 @@ const NewsLetter = (props) => {
             setEmailError("Thank you, your sign-up request was successful! Please check your email inbox to confirm.")
         }
     };
-    // console.log("email", email);
 
 
 

@@ -1,8 +1,8 @@
-import { Box, Breadcrumbs, Button, Checkbox, Collapse, FormControl, FormControlLabel, /* FormGroup, */ Grid, IconButton, MenuItem, Select, Slider, Typography, useMediaQuery, useTheme, } from '@mui/material';
+import { Box, Breadcrumbs, Button, Collapse, Grid, IconButton, MenuItem, Select, Typography, useMediaQuery, useTheme, } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import { ProductCard } from '../../../components';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import axios from 'axios';
 import SearchProductFilter from './SearchProductFilter';
@@ -28,24 +28,25 @@ const ExpandMore = styled((props) => {
 
 const Products = () => {
   const theme = useTheme();
+  const location = useLocation();
   const mobileView = useMediaQuery(theme.breakpoints.down("md"));
   const [products, setProducts] = useState([]);
   const [priceRange, setPriceRange] = useState([1, 50]);
   const [sortBy, setSortBy] = useState("");
   const [expanded, setExpanded] = useState(false);
-  const [categoryCheckbox, setCategoryCheckboxes] = useState(
+  const [categoryCheckboxes, setCategoryCheckboxes] = useState(
     categories.reduce((options, option) => {
       options[option] = false;
       return options;
     }, {})
   );
-  const [statusesCheckbox, setStatusesCheckboxes] = useState(
+  const [statusesCheckboxes, setStatusesCheckboxes] = useState(
     statuses.reduce((options, option) => {
       options[option] = false;
       return options;
     }, {})
   );
-  const [brandsCheckbox, setBrandsCheckboxes] = useState(
+  const [brandsCheckboxes, setBrandsCheckboxes] = useState(
     brands.reduce((options, option) => {
       options[option] = false;
       return options;
@@ -62,9 +63,11 @@ const Products = () => {
     return itemsName.join(',');
   }
 
-  const searchCategoriesString = handleChangeProductCategory(categoryCheckbox);
-  const searchStatusesString = handleChangeProductCategory(statusesCheckbox);
-  const searchBrandsString = handleChangeProductCategory(brandsCheckbox);
+  const searchCategoriesString = handleChangeProductCategory(categoryCheckboxes);
+  const searchStatusesString = handleChangeProductCategory(statusesCheckboxes);
+  const searchBrandsString = handleChangeProductCategory(brandsCheckboxes);
+  const { state } = { ...location };
+  const { hotProducts, redirectFrom } = { ...state };
 
   const handleSearchProducts = () => {
     const apiUrl = `http://localhost:5000/api/v1/product/searchProduct?searchTerm=${searchCategoriesString}`;
@@ -74,9 +77,15 @@ const Products = () => {
   };
 
   useEffect(() => {
-    handleSearchProducts();
+    if (redirectFrom === "Hot_Product") {
+      setCategoryCheckboxes({ "Hot Products": true });
+      setProducts(hotProducts)
+    } else {
+      handleSearchProducts();
+    }
 
-  }, [categoryCheckbox, statusesCheckbox, brandsCheckbox]);
+
+  }, [categoryCheckboxes, statusesCheckboxes, brandsCheckboxes]);
 
   const sortByNewDate = (a, b) => {
     const dateA = new Date(a.manufacturingDate);
@@ -155,20 +164,29 @@ const Products = () => {
     handleSearchProducts();
   }
 
+  const handleClearHotProducts = (event) => {
+    if(event.target.checked === false) {
+      location.state.redirectFrom = "";
+      handleClearFilter();
+    }
+  }
+
   const propsData = {
     categories,
     handleCheckboxChange,
-    categoryCheckbox,
+    categoryCheckboxes,
     setCategoryCheckboxes,
     priceRange,
     setPriceRange,
     handleSearchProducts,
     statuses,
-    statusesCheckbox,
+    statusesCheckboxes,
     setStatusesCheckboxes,
     brands,
-    brandsCheckbox,
+    brandsCheckboxes,
     setBrandsCheckboxes,
+    redirectFrom,
+    handleClearHotProducts,
   };
 
   return (
@@ -197,6 +215,15 @@ const Products = () => {
             }}
           >
             Products
+          </Typography>
+          <Typography
+            variant="body2"
+            sx={{
+              textDecoration: "none",
+              color: "#4D4D4D",
+            }}
+          >
+            Hot Products
           </Typography>
         </Breadcrumbs>
       </Box>
@@ -230,115 +257,116 @@ const Products = () => {
           </Collapse>
         </Grid>
         <Grid item xs={12} md={9}>
-        <Box sx={{ mt: -3 }}>
-          <Grid
-            container
-            alignItems="flex-start"
-            justifyContent="space-between"
-            spacing={5}
-          >
-            <Grid item md={8} xs={12}>
-              {searchCategoriesString?.length > 1 && (
-                <Box>
-                  <Typography sx={{ fontWeight: "600" }} variant="subtitle2">Search For: </Typography>
-                  {searchCategoriesString.split(",").map((item, index) => (
-                    <Typography
-                      key={item}
-                      variant='body2'
-                      sx={{ display: 'inline-flex', alignItems: "center", whiteSpace: 'nowrap', textOverflow: "ellipsis", overflowX: "hidden" }}
-                    >
-                      {(index > 0) ? (
-                        <AddCircleIcon sx={{ mx: 1 }} />
-                      ) : (
-                        <AddCircleIcon sx={{ ml: -2, visibility: "hidden" }} />
-                      )}
-                      <span>{item}</span>
-                    </Typography>
-                  ))}
-                </Box>
-              )}
-              {searchStatusesString?.length > 1 && (
-                <Box>
-                  <Typography sx={{ fontWeight: "600" }} variant="subtitle2">Status With: </Typography>
-                  {searchStatusesString.split(",").map((item, index) => (
-                    <Typography
-                      key={item}
-                      variant='body2'
-                      sx={{ display: 'inline-flex', alignItems: "center", whiteSpace: 'nowrap', textOverflow: "ellipsis", overflowX: "hidden" }}
-                    >
-                      {(index > 0) ? (
-                        <AddCircleIcon sx={{ mx: 1 }} />
-                      ) : (
-                        <AddCircleIcon sx={{ ml: -2, visibility: "hidden" }} />
-                      )}
-                      <span>{item}</span>
-                    </Typography>
-                  ))}
-                </Box>
-              )}
-              {searchBrandsString?.length > 1 && (
-                <Box sx={{ mb: 1 }}>
-                  <Typography sx={{ fontWeight: "600" }} variant="subtitle2">Product From: </Typography>
-                  {searchBrandsString.split(",").map((item, index) => (
-                    <Typography
-                      key={item}
-                      variant='body2'
-                      sx={{ display: 'inline-flex', alignItems: "center", whiteSpace: 'nowrap', textOverflow: "ellipsis", overflowX: "hidden" }}
-                    >
-                      {(index > 0) ? (
-                        <AddCircleIcon sx={{ mx: 1 }} />
-                      ) : (
-                        <AddCircleIcon sx={{ ml: -2, visibility: "hidden" }} />
-                      )}
-                      <span>{item}</span>
-                    </Typography>
-                  ))}
-                </Box>
-              )}
-            </Grid>
-            <Grid item md={4} xs={12}>
-              <Box
-                sx={{
-                  display: 'flex',
-                  alignItems: "flex-end",
-                  textAlign: "center",
-                  gap: 1, mb: 1,
-                  flexDirection: mobileView ? "row" : "column",
-                }}
-              >
-                <Select
-                  size='small'
-                  value={sortBy}
-                  onChange={handleSortChange}
+          <Box sx={{ mt: -3 }}>
+            <Grid
+              container
+              alignItems="flex-start"
+              justifyContent="space-between"
+              spacing={5}
+            >
+              <Grid item md={8} xs={12}>
+                {searchCategoriesString?.length > 1 && (
+                  <Box>
+                    <Typography sx={{ fontWeight: "600" }} variant="subtitle2">Search For: </Typography>
+                    {searchCategoriesString.split(",").map((item, index) => (
+                      <Typography
+                        key={item}
+                        variant='body2'
+                        sx={{ display: 'inline-flex', alignItems: "center", whiteSpace: 'nowrap', textOverflow: "ellipsis", overflowX: "hidden" }}
+                      >
+                        {(index > 0) ? (
+                          <AddCircleIcon sx={{ mx: 1 }} />
+                        ) : (
+                          <AddCircleIcon sx={{ ml: -2, visibility: "hidden" }} />
+                        )}
+                        <span>{item}</span>
+                      </Typography>
+                    ))}
+                  </Box>
+                )}
+                {searchStatusesString?.length > 1 && (
+                  <Box>
+                    <Typography sx={{ fontWeight: "600" }} variant="subtitle2">Status With: </Typography>
+                    {searchStatusesString.split(",").map((item, index) => (
+                      <Typography
+                        key={item}
+                        variant='body2'
+                        sx={{ display: 'inline-flex', alignItems: "center", whiteSpace: 'nowrap', textOverflow: "ellipsis", overflowX: "hidden" }}
+                      >
+                        {(index > 0) ? (
+                          <AddCircleIcon sx={{ mx: 1 }} />
+                        ) : (
+                          <AddCircleIcon sx={{ ml: -2, visibility: "hidden" }} />
+                        )}
+                        <span>{item}</span>
+                      </Typography>
+                    ))}
+                  </Box>
+                )}
+                {searchBrandsString?.length > 1 && (
+                  <Box sx={{ mb: 1 }}>
+                    <Typography sx={{ fontWeight: "600" }} variant="subtitle2">Product From: </Typography>
+                    {searchBrandsString.split(",").map((item, index) => (
+                      <Typography
+                        key={item}
+                        variant='body2'
+                        sx={{ display: 'inline-flex', alignItems: "center", whiteSpace: 'nowrap', textOverflow: "ellipsis", overflowX: "hidden" }}
+                      >
+                        {(index > 0) ? (
+                          <AddCircleIcon sx={{ mx: 1 }} />
+                        ) : (
+                          <AddCircleIcon sx={{ ml: -2, visibility: "hidden" }} />
+                        )}
+                        <span>{item}</span>
+                      </Typography>
+                    ))}
+                  </Box>
+                )}
+              </Grid>
+              <Grid item md={4} xs={12}>
+                <Box
                   sx={{
-                    width: 150,
-                    borderRadius: 2,
-                    '& input': {
-                      padding: '4px',
-                    },
+                    display: 'flex',
+                    alignItems: "flex-end",
+                    textAlign: "center",
+                    gap: 1, mb: 1,
+                    flexDirection: mobileView ? "row" : "column",
                   }}
-                  displayEmpty
                 >
-                  <MenuItem value="" disabled>
-                    <b>Sort By</b>
-                  </MenuItem>
-                  {sortingOptions?.map((value) => (
-                    <MenuItem value={value} key={value}>
-                      <>{value}</>
+                  <Select
+                    size='small'
+                    value={sortBy}
+                    onChange={handleSortChange}
+                    sx={{
+                      width: 150,
+                      borderRadius: 2,
+                      display: (redirectFrom === "Hot_Product") && "none",
+                      '& input': {
+                        padding: '4px',
+                      },
+                    }}
+                    displayEmpty
+                  >
+                    <MenuItem value="" disabled>
+                      <b>Sort By</b>
                     </MenuItem>
-                  ))}
-                </Select>
-                <Button
-                  variant='contained'
-                  size='small'
-                  sx={{ width: 150, borderRadius: 2, py: 1 }}
-                  onClick={handleClearFilter}
-                >
-                  Clear Filter
-                </Button>
-              </Box>
+                    {sortingOptions?.map((value) => (
+                      <MenuItem value={value} key={value}>
+                        <>{value}</>
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  <Button
+                    variant='contained'
+                    size='small'
+                    sx={{ width: 150, borderRadius: 2, py: 1 }}
+                    onClick={handleClearFilter}
+                  >
+                    Clear Filter
+                  </Button>
+                </Box>
+              </Grid>
             </Grid>
-          </Grid>
           </Box>
           <Box /* sx={{ mt: -3 }} */>
             <Grid
@@ -357,8 +385,7 @@ const Products = () => {
           </Box>
         </Grid>
       </Grid>
-    </Box >
-
+    </Box>
   );
 };
 

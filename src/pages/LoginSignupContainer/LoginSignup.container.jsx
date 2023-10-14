@@ -38,7 +38,6 @@ function LoginSignup() {
 
     useEffect(() => {
         if (user?.email) {
-            // console.log(user?.email);
             navigate("/")
         }
         if (pathname === "/login") setValue(0);

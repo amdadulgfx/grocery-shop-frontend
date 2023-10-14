@@ -50,47 +50,27 @@ const AdminPostAProduct = () => {
     const [snackbarMessage, setSnackbarMessage] = useState("");
 
     useEffect(() => {
-        // Fetch categories from API
         axios
             .get("http://localhost:5000/api/v1/category/")
-            .then((response) => {
-                console.log("res", response);
-                setCategories(response?.data?.data);
-            })
-            .catch((error) => {
-                console.error("Error fetching categories", error);
-            });
+            .then((response) => setCategories(response?.data?.data))
+            .catch((error) => console.error("Error fetching categories", error));
     }, []);
 
     useEffect(() => {
-        // Define the API URL
         const apiUrl = `http://localhost:5000/api/v1/category/subCategory/${values?.category?._id}`;
-        console.log("coming here");
-
-        // Make the GET request using Axios
         axios
             .get(apiUrl)
-            .then((response) => {
-                console.log("response", response?.data?.data[0]?.subcategory);
-                setSubCategories(response?.data?.data[0]?.subcategory); // Set the API response data to the state
-            })
-            .catch((error) => {
-                console.error("Error fetching data:", error);
-            });
+            .then((response) => setSubCategories(response?.data?.data[0]?.subcategory))
+            .catch((error) => console.error("Error fetching data:", error));
     }, [values?.category?._id]);
-
-    // Handle input field changes
     const handleChange = (event) => {
         const { name, value } = event.target;
-
         if (name === "productPicture") {
-            // Handle adding image URLs to the images array
             setValues((prevValues) => ({
                 ...prevValues,
                 productPicture: [...prevValues.productPicture, value],
             }));
         } else {
-            // Handle other input fields
             setValues((prevValues) => ({
                 ...prevValues,
                 [name]: value,
@@ -98,8 +78,6 @@ const AdminPostAProduct = () => {
         }
     };
 
-
-    // Handle date picker changes
     const handleDateChange = (name, date) => {
         setValues((prevValues) => ({
             ...prevValues,
@@ -107,23 +85,17 @@ const AdminPostAProduct = () => {
         }));
     };
 
-    // Handle category change
     const handleCategoryChange = (event, value) => {
         setValues({ ...values, category: value });
     };
 
-    // Handle subcategory change
     const handleSubCategoryChange = (event, value) => {
         setValues({ ...values, subcategory: value });
     };
 
-    // Handle form submission
     const handleSubmit = async () => {
         try {
-            // Access the JWT token from local storage (you should implement this)
             const adminToken = localStorage.getItem("adminToken");
-
-            // Prepare the data to be sent in the POST request
             const postData = {
                 ...values,
                 manufacturingDate: values.manufacturingDate.toISOString(),
@@ -132,9 +104,7 @@ const AdminPostAProduct = () => {
                 subcategory: values?.subcategory?._id,
             };
 
-
-            // Send the POST request to add the product
-            const response = await axios.post(
+            await axios.post(
                 "http://localhost:5000/api/v1/product/add",
                 postData,
                 {
@@ -144,10 +114,6 @@ const AdminPostAProduct = () => {
                 }
             );
 
-            // Handle success response
-            console.log("Response:", response.data);
-
-            // Show success Snackbar
             showSnackbar("success", "Product added successfully");
             setValues({
                 productName: "",
@@ -168,29 +134,20 @@ const AdminPostAProduct = () => {
                 productPlan: "",
             });
         } catch (error) {
-            // Handle error
             console.error("Error:", error);
-
-            // Show error Snackbar
             showSnackbar("error", "Failed to add product");
         }
     };
 
-
-    // Function to show Snackbar
     const showSnackbar = (severity, message) => {
         setSnackbarSeverity(severity);
         setSnackbarMessage(message);
         setSnackbarOpen(true);
     };
 
-    // Handle Snackbar close
     const handleSnackbarClose = () => {
         setSnackbarOpen(false);
     };
-
-
-    console.log("values", values);
 
     return (
         <Container minWidth="md">
@@ -220,7 +177,7 @@ const AdminPostAProduct = () => {
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <InputLabel>Product Pictures</InputLabel>
-                    <CustomTextField 
+                    <CustomTextField
                         name="productPicture"
                         // value={values.productPicture}
                         onChange={handleChange}
@@ -352,7 +309,7 @@ const AdminPostAProduct = () => {
                         displayEmpty
                     >
                         <MenuItem disabled value="">
-                               Select Status
+                            Select Status
                         </MenuItem>
                         {statusOptions.map((option) => (
                             <MenuItem key={option} value={option}>
@@ -371,7 +328,7 @@ const AdminPostAProduct = () => {
                         displayEmpty
                     >
                         <MenuItem disabled value="">
-                               Select Type
+                            Select Type
                         </MenuItem>
                         {typeOptions.map((option) => (
                             <MenuItem key={option} value={option}>
@@ -390,7 +347,7 @@ const AdminPostAProduct = () => {
                         displayEmpty
                     >
                         <MenuItem disabled value="">
-                               Select Product Plan
+                            Select Product Plan
                         </MenuItem>
                         {productPlanOptions.map((option) => (
                             <MenuItem key={option} value={option}>
@@ -438,15 +395,3 @@ const AdminPostAProduct = () => {
 };
 
 export default AdminPostAProduct;
-
-/* const VisuallyHiddenInput = styled('input')`
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  height: 1px;
-  overflow: hidden;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  white-space: nowrap;
-  width: 1px;
-`; */

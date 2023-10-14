@@ -13,12 +13,10 @@ function SingleProduct() {
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_URI}product/single/${productId}`).then(res => {
             if (res.data.success) {
-                // console.log(res.data);
                 setProduct(res.data.data)
             }
         })
     }, [])
-    console.log(productId)
 
     return (
         <Box sx={{

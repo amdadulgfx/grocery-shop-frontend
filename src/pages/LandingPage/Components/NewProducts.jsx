@@ -13,7 +13,7 @@ const NewProducts = () => {
   }, [])
 
   return (
-    <Box sx={{ my: 4 }}>
+    <Box sx={{ mt: 4, mb: 10 }}>
       <Box
         sx={{
           display: "flex",

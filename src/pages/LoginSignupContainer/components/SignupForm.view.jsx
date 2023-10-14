@@ -460,7 +460,6 @@ const SingupForm = (props) => {
 
     const handleLogIn = async (event, from) => {
         if (event.key === "Enter" || from === "onClick") {
-            // console.log(values);
             if (
                 values.email === "" ||
                 values.password === "" ||
@@ -487,10 +486,8 @@ const SingupForm = (props) => {
                     })
 
                 const user = "await Auth.signIn(values.email, values.password)";
-                // var access_token = user["signInUserSession"]["accessToken"]["jwtToken"];
                 var idToken = user["signInUserSession"]["idToken"]["jwtToken"];
                 var refresh_token = user["signInUserSession"]["refreshToken"]["token"];
-                // console.log("hello access tokennnn", access_token);
                 localStorage.setItem("idToken", idToken);
                 localStorage.setItem("refreshToken", refresh_token);
                 localStorage.setItem("flow", "hospital");

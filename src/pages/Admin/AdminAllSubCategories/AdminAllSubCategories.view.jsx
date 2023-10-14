@@ -34,9 +34,6 @@ const AdminAllSubCategories = () => {
         }
     }, [selectedSubCategory]);
 
-    console.log("selectedSubCategory.shortDesc", selectedSubCategory?.shortDesc)
-    console.log("selectedSubCategory.category", selectedCategories)
-
     const fetchSubCategories = () => {
         axios.get('http://localhost:5000/api/v1/subCategory')
             .then((response) => {
@@ -82,7 +79,6 @@ const AdminAllSubCategories = () => {
 
         axios.put(`http://localhost:5000/api/v1/subCategory/update/${selectedSubCategory._id}`, requestData)
             .then((response) => {
-                console.log('Subcategory updated successfully', response.data);
                 fetchSubCategories();
                 handleCancel();
             })
@@ -99,20 +95,13 @@ const AdminAllSubCategories = () => {
     const confirmDelete = () => {
         setDeleteConfirmationOpen(false);
         axios.delete(`http://localhost:5000/api/v1/subCategory/${selectedSubCategory}`)
-            .then((response) => {
-                console.log('Subcategory deleted successfully', response.data);
-                fetchSubCategories();
-            })
-            .catch((error) => {
-                console.error('Error deleting subcategory', error);
-            });
+            .then((response) => fetchSubCategories())
+            .catch((error) =>  console.error('Error deleting subcategory', error));
     };
 
     const handleCategoryChange = (event, newValue) => {
-        console.log("new value", newValue)
         setSelectedCategories(newValue);
     };
-    console.log("selectedCa", selectedCategories)
 
     return (
         <Container maxWidth="md">

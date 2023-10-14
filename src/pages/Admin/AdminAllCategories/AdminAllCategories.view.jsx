@@ -53,7 +53,6 @@ const AdminAllCategories = () => {
 
         axios.put(`http://localhost:5000/api/v1/category/update/${selectedCategory._id}`, requestData)
             .then((response) => {
-                console.log('Category updated successfully', response.data);
                 fetchCategories();
                 setUpdateMode(false);
                 setSelectedCategory(null);
@@ -71,10 +70,7 @@ const AdminAllCategories = () => {
     const confirmDelete = () => {
         setDeleteConfirmationOpen(false);
         axios.delete(`http://localhost:5000/api/v1/category/${selectedCategoryId}`)
-            .then((response) => {
-                console.log('Category deleted successfully', response.data);
-                fetchCategories();
-            })
+            .then((response) => fetchCategories())
             .catch((error) => {
                 console.error('Error deleting category', error);
             });

@@ -36,8 +36,6 @@ const ProductCard = ({ product }) => {
 
     if (existingProduct) {
       optionUpdate.quantity = optionUpdate?.quantity + 1;
-      console.log("coming here", optionUpdate)
-      // return
       updateCartItemQuantity(optionUpdate);
     } else {
       addToCart(option);
@@ -53,10 +51,8 @@ const ProductCard = ({ product }) => {
   };
 
   const handleAddToWishlist = (productId) => {
-    // Implement your add to wishlist functionality here
     const existingWishList = wishList?.data?.find((product) => product?.productId?._id === productId);
     if (existingWishList) {
-      console.log("Adding to wishlist:", productId);
       deleteFromWishList(existingWishList?._id);
     } else {
       addToWishList(productId);
@@ -133,7 +129,7 @@ const ProductCard = ({ product }) => {
         <Box>
           <CardMedia
             className={classes.media}
-            image={product.productPicture.length > 35 ? product.productPicture : demo}
+            image={/* product.productPicture.includes("https://") ? */ product.productPicture[0] /* : demo */}
             title={"Demo_Image"}
           />
         </Box>
@@ -148,7 +144,6 @@ const ProductCard = ({ product }) => {
               {product.productName}
             </Typography>
           </Tooltip>
-
           <Box className={classes.priceContainer} sx={{ justifyContent: "space-between !important", alignItems: "center !important" }}>
             <Tooltip title={product?.reviewPoint?.toFixed(1)}>
               <Rating

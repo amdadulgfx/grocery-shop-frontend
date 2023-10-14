@@ -110,11 +110,11 @@ const HomeCarousel = () => {
               Only this week. Don't miss...
             </Typography>
             <Typography className={classes.offerPrice} variant="h5">
-              <span style={{ fontSize: "14px", marginRight: "-5px" }}>from</span> 
+              <span style={{ fontSize: "14px", marginRight: "-5px" }}>from &nbsp;</span> 
               ${carouselData[currentIndex]?.startPrice}
               </Typography>
             <Button
-              onClick={() => navigate(`/products/${carouselData[currentIndex]?._id}`)}
+              onClick={() => navigate(`/products/${carouselData[currentIndex]?.categoryId}`)}
               variant="contained"
               sx={{
                 textTransform: "none",

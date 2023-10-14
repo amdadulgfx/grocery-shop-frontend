@@ -25,23 +25,15 @@ const AdminAddCategory = () => {
             subcategory: [],
         };
 
-        // Sending the request to the API
         axios
             .post('http://localhost:5000/api/v1/category/add', requestData)
             .then((response) => {
-                // Handle successful response
-                console.log('Category added successfully', response.data);
-
-                // Clear input field values
                 setValues({
                     categoryName: '',
                     shortDesc: '',
                 });
             })
-            .catch((error) => {
-                // Handle error if needed
-                console.error('Error adding category', error);
-            });
+            .catch((error) => console.error('Error adding category', error));
     };
 
     return (

@@ -1,12 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@500&display=swap');
+
 :root {
   font-family: 'Times New Roman', Times, serif;
+  /* font-family: 'Work Sans', sans-serif !important; */
   --clr-gray: #6F7482;
-  --clr-white: #ffffff; 
-  --clr-black: #000000; 
+  --clr-white: #ffffff;
+  --clr-black: #000000;
 }
 
 
-.MuiInputLabel-root{
+.MuiInputLabel-root {
   color: var(--clr-gray) !important;
   font-size: 12px !important;
   font-weight: 600 !important;

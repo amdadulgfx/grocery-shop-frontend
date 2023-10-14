@@ -60,42 +60,26 @@ const UpdateProduct = ({ product, handleCancel, setUpdateMode, setUpdate }) => {
         // Fetch categories from API
         axios
             .get("http://localhost:5000/api/v1/category/")
-            .then((response) => {
-                console.log("res", response);
-                setCategories(response?.data?.data);
-            })
-            .catch((error) => {
-                console.error("Error fetching categories", error);
-            });
+            .then((response) => setCategories(response?.data?.data))
+            .catch((error) => console.error("Error fetching categories", error));
     }, []);
 
     useEffect(() => {
-        // Define the API URL
         const apiUrl = `http://localhost:5000/api/v1/category/subCategory/${values?.category?._id}`;
-        console.log("coming here");
 
-        // Make the GET request using Axios
-        axios
-            .get(apiUrl)
-            .then((response) => {
-                console.log("response", response?.data?.data[0]?.subcategory);
-                setSubCategories(response?.data?.data[0]?.subcategory); // Set the API response data to the state
-            })
-            .catch((error) => {
-                console.error("Error fetching data:", error);
-            });
+        axios.get(apiUrl)
+            .then((response) => setSubCategories(response?.data?.data[0]?.subcategory))
+            .catch((error) => console.error("Error fetching data:", error));
     }, [values?.category?._id]);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
         if (name === "productPicture") {
-            // Handle adding image URLs to the images array
             setValues((prevValues) => ({
                 ...prevValues,
                 productPicture: [...prevValues.productPicture, value],
             }));
         } else {
-            // Handle other input fields
             setValues((prevValues) => ({
                 ...prevValues,
                 [name]: value,
@@ -117,15 +101,9 @@ const UpdateProduct = ({ product, handleCancel, setUpdateMode, setUpdate }) => {
     const handleSubCategoryChange = (event, value) => {
         setValues({ ...values, subcategory: value });
     };
-    console.log(
-        values
-    )
     const handleSubmit = async () => {
         try {
-            // Access the JWT token from local storage (you should implement this)
             const adminToken = localStorage.getItem("adminToken");
-
-            // Prepare the data to be sent in the POST request
             const postData = {
                 ...values,
                 manufacturingDate: values.manufacturingDate?.toISOString(),
@@ -134,8 +112,7 @@ const UpdateProduct = ({ product, handleCancel, setUpdateMode, setUpdate }) => {
                 subcategory: values?.subcategory?._id,
             };
 
-            // Send the put request to update the product
-            const response = await axios.put(
+            await axios.put(
                 `http://localhost:5000/api/v1/product/update/${product._id}`,
                 postData,
                 {
@@ -145,10 +122,6 @@ const UpdateProduct = ({ product, handleCancel, setUpdateMode, setUpdate }) => {
                 }
             );
 
-            // Handle success response
-            console.log("Response:", response.data);
-
-            // Show success Snackbar
             showSnackbar("success", "Product updated successfully");
             setValues({
                 productName: "",

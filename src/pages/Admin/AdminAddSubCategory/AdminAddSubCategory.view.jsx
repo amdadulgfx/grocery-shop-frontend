@@ -40,15 +40,11 @@ const AdminAddSubCategory = () => {
 
         axios.post('http://localhost:5000/api/v1/subCategory/add', requestData)
             .then((response) => {
-                console.log('Subcategory added successfully', response.data);
-                // Reset form fields
                 setName('');
                 setShortDesc('');
                 setSelectedCategory(null);
             })
-            .catch((error) => {
-                console.error('Error adding subcategory', error);
-            });
+            .catch((error) => console.error('Error adding subcategory', error));
     };
 
     return (
