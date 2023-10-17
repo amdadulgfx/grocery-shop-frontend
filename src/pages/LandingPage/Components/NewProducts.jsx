@@ -1,16 +1,16 @@
-import { Box, Button, Grid, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import { ProductCard } from '../../../components';
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
-import { useNavigate } from 'react-router-dom';
+import { Box, Button, Grid, Typography } from '@mui/material';
 import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ProductCard } from '../../../components';
 
 const NewProducts = () => {
   const navigate = useNavigate();
   const [newProducts, setNewProducts] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/v1/product/latestProduct")
+    axios.get(`${process.env.REACT_APP_API_URI}product/latestProduct`)
       .then((res) => {
         const response = res?.data?.data
         setNewProducts([...response])

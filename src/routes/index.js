@@ -23,7 +23,7 @@ const ROUTES = {
   FAQ: "/faq",
   TERMSANDCONDITIONS: "/terms-&-conditions",
   MYACCOUNT: "/my-account",
-  PRODUCTCARTLIST: "Carts",
+  PRODUCTCARTLIST: "carts",
   WISHLISTS: "wishlists",
   ...AdminRoutes
 };

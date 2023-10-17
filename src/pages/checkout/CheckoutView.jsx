@@ -5,7 +5,7 @@ import { purple } from '@mui/material/colors';
 import { styled } from '@mui/material/styles';
 import axios from 'axios';
 import { useFormik } from 'formik';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as yup from 'yup';
 import { BillingAdress } from './component/BillingAdress';
 const SubmitButton = styled(Button)(({ theme }) => ({
@@ -45,6 +45,7 @@ const validationSchema = yup.object({
    
 });
 export const CheckoutView = () => {
+    const dataFetchedRef = useRef(false);
     const [value, setValue] = useState('flatRate');
     const [deliveryStatus, setDeliveryStatus] = useState('cashOnDelivery');
     const [termsCondition, settermsCondition] = React.useState(false);
@@ -77,6 +78,37 @@ export const CheckoutView = () => {
         },
 
     });
+
+
+    useEffect(() => {
+        if (dataFetchedRef.current) return;
+        dataFetchedRef.current = true;
+        axios.get(`${process.env.REACT_APP_API_URI}cart`,
+            {
+                headers: {
+                    authorization: `${access_token}`,
+                },
+            }
+        ).then(res => {
+            // const { email, phoneNumber, name, address, gender, age } = res?.data?.data;
+            console.log(res.data)
+            // setinInitialValues({
+            //     email: email,
+            //     // newPassword: '',
+            //     // currentPassword: '',
+            //     phoneNumber: phoneNumber,
+            //     name: {
+            //         firstName: name?.firstName,
+            //         lastName: name?.lastName,
+            //     },
+            //     address: address,
+            //     gender: gender,
+            //     age: age,
+            // })
+        }).catch((err) => {
+            console.log(err)
+        })
+    }, [])
     return (
         <Container sx={{ padding: '40px 0' }}>
             <form onSubmit={formik.handleSubmit}>
