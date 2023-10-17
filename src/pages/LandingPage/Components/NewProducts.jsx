@@ -3,13 +3,19 @@ import React, { useEffect, useState } from 'react';
 import { ProductCard } from '../../../components';
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const NewProducts = () => {
   const navigate = useNavigate();
-  const [bestSelling, setBestSelling] = useState([]);
+  const [newProducts, setNewProducts] = useState([]);
 
   useEffect(() => {
-    setBestSelling(Products)
+    axios.get("http://localhost:5000/api/v1/product/latestProduct")
+      .then((res) => {
+        const response = res?.data?.data
+        setNewProducts([...response])
+      })
+      .catch((error) => console.error('Error fetching Hot Products', error));
   }, [])
 
   return (
@@ -43,7 +49,7 @@ const NewProducts = () => {
         </Box>
         <Box>
           <Button
-            onClick={() => navigate("/products")}
+            onClick={() => navigate("/products", { state: { redirectFrom: "New_Products" } })}
             variant="outlined"
             sx={{
               textTransform: "none",
@@ -62,7 +68,7 @@ const NewProducts = () => {
         justifyContent="center"
         alignItems="stretch"
       >
-        {bestSelling?.map((item) => (
+        {newProducts?.slice(0, 8)?.map((item) => (
           <Grid key={item.productCode} item xs={12} sm={6} md={3}>
             <ProductCard product={item} />
           </Grid>

@@ -2,7 +2,6 @@ import { Box, Button, Checkbox, FormControl, FormControlLabel, Slider, Typograph
 import React from 'react';
 
 const SearchProductFilter = (props) => {
-  // const []
   const {
     categories,
     handleCheckboxChange,
@@ -18,12 +17,12 @@ const SearchProductFilter = (props) => {
     brandsCheckboxes,
     setBrandsCheckboxes,
     redirectFrom,
-    handleClearHotProducts,
+    handleClearNavigatedProductsFilter,
   } = props;
 
   return (
     <>
-      {(redirectFrom === "Hot_Product") ? (
+      {(redirectFrom?.length > 0 && !redirectFrom === "New_Products") ? (
         <>
           <Box>
             <Typography
@@ -32,18 +31,34 @@ const SearchProductFilter = (props) => {
             >
               PRODUCT CATEGORIES
             </Typography>
-            <FormControl component="fieldset">
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={true}
-                    onChange={(event) => handleClearHotProducts(event)}
-                    name="Hot Products"
-                  />
-                }
-                label="Hot Products"
-              />
-            </FormControl>
+            {(redirectFrom === "Hot_Product") ? (
+              <FormControl component="fieldset">
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={true}
+                      onChange={(event) => handleClearNavigatedProductsFilter(event)}
+                      name="Hot Products"
+                    />
+                  }
+                  label="Hot Products"
+                />
+              </FormControl>
+            ) : (<></>)}
+            {(redirectFrom === "Best_Seller") ? (
+              <FormControl component="fieldset">
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={true}
+                      onChange={(event) => handleClearNavigatedProductsFilter(event)}
+                      name="Best Seller Products"
+                    />
+                  }
+                  label="Best Seller Products"
+                />
+              </FormControl>
+            ) : (<></>)}
           </Box>
         </>
       ) : (

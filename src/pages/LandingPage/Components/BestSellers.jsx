@@ -7,12 +7,12 @@ import axios from 'axios';
 
 const BestSellers = () => {
   const navigate = useNavigate();
-  const [products, setProducts] = useState([]);
+  const [bestSellerProducts, setBestSellerProducts] = useState([]);
 
   useEffect(() => {
     const apiUrl = `${process.env.REACT_APP_API_URI}product/`;
     axios.get(apiUrl)
-      .then((response) => setProducts(response?.data?.data))
+      .then((response) => setBestSellerProducts(response?.data?.data))
       .catch((error) => console.error('Error fetching data:', error));
   }, []);
 
@@ -47,12 +47,12 @@ const BestSellers = () => {
         </Box>
         <Box>
           <Button
-            onClick={() => navigate("/products")}
+            onClick={() => navigate("/products", { state: { bestSellerProducts: bestSellerProducts, redirectFrom: "Best_Seller" } })}
             variant="outlined"
             sx={{
               textTransform: "none",
               borderRadius: 16,
-              visibility: "hidden"
+              // visibility: "hidden"
             }}
           >
             View All&nbsp;
@@ -67,7 +67,7 @@ const BestSellers = () => {
         justifyContent="start"
         alignItems="stretch"
       >
-        {products?.map((item) => (
+        {bestSellerProducts?.slice(0, 4)?.map((item) => (
           <Grid key={item.productCode} item xs={12} sm={6} md={3}>
             <ProductCard product={item} />
           </Grid>

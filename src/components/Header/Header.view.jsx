@@ -42,7 +42,11 @@ const MainNavigation = [
     { label: "More", path: "/more" },
 ];
 
-
+const options = [
+    'Show all notification content',
+    'Hide sensitive notification content',
+    'Hide all notification content',
+];
 
 const Header = () => {
     const navigate = useNavigate();
@@ -53,14 +57,13 @@ const Header = () => {
     const [openDrawer, setOpenDrawer] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
+    const pathname = window.location.pathname
     const user = useSelector(selectUser);
     const dispatch = useDispatch();
 
-    const options = [
-        'Show all notification content',
-        'Hide sensitive notification content',
-        'Hide all notification content',
-    ];
+    useEffect(()=> {
+        pathname === "/products" ? setShowSearchBar(true) : setShowSearchBar(false);
+    }, [pathname]);
 
     const handleShowSearchBar = (event) => {
         if (searchKeyword === "") {
@@ -74,12 +77,8 @@ const Header = () => {
         setAnchorEl(null);
     };
 
-
-
-
-
     const handleLogout = () => {
-        dispatch(logout()); // Dispatch the logout action
+        dispatch(logout()); 
         localStorage.removeItem('accessToken');
     };
 
@@ -88,7 +87,7 @@ const Header = () => {
             position="sticky"
             sx={{ backgroundColor: "#ffffff", color: "var(--clr-gray-1)" }}
         >
-            {matches ? (<>
+            {matches ? (
                 <Box
                     sx={{
                         display: "flex",
@@ -100,12 +99,12 @@ const Header = () => {
                 >
                     <Box>
                         <Link to="/">
-                        <img
-                            height="35px"
-                            width="100%"
-                            src={HeaderLogo}
-                            alt="Main_logo"
-                        />
+                            <img
+                                height="35px"
+                                width="100%"
+                                src={HeaderLogo}
+                                alt="Main_logo"
+                            />
                         </Link>
                     </Box>
                     <Box
@@ -126,7 +125,7 @@ const Header = () => {
                         </IconButton>
                     </Box>
                 </Box>
-            </>) : (
+            ) : (
                 <>
                     <Container maxWidth="lg" sx={{ py: 0.5, }}>
                         <Box
@@ -195,7 +194,7 @@ const Header = () => {
                             </Box>
                         </Box>
                     </Container>
-                    <Divider /*  sx={{mx: -100}} */ />
+                    <Divider />
                     <Container maxWidth="lg" sx={{ py: 0.2, }}>
                         <Box
                             sx={{

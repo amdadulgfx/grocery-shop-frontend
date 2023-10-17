@@ -13,7 +13,7 @@ import SearchIcon from '@mui/icons-material/Search';
 const categories = ['Beverages', 'Biscuits & Snacks', 'Breads & Bakery', 'Breakfast & Dairy', 'Frozen Foods', 'Fruits & Vegetables', 'Grocery & Staples', 'Household Needs', 'Meats & Seafood'];
 const statuses = ['In Stock', 'On Sale'];
 const brands = ['Frito Lay', 'Oreo', "Welch's", "Nestle"];
-const sortingOptions = ['New Date', 'Previous Date', 'Price Low', 'Price High'];
+const sortingOptions = ['New Products', 'Price Low', 'Price High'];
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -30,6 +30,8 @@ const Products = () => {
   const theme = useTheme();
   const location = useLocation();
   const mobileView = useMediaQuery(theme.breakpoints.down("md"));
+  const [categories, setCategories] = useState([]);
+  const [brands, setBrands] = useState([]);
   const [products, setProducts] = useState([]);
   const [priceRange, setPriceRange] = useState([1, 50]);
   const [sortBy, setSortBy] = useState("");
@@ -67,24 +69,35 @@ const Products = () => {
   const searchStatusesString = handleChangeProductCategory(statusesCheckboxes);
   const searchBrandsString = handleChangeProductCategory(brandsCheckboxes);
   const { state } = { ...location };
-  const { hotProducts, redirectFrom } = { ...state };
+  const { hotProducts, bestSellerProducts, redirectFrom } = { ...state };
+
+  console.log(categories);
+  console.log(brands);
 
   const handleSearchProducts = () => {
     const apiUrl = `${process.env.REACT_APP_API_URI}product/searchProduct?searchTerm=${searchCategoriesString}`;
     axios.get(apiUrl)
-      .then(response => setProducts(response?.data?.data))
-      .catch(error => console.error('Error fetching data:', error));
+      .then((res) => setProducts(res?.data?.data))
+      .catch((error) => console.error('Error fetching data:', error));
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [])
 
   useEffect(() => {
     if (redirectFrom === "Hot_Product") {
       setCategoryCheckboxes({ "Hot Products": true });
-      setProducts(hotProducts)
+      setProducts(hotProducts);
+    } else if (redirectFrom === "Best_Seller") {
+      setCategoryCheckboxes({ "Best Seller Products": true });
+      setProducts(bestSellerProducts);
+    } else if (redirectFrom === "New_Products") {
+      setSortBy("New Products");
+      handleSearchProducts();
     } else {
       handleSearchProducts();
     }
-
-
   }, [categoryCheckboxes, statusesCheckboxes, brandsCheckboxes]);
 
   const sortByNewDate = (a, b) => {
@@ -162,11 +175,11 @@ const Products = () => {
   const handleClearFilter = () => {
     handleResetStates();
     handleSearchProducts();
+    location.state.redirectFrom = "";
   }
 
-  const handleClearHotProducts = (event) => {
-    if(event.target.checked === false) {
-      location.state.redirectFrom = "";
+  const handleClearNavigatedProductsFilter = (event) => {
+    if (event.target.checked === false) {
       handleClearFilter();
     }
   }
@@ -186,11 +199,11 @@ const Products = () => {
     brandsCheckboxes,
     setBrandsCheckboxes,
     redirectFrom,
-    handleClearHotProducts,
+    handleClearNavigatedProductsFilter,
   };
 
   return (
-    <Box maxWidth="lg" sx={{ mx: 5, py: 0.5, }}>
+    <Box maxWidth="lg" sx={{ mx: "auto", py: 0.5, }}>
       <Box>
         <Breadcrumbs
           aria-label="breadcrumb"
@@ -216,15 +229,17 @@ const Products = () => {
           >
             Products
           </Typography>
-          <Typography
-            variant="body2"
-            sx={{
-              textDecoration: "none",
-              color: "#4D4D4D",
-            }}
-          >
-            Hot Products
-          </Typography>
+          {(redirectFrom === "Hot_Product") && (
+            <Typography
+              variant="body2"
+              sx={{
+                textDecoration: "none",
+                color: "#4D4D4D",
+              }}
+            >
+              Hot Products
+            </Typography>
+          )}
         </Breadcrumbs>
       </Box>
       <Grid container spacing={2} alignContent="stretch">
