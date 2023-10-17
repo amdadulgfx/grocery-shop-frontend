@@ -18,6 +18,7 @@ const ROUTES = {
   PRODUCTS: "/products",
   SINGLEPRODUCT: "/products/:productId",
   PRODUCTORDER: "/checkout/order-recieved",
+  CHECKOUT: "/checkout/",
   PRIVACYPOLICY: "/privacy-policy",
   FAQ: "/faq",
   TERMSANDCONDITIONS: "/terms-&-conditions",

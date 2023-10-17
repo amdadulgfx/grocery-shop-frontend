@@ -3,9 +3,10 @@ import './App.css';
 import { Footer, Header } from './components';
 import { AboutUs, AdminAddCategory, AdminAddSubCategory, AdminAllCategories, AdminAllSubCategories, AdminDashboard, AdminPostAProduct, AdminProductsUpdateDeleteGetList, AdminSignIn, ContactUs, FAQ, LandingPage, LoginSignup, MyAccount, PrivacyPolicy, ProductCartLists, Products, TermsAndConditions } from './pages';
 import SingleProduct from './pages/SingleProduct';
+import WishLists from "./pages/Users/WishLists/WishLists.view";
+import { CheckoutView } from "./pages/checkout/CheckoutView";
 import { OrderView } from './pages/order/OrderView';
 import ROUTES from "./routes/index.js";
-import WishLists from "./pages/Users/WishLists/WishLists.view";
 
 function App() {
   const pathname = window.location.pathname
@@ -25,7 +26,8 @@ function App() {
           <Route exact path={ROUTES.PRODUCTS} element={<Products />} />
           <Route exact path={ROUTES.SINGLEPRODUCT} element={<SingleProduct />} />
           <Route exact path={ROUTES.PRIVACYPOLICY} element={<PrivacyPolicy />} />
-          <Route exact path={ROUTES.PRODUCTORDER} element={<OrderView />} />
+          <Route exact path={ROUTES.PRODUCTORDER} element ={<OrderView />} />
+          <Route exact path={ROUTES.CHECKOUT} element ={<CheckoutView />} />
           <Route exact path={ROUTES.FAQ} element={<FAQ />} />
           <Route exact path={ROUTES.TERMSANDCONDITIONS} element={<TermsAndConditions />} />
           <Route exact path={ROUTES.PRODUCTCARTLIST} element={<ProductCartLists />} />
