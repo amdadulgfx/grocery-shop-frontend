@@ -1,4 +1,4 @@
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Outlet, Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import './App.css';
 import { Footer, Header } from './components';
 import { AboutUs, AdminAddCategory, AdminAddSubCategory, AdminAllCategories, AdminAllSubCategories, AdminDashboard, AdminPostAProduct, AdminProductsUpdateDeleteGetList, AdminSignIn, ContactUs, FAQ, LandingPage, LoginSignup, MyAccount, PrivacyPolicy, ProductCartLists, Products, TermsAndConditions } from './pages';
@@ -26,18 +26,20 @@ function App() {
           <Route exact path={ROUTES.PRODUCTS} element={<Products />} />
           <Route exact path={ROUTES.SINGLEPRODUCT} element={<SingleProduct />} />
           <Route exact path={ROUTES.PRIVACYPOLICY} element={<PrivacyPolicy />} />
-          <Route exact path={ROUTES.PRODUCTORDER} element ={<OrderView />} />
+          <Route exact path={ROUTES.PRODUCTORDER} element={<OrderView />} />
           <Route exact path={ROUTES.FAQ} element={<FAQ />} />
           <Route exact path={ROUTES.TERMSANDCONDITIONS} element={<TermsAndConditions />} />
           <Route exact path={ROUTES.PRODUCTCARTLIST} element={<ProductCartLists />} />
           <Route exact path={ROUTES.WISHLISTS} element={<WishLists />} />
-          <Route exact path={ROUTES.ADMINDASHBOARD} element={<AdminDashboard />} />
-          <Route exact path={ROUTES.ADMINPOSTAPRODUCT} element={<AdminPostAProduct />} />
-          <Route exact path={ROUTES.ADMINADDCATEGORY} element={<AdminAddCategory />} />
-          <Route exact path={ROUTES.ADMINALLCATEGORIES} element={<AdminAllCategories />} />
-          <Route exact path={ROUTES.ADMINADDSUBCATEGORY} element={<AdminAddSubCategory />} />
-          <Route exact path={ROUTES.ADMINALLSUBCATEGORIES} element={<AdminAllSubCategories />} />
-          <Route exact path={ROUTES.ADMINPRODUCTSUPDATEDELETEGETLIST} element={<AdminProductsUpdateDeleteGetList />} />
+          <Route exact path={ROUTES.ADMINDASHBOARD} element={<AdminDashboard />} >
+            <Route exact path={ROUTES.ADMINPOSTAPRODUCT} element={<AdminPostAProduct />} />
+            <Route exact path={ROUTES.ADMINADDCATEGORY} element={<AdminAddCategory />} />
+            <Route exact path={ROUTES.ADMINALLCATEGORIES} element={<AdminAllCategories />} />
+            <Route exact path={ROUTES.ADMINADDSUBCATEGORY} element={<AdminAddSubCategory />} />
+            <Route exact path={ROUTES.ADMINALLSUBCATEGORIES} element={<AdminAllSubCategories />} />
+            <Route exact path={ROUTES.ADMINPRODUCTSUPDATEDELETEGETLIST} element={<AdminProductsUpdateDeleteGetList />} />
+            <Route path="*" element={<Outlet />} />
+          </Route>
         </Routes>
         {pathname === "/admin-dashboard" ? <></> : <Footer />}
       </div>

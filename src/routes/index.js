@@ -1,12 +1,12 @@
 const AdminRoutes = {
   ADMINSIGNIN: "/admin-login",
   ADMINDASHBOARD: "/admin-dashboard",
-  ADMINPOSTAPRODUCT: "/post-product",
-  ADMINADDCATEGORY: "/Add-Category",
-  ADMINALLCATEGORIES: "/categories",
-  ADMINADDSUBCATEGORY: "/add-subCategory",
-  ADMINALLSUBCATEGORIES: "/SubCategories",
-  ADMINPRODUCTSUPDATEDELETEGETLIST: "/admin-productLists",
+  ADMINPOSTAPRODUCT: "post-product",
+  ADMINADDCATEGORY: "Add-Category",
+  ADMINALLCATEGORIES: "categories",
+  ADMINADDSUBCATEGORY: "add-subCategory",
+  ADMINALLSUBCATEGORIES: "SubCategories",
+  ADMINPRODUCTSUPDATEDELETEGETLIST: "admin-productLists",
 };
 
 const ROUTES = {
