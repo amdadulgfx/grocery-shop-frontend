@@ -10,7 +10,7 @@ const AllCategoriesAds = () => {
   useEffect(() => {
     // Fetch categories from API
     axios
-      .get("http://localhost:5000/api/v1/category/")
+      .get(`${process.env.REACT_APP_API_URI}category/`)
       .then((response) => {
         setCategories(response?.data?.data);
       })

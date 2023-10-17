@@ -26,7 +26,7 @@ const AdminAddCategory = () => {
         };
 
         axios
-            .post('http://localhost:5000/api/v1/category/add', requestData)
+            .post(`${process.env.REACT_APP_API_URI}category/add`, requestData)
             .then((response) => {
                 setValues({
                     categoryName: '',

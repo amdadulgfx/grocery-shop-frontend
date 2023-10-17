@@ -20,7 +20,7 @@ const AdminAllCategories = () => {
     }, []);
 
     const fetchCategories = () => {
-        axios.get('http://localhost:5000/api/v1/category/')
+        axios.get(`${process.env.REACT_APP_API_URI}category/`)
             .then((response) => {
                 setCategories(response?.data?.data);
             })
@@ -51,7 +51,7 @@ const AdminAllCategories = () => {
             subcategory: [],
         };
 
-        axios.put(`http://localhost:5000/api/v1/category/update/${selectedCategory._id}`, requestData)
+        axios.put(`${process.env.REACT_APP_API_URI}category/update/${selectedCategory._id}`, requestData)
             .then((response) => {
                 fetchCategories();
                 setUpdateMode(false);
@@ -69,7 +69,7 @@ const AdminAllCategories = () => {
 
     const confirmDelete = () => {
         setDeleteConfirmationOpen(false);
-        axios.delete(`http://localhost:5000/api/v1/category/${selectedCategoryId}`)
+        axios.delete(`${process.env.REACT_APP_API_URI}category/${selectedCategoryId}`)
             .then((response) => fetchCategories())
             .catch((error) => {
                 console.error('Error deleting category', error);

@@ -13,7 +13,6 @@ import {
     Snackbar,
 } from "@mui/material";
 import axios from "axios";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import MuiAlert from "@mui/material/Alert";
 import CustomTextField from "../../../CustomTags/CustomTextField.view";
 
@@ -36,7 +35,6 @@ const initialValues = {
     productPlan: "",
 };
 
-const discountOptions = ["Active"];
 const statusOptions = ["In Stock", "Out Of Stock"];
 const typeOptions = ["Recommended", "Organic"];
 const productPlanOptions = ["Recommended", "Organic"];
@@ -59,13 +57,13 @@ const UpdateProduct = ({ product, handleCancel, setUpdateMode, setUpdate }) => {
     useEffect(() => {
         // Fetch categories from API
         axios
-            .get("http://localhost:5000/api/v1/category/")
+            .get(`${process.env.REACT_APP_API_URI}category/`)
             .then((response) => setCategories(response?.data?.data))
             .catch((error) => console.error("Error fetching categories", error));
     }, []);
 
     useEffect(() => {
-        const apiUrl = `http://localhost:5000/api/v1/category/subCategory/${values?.category?._id}`;
+        const apiUrl = `${process.env.REACT_APP_API_URI}category/subCategory/${values?.category?._id}`;
 
         axios.get(apiUrl)
             .then((response) => setSubCategories(response?.data?.data[0]?.subcategory))
@@ -113,7 +111,7 @@ const UpdateProduct = ({ product, handleCancel, setUpdateMode, setUpdate }) => {
             };
 
             await axios.put(
-                `http://localhost:5000/api/v1/product/update/${product._id}`,
+                `${process.env.REACT_APP_API_URI}product/update/${product._id}`,
                 postData,
                 {
                     headers: {

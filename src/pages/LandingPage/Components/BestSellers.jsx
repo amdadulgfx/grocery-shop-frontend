@@ -10,7 +10,7 @@ const BestSellers = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    const apiUrl = 'http://localhost:5000/api/v1/product/';
+    const apiUrl = `${process.env.REACT_APP_API_URI}product/`;
     axios.get(apiUrl)
       .then((response) => setProducts(response?.data?.data))
       .catch((error) => console.error('Error fetching data:', error));

@@ -67,7 +67,7 @@ const HomeCarousel = () => {
   };
 
   useEffect(() => {
-    const apiUrl = `http://localhost:5000/api/v1/heroMasterData`;
+    const apiUrl = `${process.env.REACT_APP_API_URI}heroMasterData`;
     axios.get(apiUrl)
       .then(response => setCarouselData(response?.data?.data))
       .catch(error => console.error('Error fetching data:', error));

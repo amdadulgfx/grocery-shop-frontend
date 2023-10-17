@@ -51,13 +51,13 @@ const AdminPostAProduct = () => {
 
     useEffect(() => {
         axios
-            .get("http://localhost:5000/api/v1/category/")
+            .get(`${process.env.REACT_APP_API_URI}category/`)
             .then((response) => setCategories(response?.data?.data))
             .catch((error) => console.error("Error fetching categories", error));
     }, []);
 
     useEffect(() => {
-        const apiUrl = `http://localhost:5000/api/v1/category/subCategory/${values?.category?._id}`;
+        const apiUrl = `${process.env.REACT_APP_API_URI}category/subCategory/${values?.category?._id}`;
         axios
             .get(apiUrl)
             .then((response) => setSubCategories(response?.data?.data[0]?.subcategory))
@@ -105,7 +105,7 @@ const AdminPostAProduct = () => {
             };
 
             await axios.post(
-                "http://localhost:5000/api/v1/product/add",
+                `${process.env.REACT_APP_API_URI}product/add`,
                 postData,
                 {
                     headers: {

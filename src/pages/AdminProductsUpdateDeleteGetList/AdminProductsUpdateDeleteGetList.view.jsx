@@ -22,7 +22,7 @@ const AdminProductsUpdateDeleteGetList = () => {
     };
 
     useEffect(() => {
-        const apiUrl = 'http://localhost:5000/api/v1/product/';
+        const apiUrl = `${process.env.REACT_APP_API_URI}product/`;
         axios.get(apiUrl)
             .then((response) => setProducts(response?.data?.data))
             .catch((error) => {
@@ -37,7 +37,7 @@ const AdminProductsUpdateDeleteGetList = () => {
 
     const confirmDelete = () => {
         setDeleteConfirmationOpen(false);
-        axios.delete(`http://localhost:5000/api/v1/product/${selectedProduct}`)
+        axios.delete(`${process.env.REACT_APP_API_URI}product/${selectedProduct}`)
             .then((response) => {
                 const newProducts = products?.filter(product => product?._id !== selectedProduct);
                 setProducts(newProducts);

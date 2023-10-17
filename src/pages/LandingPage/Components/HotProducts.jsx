@@ -12,7 +12,7 @@ const HotProducts = () => {
   const [hotProducts, setHotProducts] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/v1/product/hotProduct/")
+    axios.get(`${process.env.REACT_APP_API_URI}product/hotProduct/`)
       .then((res) => {
         const response = res?.data?.data
         setHotProducts([...response])

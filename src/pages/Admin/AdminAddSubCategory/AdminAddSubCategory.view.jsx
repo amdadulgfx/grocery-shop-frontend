@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
-    Box,
     Button,
     Container,
     Grid,
@@ -18,7 +17,7 @@ const AdminAddSubCategory = () => {
 
     useEffect(() => {
         // Fetch categories from API
-        axios.get('http://localhost:5000/api/v1/category/')
+        axios.get(`${process.env.REACT_APP_API_URI}category/`)
             .then((response) => {
                 setCategories(response?.data?.data);
             })
@@ -38,7 +37,7 @@ const AdminAddSubCategory = () => {
             category: selectedCategory ? selectedCategory._id : null,
         };
 
-        axios.post('http://localhost:5000/api/v1/subCategory/add', requestData)
+        axios.post(`${process.env.REACT_APP_API_URI}subCategory/add`, requestData)
             .then((response) => {
                 setName('');
                 setShortDesc('');

@@ -7,7 +7,6 @@ import { OrderView } from './pages/order/OrderView';
 import ROUTES from "./routes/index.js";
 import WishLists from "./pages/Users/WishLists/WishLists.view";
 
-
 function App() {
   const pathname = window.location.pathname
 

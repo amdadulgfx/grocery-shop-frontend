@@ -35,7 +35,7 @@ const AdminAllSubCategories = () => {
     }, [selectedSubCategory]);
 
     const fetchSubCategories = () => {
-        axios.get('http://localhost:5000/api/v1/subCategory')
+        axios.get(`${process.env.REACT_APP_API_URI}subCategory`)
             .then((response) => {
                 setSubCategories(response.data?.data);
             })
@@ -45,7 +45,7 @@ const AdminAllSubCategories = () => {
     };
 
     const fetchCategories = () => {
-        axios.get('http://localhost:5000/api/v1/category/')
+        axios.get(`${process.env.REACT_APP_API_URI}category/`)
             .then((response) => {
                 setCategories(response?.data?.data);
             })
@@ -77,7 +77,7 @@ const AdminAllSubCategories = () => {
             category: selectedCategories.map(cat => cat._id)
         };
 
-        axios.put(`http://localhost:5000/api/v1/subCategory/update/${selectedSubCategory._id}`, requestData)
+        axios.put(`${process.env.REACT_APP_API_URI}subCategory/update/${selectedSubCategory._id}`, requestData)
             .then((response) => {
                 fetchSubCategories();
                 handleCancel();
@@ -94,7 +94,7 @@ const AdminAllSubCategories = () => {
 
     const confirmDelete = () => {
         setDeleteConfirmationOpen(false);
-        axios.delete(`http://localhost:5000/api/v1/subCategory/${selectedSubCategory}`)
+        axios.delete(`${process.env.REACT_APP_API_URI}subCategory/${selectedSubCategory}`)
             .then((response) => fetchSubCategories())
             .catch((error) =>  console.error('Error deleting subcategory', error));
     };
