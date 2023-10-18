@@ -135,9 +135,10 @@ const Header = () => {
                 </Box>
             ) : (
                 <>
-                    <Container maxWidth="lg" sx={{ py: 0.5, }}>
+                    <Container maxWidth="lg" sx={{ py: 0.5 }}>
                         <Box
                             sx={{
+                                mx: -3,
                                 display: "flex",
                                 justifyContent: "space-between",
                                 alignItems: "center",
@@ -206,6 +207,7 @@ const Header = () => {
                     <Container maxWidth="lg" sx={{ py: 0.2, }}>
                         <Box
                             sx={{
+                                mx: -3,
                                 display: "flex",
                                 justifyContent: "space-between",
                                 alignItems: "center",
@@ -217,7 +219,7 @@ const Header = () => {
                                     <img
                                         height="40px"
                                         width="100%"
-                                        style={{ marginLeft: "8px", marginTop: "-6px" }}
+                                        style={{ /* marginLeft: "8px", */ marginTop: "-6px" }}
                                         src={HeaderLogo}
                                         alt="Main_logo"
                                     />

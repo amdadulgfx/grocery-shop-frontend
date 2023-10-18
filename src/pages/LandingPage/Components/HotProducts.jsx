@@ -133,7 +133,6 @@ const useStyles = makeStyles((theme) => ({
     borderImage: "linear-gradient(45deg, #D61343, #FFC704)",
     borderImageSlice: 1,
     borderImageSource: "linear-gradient(45deg, #D61343, #FFC704)",
-    borderRadius: 16,
     p: 2,
   },
   priceContainer: {
