@@ -2,6 +2,7 @@ import { Box, Button, Divider, Drawer, IconButton, Input, InputAdornment, Typogr
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SearchSharpIcon from '@mui/icons-material/SearchSharp';
+import LocalMallIcon from '@mui/icons-material/LocalMall';
 
 const InfoRoutes = [
   { label: "About Us", path: "/about" },
@@ -14,12 +15,12 @@ const MainNavigation = [
   { label: "Products", path: "/products" },
   { label: "Blog", path: "/blog" },
   { label: "Contact", path: "/contact-us" },
-  { label: "More", path: "/saved" },
+  // { label: "More", path: "/saved" },
 ];
 
 export const ResponsiveHeader = (props) => {
   const navigate = useNavigate();
-  const { openDrawer, setOpenDrawer } = props;
+  const { openDrawer, setOpenDrawer, user, handleLogout, handleClose } = props || {};
 
   return (
     <Drawer
@@ -71,9 +72,64 @@ export const ResponsiveHeader = (props) => {
               gap: 2,
             }}
           >
+            {user?.email ? (
+              <>
+                <Button
+                  variant="outlined"
+                  color="warning"
+                  sx={{
+                    borderRadius: 16,
+                    px: 3,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                    textTransform: "none",
+                    fontWeight: "600",
+                  }}
+                  onClick={() => { navigate("/carts"); handleClose(); }}
+                >
+
+                  <LocalMallIcon /> <span style={{ marginBottom: "-3px" }}>Cart</span>
+                </Button>
+                <Button
+                  variant="contained"
+                  sx={{
+                    borderRadius: 16,
+                    px: 3
+                  }}
+                  onClick={handleLogout}
+                >
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  variant="contained"
+                  sx={{
+                    borderRadius: 16,
+                    px: 3
+                  }}
+                  onClick={() => navigate('/signup')}
+                >
+                  SignUp
+                </Button>
+                <Button
+                  variant="outlined"
+                  sx={{
+                    border: "2px solid !important",
+                    borderRadius: 16,
+                    px: 3
+                  }}
+                  onClick={() => navigate('/login')}
+                >
+                  Login
+                </Button>
+              </>
+            )}
 
 
-            <Button
+            {/* <Button
               variant="contained"
               sx={{
                 borderRadius: 16,
@@ -91,7 +147,7 @@ export const ResponsiveHeader = (props) => {
               }}
             >
               Login
-            </Button>
+            </Button> */}
           </Box>
         </Box>
         <Box maxWidth="md" sx={{ mx: "auto", my: 2, px: "20px" }}>

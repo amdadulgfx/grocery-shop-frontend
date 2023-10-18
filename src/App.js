@@ -7,13 +7,14 @@ import WishLists from "./pages/Users/WishLists/WishLists.view";
 import { CheckoutView } from "./pages/checkout/CheckoutView";
 import { OrderView } from './pages/order/OrderView';
 import ROUTES from "./routes/index.js";
+import WithScrollToTop from "./routes/WithScrollToTop";
 
 function App() {
   const pathname = window.location.pathname;
 
   return (
     <Router>
-      <div>
+      <WithScrollToTop>
         {((pathname === "/admin-dashboard") || (pathname === "/admin-dashboard/post-product") || (pathname === "/admin-dashboard/add-category") || (pathname === "/admin-dashboard/categories") || (pathname === "/admin-dashboard/add-subCategory") || (pathname === "/admin-dashboard/SubCategories") || (pathname === "/admin-dashboard/admin-productLists")) ? <></> : <Header />}
         <ErrorBoundary>
           <Routes>
@@ -34,19 +35,19 @@ function App() {
             <Route exact path={ROUTES.PRODUCTCARTLIST} element={<ProductCartLists />} />
             <Route exact path={ROUTES.WISHLISTS} element={<WishLists />} />
             <Route exact path={ROUTES.ADMINDASHBOARD} element={<AdminDashboard />} >
-              <Route exact path={ROUTES.ADMINPOSTAPRODUCT} element={<AdminPostAProduct />} />
-              <Route exact path={ROUTES.ADMINADDCATEGORY} element={<AdminAddCategory />} />
-              <Route exact path={ROUTES.ADMINALLCATEGORIES} element={<AdminAllCategories />} />
-              <Route exact path={ROUTES.ADMINADDSUBCATEGORY} element={<AdminAddSubCategory />} />
-              <Route exact path={ROUTES.ADMINALLSUBCATEGORIES} element={<AdminAllSubCategories />} />
-              <Route exact path={ROUTES.ADMINPRODUCTSUPDATEDELETEGETLIST} element={<AdminProductsUpdateDeleteGetList />} />
-              <Route path="*" element={<Outlet />} />
+            <Route exact path={ROUTES.ADMINPOSTAPRODUCT} element={<AdminPostAProduct />} />
+            <Route exact path={ROUTES.ADMINADDCATEGORY} element={<AdminAddCategory />} />
+            <Route exact path={ROUTES.ADMINALLCATEGORIES} element={<AdminAllCategories />} />
+            <Route exact path={ROUTES.ADMINADDSUBCATEGORY} element={<AdminAddSubCategory />} />
+            <Route exact path={ROUTES.ADMINALLSUBCATEGORIES} element={<AdminAllSubCategories />} />
+            <Route exact path={ROUTES.ADMINPRODUCTSUPDATEDELETEGETLIST} element={<AdminProductsUpdateDeleteGetList />} />
+            <Route path="*" element={<Outlet />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
         </ErrorBoundary>
         {((pathname === "/admin-dashboard") || (pathname === "/admin-dashboard/post-product") || (pathname === "/admin-dashboard/add-category") || (pathname === "/admin-dashboard/categories") || (pathname === "/admin-dashboard/add-subCategory") || (pathname === "/admin-dashboard/SubCategories") || (pathname === "/admin-dashboard/admin-productLists")) ? <></> : <Footer />}
-      </div>
+      </WithScrollToTop>
     </Router>
   );
 };

@@ -23,6 +23,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { ResponsiveHeader } from "./HeaderMenus.view";
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, selectUser } from '../../reduxMine/features/authApi';
+import LocalMallIcon from '@mui/icons-material/LocalMall';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -39,7 +40,7 @@ const MainNavigation = [
     { label: "Products", path: "/products" },
     { label: "Blog", path: "/blog" },
     { label: "Contact", path: "/contact-us" },
-    { label: "More", path: "/more" },
+    // { label: "More", path: "/saved" },
 ];
 
 const options = [
@@ -61,7 +62,7 @@ const Header = () => {
     const user = useSelector(selectUser);
     const dispatch = useDispatch();
 
-    useEffect(()=> {
+    useEffect(() => {
         pathname === "/products" ? setShowSearchBar(true) : setShowSearchBar(false);
     }, [pathname]);
 
@@ -75,12 +76,22 @@ const Header = () => {
     }
     const handleClose = () => {
         setAnchorEl(null);
+        setOpenDrawer(false);
     };
 
     const handleLogout = () => {
-        dispatch(logout()); 
+        dispatch(logout());
         localStorage.removeItem('accessToken');
+        matches && handleClose();
     };
+
+    const headerProps = {
+        openDrawer,
+        setOpenDrawer,
+        user,
+        handleLogout,
+        handleClose,
+    }
 
     return (
         <AppBar
@@ -114,10 +125,7 @@ const Header = () => {
                             gap: 1,
                         }}
                     >
-                        <ResponsiveHeader
-                            openDrawer={openDrawer}
-                            setOpenDrawer={setOpenDrawer}
-                        />
+                        <ResponsiveHeader {...headerProps} />
                         <IconButton
                             onClick={() => setOpenDrawer(true)}
                         >
@@ -227,7 +235,8 @@ const Header = () => {
                                             color: "#757575",
                                             fontSize: "1rem",
                                             fontWeight: "600",
-                                            p: 2,
+                                            py: 2, px: 1.2,
+                                            cursor: "pointer",
                                             "&:hover": {
                                                 color: "#2BBEF9"
                                             }
@@ -304,16 +313,35 @@ const Header = () => {
                                 )}
 
                                 {user?.email ? (
-                                    <Button
-                                        variant="contained"
-                                        sx={{
-                                            borderRadius: 16,
-                                            px: 3
-                                        }}
-                                        onClick={handleLogout}
-                                    >
-                                        Logout
-                                    </Button>
+                                    <>
+                                        <Button
+                                            variant="outlined"
+                                            color="warning"
+                                            sx={{
+                                                borderRadius: 16,
+                                                px: 3,
+                                                display: "flex",
+                                                alignItems: "center",
+                                                gap: 1,
+                                                textTransform: "none",
+                                                fontWeight: "600",
+                                            }}
+                                            onClick={() => navigate("/carts")}
+                                        >
+
+                                            <LocalMallIcon /> <span style={{ marginBottom: "-3px" }}>Cart</span>
+                                        </Button>
+                                        <Button
+                                            variant="contained"
+                                            sx={{
+                                                borderRadius: 16,
+                                                px: 3
+                                            }}
+                                            onClick={handleLogout}
+                                        >
+                                            Logout
+                                        </Button>
+                                    </>
                                 ) : (
                                     <>
                                         <Button
