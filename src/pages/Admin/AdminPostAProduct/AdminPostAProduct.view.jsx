@@ -95,7 +95,7 @@ const AdminPostAProduct = () => {
 
     const handleSubmit = async () => {
         try {
-            const adminToken = localStorage.getItem("adminToken");
+            const adminToken = localStorage.getItem("accessToken");
             const postData = {
                 ...values,
                 manufacturingDate: values.manufacturingDate.toISOString(),

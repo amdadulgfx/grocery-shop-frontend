@@ -18,13 +18,11 @@ const defaultTheme = createTheme();
 const AdminSignIn = () => {
   const navigate = useNavigate();
 
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const email = formData.get('email');
     const password = formData.get('password');
-  
     
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_URI}admin-auth/signin/`, {
@@ -35,9 +33,9 @@ const AdminSignIn = () => {
       const { token } = response?.data?.data; // Assuming the token is returned in the response
 
       // Store token in local storage
-      localStorage.setItem('adminToken', token);
+      localStorage.setItem('accessToken', token);
       // Navigate to admin home page
-      navigate('/post-product');
+      navigate('/admin-dashboard/admin-productLists');
 
     } catch (error) {
       console.error('Login failed:', error);

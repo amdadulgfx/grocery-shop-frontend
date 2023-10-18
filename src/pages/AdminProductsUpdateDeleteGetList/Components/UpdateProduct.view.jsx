@@ -101,7 +101,7 @@ const UpdateProduct = ({ product, handleCancel, setUpdateMode, setUpdate }) => {
     };
     const handleSubmit = async () => {
         try {
-            const adminToken = localStorage.getItem("adminToken");
+            const adminToken = localStorage.getItem("accessToken");
             const postData = {
                 ...values,
                 manufacturingDate: values.manufacturingDate?.toISOString(),

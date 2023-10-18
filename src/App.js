@@ -14,7 +14,7 @@ function App() {
   return (
     <Router>
       <div>
-        {pathname === "/admin-dashboard" ? <></> : <Header />}
+        {((pathname === "/admin-dashboard") || (pathname === "/admin-dashboard/post-product") || (pathname === "/admin-dashboard/add-category") || (pathname === "/admin-dashboard/categories") || (pathname === "/admin-dashboard/add-subCategory") || (pathname === "/admin-dashboard/SubCategories") || (pathname === "/admin-dashboard/admin-productLists")) ? <></> : <Header />}
         <ErrorBoundary>
           <Routes>
             <Route exact path={ROUTES.LANDINGPAGE} element={<LandingPage />} />
@@ -45,7 +45,7 @@ function App() {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </ErrorBoundary>
-        {pathname === "/admin-dashboard" ? <></> : <Footer />}
+        {((pathname === "/admin-dashboard") || (pathname === "/admin-dashboard/post-product") || (pathname === "/admin-dashboard/add-category") || (pathname === "/admin-dashboard/categories") || (pathname === "/admin-dashboard/add-subCategory") || (pathname === "/admin-dashboard/SubCategories") || (pathname === "/admin-dashboard/admin-productLists")) ? <></> : <Footer />}
       </div>
     </Router>
   );

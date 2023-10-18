@@ -2,7 +2,7 @@ const AdminRoutes = {
   ADMINSIGNIN: "/admin-login",
   ADMINDASHBOARD: "/admin-dashboard",
   ADMINPOSTAPRODUCT: "post-product",
-  ADMINADDCATEGORY: "Add-Category",
+  ADMINADDCATEGORY: "add-category",
   ADMINALLCATEGORIES: "categories",
   ADMINADDSUBCATEGORY: "add-subCategory",
   ADMINALLSUBCATEGORIES: "SubCategories",
