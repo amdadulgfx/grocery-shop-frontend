@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
-
-import SpecialOrganicAdsImage from "../../../assets/LandingPageImages/SpecialOrganicAds.jpg";
 import { Box, Grid, Typography } from '@mui/material';
 import axios from 'axios';
-
 
 const TrendingProductsAds = () => {
 
@@ -107,41 +104,3 @@ const discountPrice = {
   fontSize: '16px',
   fontWeight: 600,
 };
-
-const trendingProducts = [
-  {
-    id: 1,
-    name: 'Deluxe Chocolate Cake',
-    normalPrice: '$39.99',
-    discountPrice: '$29.99',
-    image: 'path/to/product-image1.jpg',
-  },
-  {
-    id: 2,
-    name: 'Organic Fruit Basket',
-    normalPrice: '$49.99',
-    discountPrice: '$39.99',
-    image: 'path/to/product-image2.jpg',
-  },
-  {
-    id: 3,
-    name: 'Premium Coffee Blend',
-    normalPrice: '$12.99',
-    discountPrice: '$9.99',
-    image: 'path/to/product-image3.jpg',
-  },
-  {
-    id: 4,
-    name: 'Gourmet Cheese Selection',
-    normalPrice: '$24.99',
-    discountPrice: '$19.99',
-    image: 'path/to/product-image4.jpg',
-  },
-  {
-    id: 5,
-    name: 'Artisan Bread Collection',
-    normalPrice: '$8.99',
-    discountPrice: '$6.99',
-    image: 'path/to/product-image5.jpg',
-  },
-];
