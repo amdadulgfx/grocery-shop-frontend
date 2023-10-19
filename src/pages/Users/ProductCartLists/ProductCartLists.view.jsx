@@ -1,11 +1,14 @@
-import { Grid, Typography, Card, CardContent, IconButton, Container, Box, Button, TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
-import { useDeleteItemFromCartMutation, useGetCartListQuery, useUpdateCartItemQuantityMutation } from '../../../reduxMine/features/cart/cartAPIs';
 import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
 import DeleteIcon from '@mui/icons-material/Delete';
-
+import RemoveIcon from '@mui/icons-material/Remove';
+import { Box, Button, Card, CardContent, Container, FormControlLabel, Grid, IconButton, Radio, RadioGroup, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDeleteItemFromCartMutation, useGetCartListQuery, useUpdateCartItemQuantityMutation } from '../../../reduxMine/features/cart/cartAPIs';
 
 const ProductCartLists = () => {
+  const [value, setValue] = useState('flatRate');
+  const navigate = useNavigate();
   const { data } = useGetCartListQuery(undefined);
   const [deleteItemFromCart] = useDeleteItemFromCartMutation();
   const [updateCartItemQuantity] = useUpdateCartItemQuantityMutation();
@@ -121,14 +124,27 @@ const ProductCartLists = () => {
                     </Box>
                     <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mt: 1 }}>
                       <Typography>Shipping:</Typography>
-                      <Typography>$10.00</Typography>
+
+                      <RadioGroup
+                        aria-label="gender"
+                        name="gender"
+                        value={value}
+                        onChange={(val) => setValue(val.target.value)}
+                      >
+                        <FormControlLabel labelPlacement="start" value="flatRate" control={<Radio />} label={<Typography noWrap sx={{ display: 'inline-flex', fontSize: ".875rem", }}>Flat Rate <Typography style={{ color: '#d51243', fontSize: ".8125rem", marginLeft: '5px' }}> $5.00</Typography> </Typography>} />
+
+                        <FormControlLabel labelPlacement="start" value="localPickup" noWrap control={<Radio />}
+                          label={<Typography noWrap sx={{ fontSize: ".8125rem" }} >Local picup</Typography>}
+                        />
+                      </RadioGroup>
+                      {/* <Typography>$10.00</Typography> */}
                     </Box>
                     <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mt: 1 }}>
                       <Typography>Total:</Typography>
-                      <Typography>${calculateTotal() + 10.00}</Typography>
+                      <Typography>${calculateTotal() +(value === 'flatRate'? 5.00: 0)}</Typography>
                     </Box>
                     <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", mt: 1.5 }}>
-                    <Button variant='contained'>Checkout</Button>
+                      <Button variant='contained' onClick={() => navigate('/checkout',{state:{shippingValue:value,total: calculateTotal()}})}>Checkout</Button>
                     </Box>
                   </CardContent>
                 </Card>

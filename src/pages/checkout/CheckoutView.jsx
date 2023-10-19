@@ -6,7 +6,9 @@ import { styled } from '@mui/material/styles';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import React, { useEffect, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import * as yup from 'yup';
+import { useGetCartListQuery } from '../../reduxMine/features/cart/cartAPIs';
 import { BillingAdress } from './component/BillingAdress';
 const SubmitButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText(purple[500]),
@@ -42,10 +44,17 @@ const validationSchema = yup.object({
     phone: yup.string().required('Required'),
     companyName: yup.string(),
     orderNotes: yup.string(),
-   
+
 });
 export const CheckoutView = () => {
+
+    // console.log(useLocation())
     const dataFetchedRef = useRef(false);
+    const { data } = useGetCartListQuery(undefined);
+    const locationsData = useLocation();
+    // console.log(locationsData.state)
+    const [stateValue, setStateValue] = useState({})
+    // console.log(data.data)
     const [value, setValue] = useState('flatRate');
     const [deliveryStatus, setDeliveryStatus] = useState('cashOnDelivery');
     const [termsCondition, settermsCondition] = React.useState(false);
@@ -57,63 +66,67 @@ export const CheckoutView = () => {
         validationSchema,
         enableReinitialize: true,
         onSubmit: (values) => {
-                axios.post(`${process.env.REACT_APP_API_URI}order/`,
-                    values,
-                    {
-                        headers: {
-                            authorization: `${access_token}`,
-                        },
+            axios.post(`${process.env.REACT_APP_API_URI}order/`,
+                values,
+                {
+                    headers: {
+                        authorization: `${access_token}`,
+                    },
+                }
+            )
+                .then((res) => {
+                    if (res.data.success) {
+                        console.log(values)
+                        console.log(res.data)
+                        setSuccessAlert(true)
                     }
-                )
-                    .then((res) => {
-                        if (res.data.success) {
-                            console.log(values)
-                            console.log(res.data)
-                            setSuccessAlert(true)
-                        }
-                    }).catch((error) => {
-                        console.log(error)
-                    })
-            
+                }).catch((error) => {
+                    console.log(error)
+                })
+
         },
 
     });
 
-
     useEffect(() => {
-        if (dataFetchedRef.current) return;
-        dataFetchedRef.current = true;
-        axios.get(`${process.env.REACT_APP_API_URI}cart`,
-            {
-                headers: {
-                    authorization: `${access_token}`,
-                },
-            }
-        ).then(res => {
-            // const { email, phoneNumber, name, address, gender, age } = res?.data?.data;
-            console.log(res.data)
-            // setinInitialValues({
-            //     email: email,
-            //     // newPassword: '',
-            //     // currentPassword: '',
-            //     phoneNumber: phoneNumber,
-            //     name: {
-            //         firstName: name?.firstName,
-            //         lastName: name?.lastName,
-            //     },
-            //     address: address,
-            //     gender: gender,
-            //     age: age,
-            // })
-        }).catch((err) => {
-            console.log(err)
-        })
+        // const locaitons = useLocation()
+        setValue(locationsData?.state?.shippingValue)
+        setStateValue(locationsData)
     }, [])
+    // useEffect(() => {
+    //     if (dataFetchedRef.current) return;
+    //     dataFetchedRef.current = true;
+    //     axios.get(`${process.env.REACT_APP_API_URI}cart`,
+    //         {
+    //             headers: {
+    //                 authorization: `${access_token}`,
+    //             },
+    //         }
+    //     ).then(res => {
+    //         // const { email, phoneNumber, name, address, gender, age } = res?.data?.data;
+    //         console.log(res.data)
+    //         // setinInitialValues({
+    //         //     email: email,
+    //         //     // newPassword: '',
+    //         //     // currentPassword: '',
+    //         //     phoneNumber: phoneNumber,
+    //         //     name: {
+    //         //         firstName: name?.firstName,
+    //         //         lastName: name?.lastName,
+    //         //     },
+    //         //     address: address,
+    //         //     gender: gender,
+    //         //     age: age,
+    //         // })
+    //     }).catch((err) => {
+    //         console.log(err)
+    //     })
+    // }, [])
     return (
         <Container sx={{ padding: '40px 0' }}>
             <form onSubmit={formik.handleSubmit}>
-                <Box sx={{padding: '6px 2px', margin: "8px 0", borderBottom: '1px dashed #2ec766'}}>
-                    <Typography sx={{fontWeight: '500', fontSize: '14px', color: '#8a8686'}}>Add your shipping details and procced your order.</Typography>
+                <Box sx={{ padding: '6px 2px', margin: "8px 0", borderBottom: '1px dashed #2ec766' }}>
+                    <Typography sx={{ fontWeight: '500', fontSize: '14px', color: '#8a8686' }}>Add your shipping details and procced your order.</Typography>
                 </Box>
                 <Grid container spacing={3}>
                     <Grid item xs={8}>
@@ -132,21 +145,28 @@ export const CheckoutView = () => {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
+                                        {
+                                            data.data.map((item,) => (
+                                                <TableRow
+                                                    // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                                    sx={{borderBottom: 'none'}}
+                                                    key={item?._id}
+                                                >
+
+                                                    <TableCell component="th" scope="row"   sx={{borderBottom: 'none'}}>
+                                                        {`${item?.productId?.productName} x ${item?.quantity}`}
+                                                    </TableCell>
+                                                    <TableCell align="right"  sx={{borderBottom: 'none'}} >{item?.productId?.price * item?.quantity}</TableCell>
+                                                </TableRow>
+                                            ))
+                                        }
                                         <TableRow
                                         // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                         >
-                                            <TableCell component="th" scope="row" sx={{}}>
-                                                {"Angie's Boomchickapop Sweet & Salty Kettle Corn  × 1	"}
-                                            </TableCell>
-                                            <TableCell align="right" >{"$3.29"}</TableCell>
-                                        </TableRow>
-                                        <TableRow
-                                        // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                        >
-                                            <TableCell component="th" scope="row" sx={{}}>
+                                            <TableCell component="th" scope="row" sx={{borderTop: "1px solid rgb(224 219 224)"}}>
                                                 {"SubTotal"}
                                             </TableCell>
-                                            <TableCell align="right" >{"$3.29"}</TableCell>
+                                            <TableCell align="right" sx={{borderTop: "1px solid rgb(224 219 224)"}} >{stateValue?.state?.total}</TableCell>
                                         </TableRow>
                                         <TableRow
                                         // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -175,7 +195,7 @@ export const CheckoutView = () => {
                                             <TableCell component="th" scope="row" sx={{}}>
                                                 {"Total"}
                                             </TableCell>
-                                            <TableCell align="right" >{"$8.29"}</TableCell>
+                                            <TableCell align="right" >{stateValue?.state?.total + (stateValue?.state?.shippingValue === 'flatRate' ? 5.00 : 0)}</TableCell>
                                         </TableRow>
                                     </TableBody>
                                 </Table>
