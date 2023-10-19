@@ -4,7 +4,7 @@ const cartAPIs = api.injectEndpoints({
     endpoints: ((builder) => ({
         addToCart: builder.mutation({
             query: ((data) => ({
-                url: `api/v1/cart`,
+                url: `/cart`,
                 method: "POST",
                 body: data,
                 headers: {
@@ -15,7 +15,7 @@ const cartAPIs = api.injectEndpoints({
         }),
         getCartList: builder.query({
             query: (() => ({
-                url: `/api/v1/cart`,
+                url: `/cart`,
                 headers: {
                     authorization: `${localStorage.getItem('accessToken')}`,
                 },
@@ -24,7 +24,7 @@ const cartAPIs = api.injectEndpoints({
         }),
         deleteItemFromCart: builder.mutation({
             query: ((id) => ({
-                url: `/api/v1/cart/${id}`,
+                url: `/cart/${id}`,
                 method: "DELETE",
                 headers: {
                     authorization: `${localStorage.getItem('accessToken')}`
@@ -34,7 +34,7 @@ const cartAPIs = api.injectEndpoints({
         }),
         updateCartItemQuantity: builder.mutation({
             query: (({productId, quantity}) => ({
-                url: `api/v1/cart/${productId}`,
+                url: `/cart/${productId}`,
                 method: "PUT",
                 body: {quantity : quantity},
                 headers: {

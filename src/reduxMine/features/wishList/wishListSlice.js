@@ -4,7 +4,7 @@ const wishListSlice = api.injectEndpoints({
     endpoints: ((builder) => ({
         addToWishList: builder.mutation({
             query: ((productId) => ({
-                url: `api/v1/wishList`,
+                url: `/wishList`,
                 method: "POST",
                 body: {productId : productId},
                 headers: {
@@ -15,7 +15,7 @@ const wishListSlice = api.injectEndpoints({
         }),
         getWishList: builder.query({
             query: (() => ({
-                url: `/api/v1/wishList`,
+                url: `//wishList`,
                 headers: {
                     authorization: `${localStorage.getItem('accessToken')}`,
                 },
@@ -24,7 +24,7 @@ const wishListSlice = api.injectEndpoints({
         }),
         deleteFromWishList: builder.mutation({
             query: ((productId) => ({
-                url: `/api/v1/wishList/${productId}`,
+                url: `//wishList/${productId}`,
                 method: "DELETE",
                 headers: {
                     authorization: `${localStorage.getItem('accessToken')}`
