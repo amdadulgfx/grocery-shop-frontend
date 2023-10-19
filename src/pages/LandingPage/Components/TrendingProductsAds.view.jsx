@@ -1,23 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import SpecialOrganicAdsImage from "../../../assets/LandingPageImages/SpecialOrganicAds.jpg";
 import { Box, Grid, Typography } from '@mui/material';
+import axios from 'axios';
 
 
 const TrendingProductsAds = () => {
+
+  const [trendingProducts, setTrendingProducts] = useState([]);
+
+  useEffect(() => {
+    const apiUrl = `${process.env.REACT_APP_API_URI}product/`;
+    axios.get(apiUrl)
+      .then((response) => setTrendingProducts(response?.data?.data))
+      .catch((error) => console.error('Error fetching data:', error));
+  }, []);
 
   return (
     <Box>
       <Typography sx={{ fontSize: "16px", fontWeight: 600, mb: 1 }}>TRENDING PRODUCTS</Typography>
       <Box sx={root}>
-        {trendingProducts.map((product) => (
-          <Box sx={productBox} key={product.id}>
+        {trendingProducts.slice(2, 7).map((product) => (
+          <Box sx={productBox} key={product._id}>
             <Grid container spacing={2}>
               <Grid item xs={4}>
                 <Box sx={{ ...priceContainer, justifyContent: "center", pt: 1.5 }}>
                   <img
-                    src={SpecialOrganicAdsImage}
-                    alt={product.name}
+                    src={product.productPicture[0]}
+                    alt={product.productName}
                     style={productImage}
                   />
                 </Box>
@@ -30,14 +40,14 @@ const TrendingProductsAds = () => {
                   sx={productName}
                 // to={`/products/${product.id}`} // Replace with your route
                 >
-                  {product.name}
+                  {product.productName}
                 </Typography>
                 <Box sx={priceContainer}>
                   <Typography sx={normalPrice}>
-                    {product.normalPrice}
+                    ${product.price}
                   </Typography>
                   <Typography sx={discountPrice}>
-                    {product.discountPrice}
+                    ${product.price - (product.discount < 1 ? 5 : product.discount)}
                   </Typography>
                 </Box>
               </Grid>
@@ -58,7 +68,7 @@ const root = {
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
-  border: '1px solid grey',
+  border: '1px solid lightgrey',
   borderRadius: '6px',
 };
 const productBox = {

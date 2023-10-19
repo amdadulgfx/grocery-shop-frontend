@@ -19,9 +19,9 @@ const AdvertisementAndAllCategory = () => {
             <Box sx={{ mt: 3, mb: 4 }}>
                 <FreshestProductsAds />
             </Box>
-            <Box sx={{ mt: 3, mb: 4 }}>
+            {/* <Box sx={{ mt: 3, mb: 4 }}>
                 <DownloadAndOrderAds />
-            </Box>
+            </Box> */}
             <Box sx={{ mt: 3, mb: 4 }}>
                 <TrendingProductsAds />
             </Box>
