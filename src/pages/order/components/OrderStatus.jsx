@@ -1,8 +1,9 @@
-import { Box, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import { Box, Typography } from '@mui/material';
+import React, { useState } from 'react';
 
-export default function OrderStatus() {
-    const [isSuccess, setIsSuccess] = useState(true)
+
+export default function OrderStatus({oderDetails}) {
+    const [isSuccess, setIsSuccess] = useState(oderDetails);
     return (
         <Box>
             {
