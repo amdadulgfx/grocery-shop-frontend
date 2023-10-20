@@ -6,7 +6,7 @@ import { styled } from '@mui/material/styles';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import React, { useEffect, useRef, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import { useGetCartListQuery } from '../../reduxMine/features/cart/cartAPIs';
 import { BillingAdress } from './component/BillingAdress';
@@ -30,7 +30,10 @@ const billingDetails = {
     city: "",
     zipCode: "",
     phone: "",
-    orderNotes: ""
+    orderNotes: "",
+    paymentMethod: 'COD',
+    country: '',
+    state: ''
 }
 const validationSchema = yup.object({
     name: yup.object().shape({
@@ -44,6 +47,9 @@ const validationSchema = yup.object({
     phone: yup.string().required('Required'),
     companyName: yup.string(),
     orderNotes: yup.string(),
+    paymentMethod: yup.string(),
+    country: yup.string(),
+    state: yup.string()
 
 });
 export const CheckoutView = () => {
@@ -52,8 +58,10 @@ export const CheckoutView = () => {
     const dataFetchedRef = useRef(false);
     const { data } = useGetCartListQuery(undefined);
     const locationsData = useLocation();
+    const navigate = useNavigate();
     // console.log(locationsData.state)
     const [stateValue, setStateValue] = useState({})
+    const [productData, setProductData] = useState([])
     // console.log(data.data)
     const [value, setValue] = useState('flatRate');
     const [deliveryStatus, setDeliveryStatus] = useState('cashOnDelivery');
@@ -76,8 +84,9 @@ export const CheckoutView = () => {
             )
                 .then((res) => {
                     if (res.data.success) {
-                        console.log(values)
-                        console.log(res.data)
+                        // console.log(values)
+                        // console.log(res.data)
+                        navigate('/checkout/order-recieved',{state:{shippingValue:value,product: data.data,  total: stateValue?.state?.total, orderStatus: true, billingInfo: values}})
                         setSuccessAlert(true)
                     }
                 }).catch((error) => {
@@ -92,6 +101,7 @@ export const CheckoutView = () => {
         // const locaitons = useLocation()
         setValue(locationsData?.state?.shippingValue)
         setStateValue(locationsData)
+        setProductData(data.data)
     }, [])
     // useEffect(() => {
     //     if (dataFetchedRef.current) return;

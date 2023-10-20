@@ -72,6 +72,18 @@ export const BillingAdress = ({ formik }) => {
                 </Grid>
                 <Grid item xs={12} lg={12} md={12}>
                     <TextField
+                        label="Country"
+                        name="country"
+                        value={formik.values?.country}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={formik.touched.country && Boolean(formik.errors.country)}
+                        helperText={formik.touched.country && formik.errors.country}
+                        fullWidth
+                    />
+                </Grid>
+                <Grid item xs={12} lg={12} md={12}>
+                    <TextField
                         label="Company Name"
                         name="comapnyName"
                         value={formik.values?.comapnyName}
@@ -79,6 +91,30 @@ export const BillingAdress = ({ formik }) => {
                         onBlur={formik.handleBlur}
                         error={formik.touched.comapnyName && Boolean(formik.errors.comapnyName)}
                         helperText={formik.touched.comapnyName && formik.errors.comapnyName}
+                        fullWidth
+                    />
+                </Grid>
+                <Grid item xs={6} lg={6} md={6}>
+                    <TextField
+                        label="State"
+                        name="state"
+                        value={formik.values?.state}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={formik.touched.state && Boolean(formik.errors.state)}
+                        helperText={formik.touched.state && formik.errors.state}
+                        fullWidth
+                    />
+                </Grid>
+                <Grid item xs={6} lg={6} md={6}>
+                    <TextField
+                        label="Town / City"
+                        name="city"
+                        value={formik.values?.city}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={formik.touched.city && Boolean(formik.errors.city)}
+                        helperText={formik.touched.city && formik.errors.city}
                         fullWidth
                     />
                 </Grid>
@@ -94,18 +130,7 @@ export const BillingAdress = ({ formik }) => {
                         fullWidth
                     />
                 </Grid>
-                <Grid item xs={12} lg={12} md={12}>
-                    <TextField
-                        label="Town / City"
-                        name="city"
-                        value={formik.values?.city}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        error={formik.touched.city && Boolean(formik.errors.city)}
-                        helperText={formik.touched.city && formik.errors.city}
-                        fullWidth
-                    />
-                </Grid>
+                
                 <Grid item xs={12} lg={12} md={12}>
                     <TextField
                         label="Zip Code"
