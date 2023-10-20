@@ -53,6 +53,7 @@ const Header = () => {
     const navigate = useNavigate();
     const theme = useTheme();
     const matches = useMediaQuery(theme.breakpoints.down('md'));
+    const tabMode = useMediaQuery(theme.breakpoints.down('lg'));
     const [showSearchBar, setShowSearchBar] = useState(false);
     const [searchKeyword, setSearchKeyword] = useState('');
     const [openDrawer, setOpenDrawer] = useState(false);
@@ -262,10 +263,10 @@ const Header = () => {
                                                 sx={{
                                                     borderRadius: 16,
                                                     padding: "5px 0px 5px 27px  !important",
-                                                    backgroundColor: "#F3F4F7"
+                                                    backgroundColor: "#F3F4F7",
+                                                    width: tabMode ? 195 : 300,
                                                 }}
                                                 disableUnderline
-                                                fullWidth
                                                 placeholder="Search Product"
                                                 onChange={(event) => setSearchKeyword(event.target.value)}
                                                 value={searchKeyword}
