@@ -1,9 +1,10 @@
 import React from 'react';
-import { Box, Button, Divider, Grid, InputLabel } from '@mui/material';
-import { TextFiledBorderLess, TypographyHeadingOne, TypographyParagraph, TypographySubtitle } from '../../../CustomTags';
+import { Box, Divider, Grid } from '@mui/material';
+import { TypographyHeadingOne, TypographyParagraph, TypographySubtitle } from '../../../CustomTags';
 import FmdGoodIcon from '@mui/icons-material/FmdGood';
 import CallIcon from '@mui/icons-material/Call';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import ContactForm from './Components/ContactForm';
 
 const ContactUs = () => {
   return (
@@ -15,7 +16,7 @@ const ContactUs = () => {
               Get In Touch
             </TypographyHeadingOne>
             <TypographyParagraph sx={{ py: 1, color: "#0c0c0c" }}>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Expedita quaerat unde quam dolor culpa veritatis inventore, aut commodi eum veniam vel.
+              Thank you for your interest in Grocery Heaven. We're here to assist you with any questions, concerns, or feedback you may have. Please don't hesitate to reach out to us using the following contact information:
             </TypographyParagraph>
           </Box>
           <Grid
@@ -38,9 +39,9 @@ const ContactUs = () => {
                 <TypographySubtitle sx={{ color: "#0c0c0c", fontSize: "1.2rem", py: 2 }}>
                   102 Street 2714 Donovan
                 </TypographySubtitle>
-                <TypographyParagraph sx={{ fontSize: "0.8rem", color: "#111111", pb: 1, }}>
+                {/* <TypographyParagraph sx={{ fontSize: "0.8rem", color: "#111111", pb: 1, }}>
                   Lorem ipsum dolar site amet discont
-                </TypographyParagraph>
+                </TypographyParagraph> */}
               </Box>
             </Grid>
             <Grid item xs={12} md={4}>
@@ -57,9 +58,9 @@ const ContactUs = () => {
                 <TypographySubtitle sx={{ color: "#0c0c0c", fontSize: "1.2rem", py: 2 }}>
                   +02 1234 567 88
                 </TypographySubtitle>
-                <TypographyParagraph sx={{ fontSize: "0.8rem", color: "#111111", pb: 1, }}>
+                {/* <TypographyParagraph sx={{ fontSize: "0.8rem", color: "#111111", pb: 1, }}>
                   Lorem ipsum dolar site amet discont
-                </TypographyParagraph>
+                </TypographyParagraph> */}
               </Box>
             </Grid>
             <Grid item xs={12} md={4}>
@@ -74,11 +75,11 @@ const ContactUs = () => {
               >
                 <MailOutlineIcon sx={{ color: "#233A95", fontSize: "2.5rem" }} />
                 <TypographySubtitle sx={{ color: "#0c0c0c", fontSize: "1.2rem", py: 2 }}>
-                  info@example.com
+                  info@groceryheaven.com
                 </TypographySubtitle>
-                <TypographyParagraph sx={{ fontSize: "0.8rem", color: "#111111", pb: 1, }}>
+                {/* <TypographyParagraph sx={{ fontSize: "0.8rem", color: "#111111", pb: 1, }}>
                   Lorem ipsum dolar site amet discont
-                </TypographyParagraph>
+                </TypographyParagraph> */}
               </Box>
             </Grid>
           </Grid>
@@ -97,65 +98,12 @@ const ContactUs = () => {
             <TypographyHeadingOne>
               Send Us
             </TypographyHeadingOne>
-            <TypographyParagraph sx={{ fontSize: "0.8rem", color: "#111111", pb: 1, }}>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Expedita quaerat unde quam dolor culpa veritatis inventore, aut commodi eum veniam vel.
+            <TypographyParagraph sx={{ fontSize: "0.8rem", color: "#111111", pb: 1, mt: 1 }}>
+              Have a question, comment, or special request? We're here to help! Please use the convenient form below to send us a message, and our friendly customer support team will get back to you as soon as possible. Your feedback and inquiries are essential to us, and we are committed to providing you with the best grocery shopping experience. We appreciate your time and look forward to assisting you with any assistance you may need.
             </TypographyParagraph>
           </Box>
           <Divider sx={{ color: "#eeeeee", mb: 5 }} />
-          <Grid
-            container
-            justifyContent="center"
-            alignItems="center"
-            spacing={3}
-          >
-            <Grid item xs={12} md={6}>
-              <Box>
-                <InputLabel sx={{ pb: 0.5 }}>Your name&nbsp;<span style={{ color: "red" }}>*</span></InputLabel>
-                <TextFiledBorderLess
-                  sx={{ backgroundColor: "#F3F3F6" }}
-
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Box>
-                <InputLabel sx={{ pb: 0.5 }}>Your email&nbsp;<span style={{ color: "red" }}>*</span></InputLabel>
-                <TextFiledBorderLess
-                  sx={{ backgroundColor: "#F3F3F6" }}
-
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={12}>
-              <Box>
-                <InputLabel sx={{ pb: 0.5 }}>Subject&nbsp;<span style={{ color: "red" }}>*</span></InputLabel>
-                <TextFiledBorderLess
-                  sx={{ backgroundColor: "#F3F3F6" }}
-
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={12}>
-              <Box>
-                <InputLabel sx={{ pb: 0.5 }}>Your message&nbsp;<span style={{ color: "red" }}>*</span></InputLabel>
-                <TextFiledBorderLess
-                  sx={{ backgroundColor: "#F3F3F6" }}
-                  multiline
-                  rows={5}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={12}>
-              <Box>
-                <Button
-                  variant="contained"
-                  sx={{ py: 1.2, px: 5, borderRadius: 16 }}
-                >
-                  Send Message
-                </Button>
-              </Box>
-            </Grid>
-          </Grid>
+          <ContactForm />
         </Box>
       </Box>
     </Box>
