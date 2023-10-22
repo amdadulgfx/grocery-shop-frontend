@@ -35,6 +35,7 @@ const billingDetails = {
     country: '',
     state: ''
 }
+
 const validationSchema = yup.object({
     name: yup.object().shape({
         firstName: yup.string().required('Required'),
@@ -43,13 +44,13 @@ const validationSchema = yup.object({
     email: yup.string().email('Invalid email').required('Required'),
     streetAddress: yup.string().required('Required'),
     city: yup.string().required('Required'),
-    zipCode: yup.string(),
-    phone: yup.string().required('Required'),
+    zipCode: yup.string().required('Required'),
+    phone: yup.string().matches(/^[0-9+\-]+$/, 'phone number is not valid').required('Required'),
     companyName: yup.string(),
     orderNotes: yup.string(),
     paymentMethod: yup.string(),
-    country: yup.string(),
-    state: yup.string()
+    country: yup.string().required('Required'),
+    state: yup.string().required('Required')
 
 });
 export const CheckoutView = () => {

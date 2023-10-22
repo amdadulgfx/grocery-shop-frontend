@@ -1,16 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react'
-import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import { useFormik } from 'formik';
 import { Button, FormControlLabel, Grid, Radio, RadioGroup, TextField } from '@mui/material';
-import * as yup from 'yup';
+import Box from '@mui/material/Box';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+import Typography from '@mui/material/Typography';
 import axios from 'axios';
-import GroceryAlert from '../../../components/GroceryAlert';
+import { useFormik } from 'formik';
+import PropTypes from 'prop-types';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
+import * as yup from 'yup';
+import GroceryAlert from '../../../components/GroceryAlert';
 import { selectUser } from '../../../reduxMine/features/authApi';
+import { OrderList } from './OrderList';
 
 const access_token = localStorage.getItem("accessToken");
 
@@ -84,8 +85,7 @@ function AdditionalDetailsTab() {
                 </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
-                Coming Soon...
-                {user?.email}
+                <OrderList />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
                 <AccountDetailsForm />
