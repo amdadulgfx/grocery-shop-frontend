@@ -65,7 +65,7 @@ const AdminAddCategory = () => {
                         </Typography>
                     </Grid>
                     <Grid item xs={12} sx={12} md={8.5}>
-                        <Box sx={{ boxShadow: "5px 5px 10px 10px whitesmoke", px: { xs: 1, md: 3 }, py: { xs: 1, md: 3 }, borderRadius: "6px" }}>
+                        <Box sx={{ boxShadow: "5px 5px 10px 10px whitesmoke", px: { xs: 1.5, md: 3 }, py: { xs: 2, md: 3 }, borderRadius: "6px" }}>
                             <Grid container spacing={2}>
                                 <Grid item xs={12} md={12}>
                                     <InputLabel>Category Name</InputLabel>
@@ -86,7 +86,7 @@ const AdminAddCategory = () => {
                                     />
                                 </Grid>
                                 <Grid item xs={12} md={12}>
-                                    <Box mt={2}>
+                                    <Box sx={{display:"flex", alignItems:"center", justifyContent:"center", mt: {xs: 1.2, md: 2}}}>
                                         <Button
                                             sx={{
                                                 borderRadius: 16,

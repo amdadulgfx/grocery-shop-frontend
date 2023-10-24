@@ -15,7 +15,7 @@ const wishListSlice = api.injectEndpoints({
         }),
         getWishList: builder.query({
             query: (() => ({
-                url: `//wishList`,
+                url: `/wishList`,
                 headers: {
                     authorization: `${localStorage.getItem('accessToken')}`,
                 },
@@ -24,7 +24,7 @@ const wishListSlice = api.injectEndpoints({
         }),
         deleteFromWishList: builder.mutation({
             query: ((productId) => ({
-                url: `//wishList/${productId}`,
+                url: `/wishList/${productId}`,
                 method: "DELETE",
                 headers: {
                     authorization: `${localStorage.getItem('accessToken')}`

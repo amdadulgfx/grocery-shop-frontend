@@ -32,8 +32,8 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 const InfoRoutes = [
     { label: "About Us", path: "/about-us" },
     { label: "My Account", path: "/my-account" },
-    { label: "Wishlist", path: "/saved" },
-    { label: "Order Tracking", path: "/tracking" },
+    { label: "Wishlist", path: "/wishlists" },
+    { label: "Order Tracking", path: "/my-account" },
 ];
 
 const MainNavigation = [
