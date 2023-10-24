@@ -8,9 +8,14 @@ import { CheckoutView } from "./pages/checkout/CheckoutView";
 import { OrderView } from './pages/order/OrderView';
 import ROUTES from "./routes/index.js";
 import WithScrollToTop from "./routes/WithScrollToTop";
+import { useEffect, useState } from "react";
 
 function App() {
-  const pathname = window.location.pathname;
+  const [pathname, setPathName] = useState();
+  useEffect(() => {
+    setPathName(window.location.pathname);
+  }, [])
+
 
   return (
     <Router>
