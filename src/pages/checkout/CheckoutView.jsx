@@ -140,10 +140,10 @@ export const CheckoutView = () => {
                     <Typography sx={{ fontWeight: '500', fontSize: '14px', color: '#8a8686' }}>Add your shipping details and procced your order.</Typography>
                 </Box>
                 <Grid container spacing={3}>
-                    <Grid item xs={8}>
+                    <Grid item xs={12} md={8} >
                         <BillingAdress formik={formik} />
                     </Grid>
-                    <Grid item xs={4} >
+                    <Grid item xs={12} md={4}>
                         <FormControl sx={{ border: "2px solid #233a95", borderRadius: '7px', padding: "10px 8px" }}>
                             <Typography variant='subtitle1' textAlign={'center'}>YOUR ORDER</Typography>
                             <Divider />
