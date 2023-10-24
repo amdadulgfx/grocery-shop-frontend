@@ -1,14 +1,14 @@
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import PhoneInTalkIcon from '@mui/icons-material/PhoneInTalk';
+import TwitterIcon from "@mui/icons-material/Twitter";
+import YouTubeIcon from "@mui/icons-material/YouTube";
 import { Box, Divider, Grid, Typography } from '@mui/material';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import playStore from "../../../assets/FooterImage/planStoreImage.png";
 import appStore from "../../../assets/FooterImage/AppStore.png";
-import facebook from "../../../assets/FooterImage/facebook.png";
 import instagram from "../../../assets/FooterImage/Instragram.png";
-import YouTubeIcon from "@mui/icons-material/YouTube";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import PhoneInTalkIcon from '@mui/icons-material/PhoneInTalk';
+import facebook from "../../../assets/FooterImage/facebook.png";
+import playStore from "../../../assets/FooterImage/planStoreImage.png";
 
 
 const FooterContactAndApp = (props) => {
@@ -23,7 +23,7 @@ const FooterContactAndApp = (props) => {
                             <PhoneInTalkIcon sx={{ border: "0.5px solid #395987", borderRadius: "50%", p: 1, color: "#395987" }} />
                         </Box>
                         <Box sx={{ ml: 2 }}>
-                            <Typography sx={{ ...downloadAppStyle, fontSize: "1.25rem" }}>+8801123456789</Typography>
+                            <Typography sx={{ ...downloadAppStyle, fontSize: "1.25rem" }}>+8801401257859</Typography>
                             <Typography sx={CopyrightTextStyle}>Working 8:00 - 22:00</Typography>
                         </Box>
                     </Box>
@@ -51,7 +51,7 @@ const FooterContactAndApp = (props) => {
                             }}
                         >
                             <a
-                                href="https://www.facebook.com/profile.php?id=100085360226241"
+                                href="https://www.facebook.com/profile.php?grocyer.haven"
                                 target="_blank"
                                 rel="noreferrer"
                             >
@@ -59,7 +59,7 @@ const FooterContactAndApp = (props) => {
                             </a>
                             <a
                                 style={{ marginLeft: mobileView ? "37.75px" : "20px" }}
-                                href="https://twitter.com/Medlinkjobsind"
+                                href="https://twitter.com/GroceryHeaven"
                                 target="_blank"
                                 rel="noreferrer"
                             >
@@ -67,7 +67,7 @@ const FooterContactAndApp = (props) => {
                             </a>
                             <a
                                 style={{ marginLeft: mobileView ? "37.75px" : "20px" }}
-                                href="https://www.instagram.com/medlinkjobs"
+                                href="https://www.instagram.com/grocery-heaven"
                                 target="_blank"
                                 rel="noreferrer"
                             >
@@ -83,7 +83,7 @@ const FooterContactAndApp = (props) => {
                             </a>
                             <a
                                 style={{ marginLeft: mobileView ? "37.75px" : "20px" }}
-                                href="https://www.linkedin.com/company/medlink-jobs/about"
+                                href="https://www.linkedin.com/company/grocery-heaven/about"
                                 target="_blank"
                                 rel="noreferrer"
                             >

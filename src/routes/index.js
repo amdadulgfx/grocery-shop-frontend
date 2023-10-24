@@ -25,6 +25,7 @@ const ROUTES = {
   MYACCOUNT: "/my-account",
   PRODUCTCARTLIST: "/carts",
   WISHLISTS: "/wishlists",
+  ORDERTRACKING: '/tracking',
   ...AdminRoutes
 };
 

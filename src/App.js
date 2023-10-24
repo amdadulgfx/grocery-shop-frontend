@@ -1,14 +1,15 @@
+import { useEffect, useState } from "react";
 import { Outlet, Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import './App.css';
 import { AdminRoute, ErrorBoundary, Footer, Header, NotFound, PrivateRoute } from './components';
 import { AboutUs, AdminAddCategory, AdminAddSubCategory, AdminAllCategories, AdminAllSubCategories, AdminDashboard, AdminPostAProduct, AdminProductsUpdateDeleteGetList, AdminSignIn, ContactUs, FAQ, LandingPage, LoginSignup, MyAccount, PrivacyPolicy, ProductCartLists, Products, TermsAndConditions } from './pages';
+import OrderTracking from "./pages/OrderTracking/OrderTracking.view";
 import SingleProduct from './pages/SingleProduct';
 import WishLists from "./pages/Users/WishLists/WishLists.view";
 import { CheckoutView } from "./pages/checkout/CheckoutView";
 import { OrderView } from './pages/order/OrderView';
-import ROUTES from "./routes/index.js";
 import WithScrollToTop from "./routes/WithScrollToTop";
-import { useEffect, useState } from "react";
+import ROUTES from "./routes/index.js";
 
 function App() {
   const [pathname, setPathName] = useState();
@@ -38,6 +39,7 @@ function App() {
             <Route exact path={ROUTES.FAQ} element={<FAQ />} />
             <Route exact path={ROUTES.TERMSANDCONDITIONS} element={<TermsAndConditions />} />
             <Route exact path={ROUTES.PRODUCTCARTLIST} element={<PrivateRoute><ProductCartLists /></PrivateRoute>} />
+            <Route exact path={ROUTES.ORDERTRACKING} element={<PrivateRoute><OrderTracking /></PrivateRoute>} />
             <Route exact path={ROUTES.WISHLISTS} element={<PrivateRoute><WishLists /></PrivateRoute>} />
             <Route exact path={ROUTES.ADMINDASHBOARD} element={<AdminRoute><AdminDashboard /></AdminRoute>} >
               <Route exact path={ROUTES.ADMINPOSTAPRODUCT} element={<AdminRoute><AdminPostAProduct /></AdminRoute>} />
