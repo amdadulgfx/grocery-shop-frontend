@@ -46,7 +46,7 @@ const AdminDashboard = (props) => {
       </Toolbar>
       <Box sx={{ px: 1, py: 2 }} >
         {lists?.map((list) => (
-          <Box key={list?.ID} sx={{ display: "flex", mb: 1.5, py:"4px", px: 0.8, borderRadius: list?.route === location?.pathname && "6px", backgroundColor: list?.route === location?.pathname ? "#EBF8F4" : "#FFFFFF" }}>
+          <Box key={list?.ID} sx={{ display: "flex", mb: 1.5, py: "4px", px: 0.8, borderRadius: list?.route === location?.pathname && "6px", backgroundColor: list?.route === location?.pathname ? "#EBF8F4" : "#FFFFFF" }}>
             <list.icons sx={{ fontSize: { xs: "18px", sm: "25px" }, color: list?.route === location?.pathname ? "#00A76F" : "#637381" }} />
             <Typography sx={{ textDecoration: "none", ml: "10px", pt: { sm: "2px" }, color: list?.route === location?.pathname ? "#00A76F" : "#637381", fontSize: { xs: "14px", sm: "18px" }, fontWeight: list?.route === location?.pathname ? 600 : 500 }} component={Link} to={list?.route}>{list?.name}</Typography>
           </Box>
@@ -68,7 +68,6 @@ const AdminDashboard = (props) => {
         }}
       >
         <Toolbar sx={{ backgroundColor: "white", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-
           <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <IconButton
               color="inherit"
@@ -77,7 +76,7 @@ const AdminDashboard = (props) => {
               onClick={handleDrawerToggle}
               sx={{ mr: 2, display: { sm: 'none' } }}
             >
-              <MenuIcon sx={{ color: "pink" }} />
+              <MenuIcon sx={{ color: "#00A76F" }} />
             </IconButton>
             <Typography sx={{ color: "#637381", fontSize: { xs: "18px", sm: "22px" }, fontWeight: 700 }}>
               {location?.pathname === "/admin-dashboard" && "Dashboard"}
@@ -87,14 +86,23 @@ const AdminDashboard = (props) => {
               {location?.pathname === "/admin-dashboard/add-category" && "Post Category"}
               {location?.pathname === "/admin-dashboard/subCategories" && "Subcategories"}
               {location?.pathname === "/admin-dashboard/add-subCategory" && "Post Subcategory"}
-              </Typography>
+            </Typography>
           </Box>
           <Box>
             <Button
-              variant="contained"
               sx={{
                 borderRadius: 16,
                 px: 3,
+                backgroundColor: "#00A76F",
+                color: "#FFFFFF",
+                fontWeight: 600,
+                "&:hover": {
+                  borderRadius: 16,
+                  px: 3,
+                  backgroundColor: "#00A76F",
+                  color: "#FFFFFF",
+                  fontWeight: 600,
+                }
               }}
               onClick={handleLogout}
             >
