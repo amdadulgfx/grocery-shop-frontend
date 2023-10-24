@@ -7,16 +7,17 @@ import {
     Select,
     Button,
     Typography,
-    Container,
     Autocomplete,
     TextField,
     Snackbar,
+    Breadcrumbs,
 } from "@mui/material";
 import axios from "axios";
-// import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import MuiAlert from "@mui/material/Alert";
-// import dayjs from 'dayjs';
 import CustomTextField from "../../../CustomTags/CustomTextField.view";
+import { Link } from "react-router-dom";
+import CircleIcon from '@mui/icons-material/Circle';
+
 
 const initialValues = {
     productName: "",
@@ -150,232 +151,287 @@ const AdminPostAProduct = () => {
     };
 
     return (
-        <Container minWidth="md">
-            <Typography
-                sx={{ mt: 1, mb: 1, textAlign: "center", fontSize: "20px" }}
-            >
-                Post A Product
+        <Box>
+            <div style={{ marginBottom: "6px" }}>
+                <Breadcrumbs aria-label="breadcrumb" separator={<CircleIcon sx={{fontSize:"8px", color:"#637381"}} />}>
+                    <Typography component={Link} to="/admin-dashboard" sx={{ textDecoration: "none", color: "#637381" }}>
+                        Dashboard
+                    </Typography>
+                    <Typography sx={{ color: "#637381" }}>
+                        Post Product
+                    </Typography>
+                </Breadcrumbs>
+            </div>
+            <Typography sx={{ mt: 0.5, mb: 2, fontSize: { xs: "18px", sm: "24px" }, color: "#637381", fontWeight: 600 }}>
+                Create a new product
             </Typography>
-            <Grid container rowSpacing={2} columnSpacing={10}>
-                <Grid item xs={12} md={6}>
-                    <InputLabel>Product Name</InputLabel>
-                    <CustomTextField
-                        name="productName"
-                        value={values.productName}
-                        onChange={handleChange}
-                        placeholder="Enter the product name"
-                    />
+            <Box>
+                <Grid container rowSpacing={2} columnSpacing={2}>
+                    <Grid item xs={12} sx={12} md={3.5}>
+                        <Typography sx={{ fontSize: "18px", fontWeight: 600 }}>
+                            Details
+                        </Typography>
+                        <Typography sx={{ color: "#637381", fontSize: "12px", fontWeight: 400 }}>
+                            name, brand, picture, description
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12} sx={12} md={8.5}>
+                        <Box sx={{ boxShadow: "5px 5px 10px 10px whitesmoke", px: { xs: 1, md: 3 }, py: { xs: 1, md: 3 }, borderRadius: "6px" }}>
+                            <Grid container rowSpacing={2} columnSpacing={2}>
+                                <Grid item xs={12} md={12}>
+                                    <InputLabel>Product Name</InputLabel>
+                                    <CustomTextField
+                                        name="productName"
+                                        value={values.productName}
+                                        onChange={handleChange}
+                                        placeholder="Enter the product name"
+                                    />
+                                </Grid>
+                                <Grid item xs={12} md={12}>
+                                    <InputLabel>Brand</InputLabel>
+                                    <CustomTextField
+                                        name="brand"
+                                        value={values.brand}
+                                        onChange={handleChange}
+                                        placeholder="Enter the brand name"
+                                    />
+                                </Grid>
+                                <Grid item xs={12} md={12}>
+                                    <InputLabel>Product Picture</InputLabel>
+                                    <CustomTextField
+                                        name="productPicture"
+                                        // value={values.productPicture}
+                                        onChange={handleChange}
+                                        placeholder="Enter the image URL"
+                                    />
+                                </Grid>
+                                <Grid item xs={12} md={12}>
+                                    <InputLabel>Description</InputLabel>
+                                    <CustomTextField
+                                        name="description"
+                                        multiline
+                                        row={4}
+                                        value={values.description}
+                                        onChange={handleChange}
+                                        placeholder="Enter Description"
+                                    />
+                                </Grid>
+                            </Grid>
+                        </Box>
+                    </Grid>
                 </Grid>
-                <Grid item xs={12} md={6}>
-                    <InputLabel>Brand</InputLabel>
-                    <CustomTextField
-                        name="brand"
-                        value={values.brand}
-                        onChange={handleChange}
-                        placeholder="Enter the brand name"
-                    />
+                <Grid container rowSpacing={2} columnSpacing={2} sx={{ mt: 2 }}>
+                    <Grid item xs={12} sx={12} md={3.5}>
+                        <Typography sx={{ fontSize: "18px", fontWeight: 600 }}>
+                            Pricing
+                        </Typography>
+                        <Typography sx={{ color: "#637381", fontSize: "12px", fontWeight: 400 }}>
+                            price related inputs
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12} sx={12} md={8.5}>
+                        <Box sx={{ boxShadow: "5px 5px 10px 10px whitesmoke", px: { xs: 1, md: 3 }, py: { xs: 1, md: 3 }, borderRadius: "6px" }}>
+                            <Grid container rowSpacing={2} columnSpacing={2}>
+                                <Grid item xs={12} md={12}>
+                                    <InputLabel>Price</InputLabel>
+                                    <CustomTextField
+                                        name="price"
+                                        type="text"
+                                        value={values.price}
+                                        onChange={handleChange}
+                                        placeholder="Enter the price"
+                                    />
+                                </Grid>
+                                <Grid item xs={12} md={12}>
+                                    <InputLabel>Discount Percentage</InputLabel>
+                                    <CustomTextField
+                                        name="discount"
+                                        type="text"
+                                        value={values.discount}
+                                        onChange={handleChange}
+                                        placeholder="Enter discount percentage"
+                                    />
+                                </Grid>
+                            </Grid>
+                        </Box>
+                    </Grid>
                 </Grid>
-                <Grid item xs={12} md={6}>
-                    <InputLabel>Product Pictures</InputLabel>
-                    <CustomTextField
-                        name="productPicture"
-                        // value={values.productPicture}
-                        onChange={handleChange}
-                        placeholder="Enter the image URL"
-                    />
-                    {/* <Button
-                        component="label"
-                        variant="contained"
-                        startIcon={<CloudUploadIcon />}
-                        htmlFor="image-upload"
-                    >
-                        Upload files
-                        <VisuallyHiddenInput
-                            type="file"
-                            id="image-upload"
-                            multiple
-                            onChange={(event) => {
-                                const imageFiles = Array.from(event.target.files);
-                                setValues({ ...values, images: imageFiles });
-                            }}
-                        />
-                    </Button> */}
+                <Grid container rowSpacing={2} columnSpacing={2} sx={{ mt: 2 }}>
+                    <Grid item xs={12} sx={12} md={3.5}>
+                        <Typography sx={{ fontSize: "18px", fontWeight: 600 }} >
+                            Properties
+                        </Typography>
+                        <Typography sx={{ color: "#637381", fontSize: "12px", fontWeight: 400 }}>
+                            additional informations
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12} sx={12} md={8.5}>
+                        <Box sx={{ boxShadow: "5px 5px 10px 10px whitesmoke", px: { xs: 1, md: 3 }, py: { xs: 1, md: 3 }, borderRadius: "6px" }}>
+                            <Grid container rowSpacing={2} columnSpacing={2}>
+                                <Grid item xs={12} md={12}>
+                                    <InputLabel>Weight (g)</InputLabel>
+                                    <CustomTextField
+                                        name="weight"
+                                        type="text"
+                                        value={values.weight}
+                                        onChange={handleChange}
+                                        placeholder="Enter the weight"
+                                    />
+                                </Grid>
+                                <Grid item xs={12} md={12}>
+                                    <InputLabel>Quantity</InputLabel>
+                                    <CustomTextField
+                                        name="countInStock"
+                                        type="text"
+                                        value={values.countInStock}
+                                        onChange={handleChange}
+                                        placeholder="Enter the image quantity"
+                                    />
+                                </Grid>
+                                <Grid item xs={12} md={12}>
+                                    <InputLabel>Manufacturing Date</InputLabel>
+                                    <CustomTextField
+                                        type="date"
+                                        name="manufacturingDate"
+                                        onChange={(event) =>
+                                            handleDateChange("manufacturingDate", new Date(event.target.value))
+                                        }
+                                        placeholder="Enter manufacturing Date"
+                                    />
+                                </Grid>
+                                <Grid item xs={12} md={12}>
+                                    <InputLabel>Expiration Date</InputLabel>
+                                    <CustomTextField
+                                        type="date"
+                                        name="expiredDate"
+                                        onChange={(event) =>
+                                            handleDateChange("expiredDate", new Date(event.target.value))
+                                        }
+                                        placeholder="Enter expired Date"
+                                    />
+                                </Grid>
+                                <Grid item xs={12} md={12}>
+                                    <InputLabel>Category</InputLabel>
+                                    <Autocomplete
+                                        id="category-autocomplete"
+                                        options={categories}
+                                        getOptionLabel={(option) => option.name}
+                                        value={values?.category?.name ? values?.category : null}
+                                        onChange={handleCategoryChange}
+                                        renderInput={(params) => (
+                                            <TextField {...params} fullWidth placeholder="Select Category" />
+                                        )}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} md={12}>
+                                    <InputLabel>Subcategory</InputLabel>
+                                    <Autocomplete
+                                        id="subcategory-autocomplete"
+                                        value={values?.subcategory?.name ? values?.subcategory : null}
+                                        options={subCategories}
+                                        getOptionLabel={(option) => option.name}
+                                        onChange={handleSubCategoryChange}
+                                        disabled={values?.category ? false : true}
+                                        renderInput={(params) => (
+                                            <TextField {...params} fullWidth placeholder="Select Category" />
+                                        )}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} md={12}>
+                                    <InputLabel>Product Code</InputLabel>
+                                    <CustomTextField
+                                        name="productCode"
+                                        value={values.productCode}
+                                        onChange={handleChange}
+                                        placeholder="Enter product Code"
+                                    />
+                                </Grid>
+                                <Grid item xs={12} md={12}>
+                                    <InputLabel>Status</InputLabel>
+                                    <Select
+                                        name="status"
+                                        value={values.status}
+                                        onChange={handleChange}
+                                        fullWidth
+                                        displayEmpty
+                                    >
+                                        <MenuItem disabled value="">
+                                            Select Status
+                                        </MenuItem>
+                                        {statusOptions.map((option) => (
+                                            <MenuItem key={option} value={option}>
+                                                {option}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </Grid>
+                                <Grid item xs={12} md={12}>
+                                    <InputLabel>Type</InputLabel>
+                                    <Select
+                                        name="type"
+                                        value={values.type}
+                                        onChange={handleChange}
+                                        fullWidth
+                                        displayEmpty
+                                    >
+                                        <MenuItem disabled value="">
+                                            Select Type
+                                        </MenuItem>
+                                        {typeOptions.map((option) => (
+                                            <MenuItem key={option} value={option}>
+                                                {option}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </Grid>
+                                <Grid item xs={12} md={12}>
+                                    <InputLabel>Product Plan</InputLabel>
+                                    <Select
+                                        name="productPlan"
+                                        value={values.productPlan}
+                                        onChange={handleChange}
+                                        fullWidth
+                                        displayEmpty
+                                    >
+                                        <MenuItem disabled value="">
+                                            Select Product Plan
+                                        </MenuItem>
+                                        {productPlanOptions.map((option) => (
+                                            <MenuItem key={option} value={option}>
+                                                {option}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </Grid>
+                                <Grid item xs={12} md={12}>
+                                    <Box mt={2}>
+                                        <Button
+                                            sx={{
+                                                borderRadius: 16,
+                                                px: 3,
+                                                backgroundColor: "#00A76F",
+                                                color: "#FFFFFF",
+                                                fontWeight: 600,
+                                                "&:hover": {
+                                                    borderRadius: 16,
+                                                    px: 3,
+                                                    backgroundColor: "#00A76F",
+                                                    color: "#FFFFFF",
+                                                    fontWeight: 600,
+                                                }
+                                            }}
+                                            onClick={handleSubmit}
+                                        >
+                                            Submit
+                                        </Button>
+                                    </Box>
+                                </Grid>
+                            </Grid>
+                        </Box>
+                    </Grid>
                 </Grid>
-                <Grid item xs={12} md={6}>
-                    <InputLabel>Weight (g)</InputLabel>
-                    <CustomTextField
-                        name="weight"
-                        type="text"
-                        value={values.weight}
-                        onChange={handleChange}
-                        placeholder="Enter the weight"
-                    />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <InputLabel>Price</InputLabel>
-                    <CustomTextField
-                        name="price"
-                        type="text"
-                        value={values.price}
-                        onChange={handleChange}
-                        placeholder="Enter the price"
-                    />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <InputLabel>Quantity</InputLabel>
-                    <CustomTextField
-                        name="countInStock"
-                        type="text"
-                        value={values.countInStock}
-                        onChange={handleChange}
-                        placeholder="Enter the image quantity"
-                    />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <InputLabel>Manufacturing Date</InputLabel>
-                    <CustomTextField
-                        type="date"
-                        name="manufacturingDate"
-                        onChange={(event) =>
-                            handleDateChange("manufacturingDate", new Date(event.target.value))
-                        }
-                        placeholder="Enter manufacturing Date"
-                    />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <InputLabel>Expiration Date</InputLabel>
-                    <CustomTextField
-                        type="date"
-                        name="expiredDate"
-                        onChange={(event) =>
-                            handleDateChange("expiredDate", new Date(event.target.value))
-                        }
-                        placeholder="Enter expired Date"
-                    />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <InputLabel>Category</InputLabel>
-                    <Autocomplete
-                        id="category-autocomplete"
-                        options={categories}
-                        getOptionLabel={(option) => option.name}
-                        value={values?.category}
-                        onChange={handleCategoryChange}
-                        renderInput={(params) => (
-                            <TextField {...params} fullWidth placeholder="Select Category" />
-                        )}
-                    />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <InputLabel>Subcategory</InputLabel>
-                    <Autocomplete
-                        id="subcategory-autocomplete"
-                        value={values?.subcategory}
-                        options={subCategories}
-                        getOptionLabel={(option) => option.name}
-                        onChange={handleSubCategoryChange}
-                        disabled={values?.category ? false : true}
-                        renderInput={(params) => (
-                            <TextField {...params} fullWidth placeholder="Select Category" />
-                        )}
-                    />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <InputLabel>Discount Percentage</InputLabel>
-                    <CustomTextField
-                        name="discount"
-                        type="text"
-                        value={values.discount}
-                        onChange={handleChange}
-                        placeholder="Enter discount percentage"
-                    />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <InputLabel>Product Code</InputLabel>
-                    <CustomTextField
-                        name="productCode"
-                        value={values.productCode}
-                        onChange={handleChange}
-                        placeholder="Enter product Code"
-                    />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <InputLabel>Status</InputLabel>
-                    <Select
-                        name="status"
-                        value={values.status}
-                        onChange={handleChange}
-                        fullWidth
-                        displayEmpty
-                    >
-                        <MenuItem disabled value="">
-                            Select Status
-                        </MenuItem>
-                        {statusOptions.map((option) => (
-                            <MenuItem key={option} value={option}>
-                                {option}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <InputLabel>Type</InputLabel>
-                    <Select
-                        name="type"
-                        value={values.type}
-                        onChange={handleChange}
-                        fullWidth
-                        displayEmpty
-                    >
-                        <MenuItem disabled value="">
-                            Select Type
-                        </MenuItem>
-                        {typeOptions.map((option) => (
-                            <MenuItem key={option} value={option}>
-                                {option}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <InputLabel>Product Plan</InputLabel>
-                    <Select
-                        name="productPlan"
-                        value={values.productPlan}
-                        onChange={handleChange}
-                        fullWidth
-                        displayEmpty
-                    >
-                        <MenuItem disabled value="">
-                            Select Product Plan
-                        </MenuItem>
-                        {productPlanOptions.map((option) => (
-                            <MenuItem key={option} value={option}>
-                                {option}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <InputLabel>Description</InputLabel>
-                    <CustomTextField
-                        name="description"
-                        multiline
-                        row={4}
-                        value={values.description}
-                        onChange={handleChange}
-                        placeholder="Enter Description"
-                    />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <Box mt={2}>
-                        <Button variant="contained" color="primary" onClick={handleSubmit}>
-                            Submit
-                        </Button>
-                    </Box>
-                </Grid>
-            </Grid>
 
+            </Box>
             <Snackbar
                 open={snackbarOpen}
                 autoHideDuration={6000}
@@ -390,7 +446,7 @@ const AdminPostAProduct = () => {
                     {snackbarMessage}
                 </MuiAlert>
             </Snackbar>
-        </Container>
+        </Box>
     );
 };
 

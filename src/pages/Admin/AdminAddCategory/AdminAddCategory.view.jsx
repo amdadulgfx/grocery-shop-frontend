@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { Box, Button, Grid, InputLabel, Typography } from '@mui/material';
+import { Box, Breadcrumbs, Button, Grid, InputLabel, Typography } from '@mui/material';
 import axios from 'axios';
 import CustomTextField from '../../../CustomTags/CustomTextField.view';
+import { Link } from 'react-router-dom';
+import CircleIcon from '@mui/icons-material/Circle';
+
 
 const AdminAddCategory = () => {
     const [values, setValues] = useState({
@@ -37,38 +40,79 @@ const AdminAddCategory = () => {
     };
 
     return (
-        <Box sx={{ px: { xs: 1.25, md: 5 } }}>
-            <Typography sx={{ mt: 1, mb: 1, textAlign: 'center', fontSize: '20px' }}>
-                Add Category
+        <Box>
+            <div style={{ marginBottom: "6px" }}>
+                <Breadcrumbs aria-label="breadcrumb" separator={<CircleIcon sx={{ fontSize: "8px", color: "#637381" }} />} >
+                    <Typography component={Link} to="/admin-dashboard" sx={{ textDecoration: "none", color: "#637381" }}>
+                        Dashboard
+                    </Typography>
+                    <Typography sx={{ color: "#637381" }}>
+                        Post Category
+                    </Typography>
+                </Breadcrumbs>
+            </div>
+            <Typography sx={{ mt: 0.5, mb: 2, fontSize: { xs: "18px", sm: "24px" }, color: "#637381", fontWeight: 600 }}>
+                Create a new category
             </Typography>
-            <Grid container spacing={2}>
-                <Grid item xs={12} md={12}>
-                    <InputLabel>Category Name</InputLabel>
-                    <CustomTextField
-                        name="categoryName"
-                        value={values.categoryName}
-                        onChange={handleChange}
-                    />
+            <Box>
+                <Grid container rowSpacing={2} columnSpacing={2}>
+                    <Grid item xs={12} sx={12} md={3.5}>
+                        <Typography sx={{ fontSize: "18px", fontWeight: 600 }}>
+                            Details
+                        </Typography>
+                        <Typography sx={{ color: "#637381", fontSize: "12px", fontWeight: 400 }}>
+                            name, short description
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12} sx={12} md={8.5}>
+                        <Box sx={{ boxShadow: "5px 5px 10px 10px whitesmoke", px: { xs: 1, md: 3 }, py: { xs: 1, md: 3 }, borderRadius: "6px" }}>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12} md={12}>
+                                    <InputLabel>Category Name</InputLabel>
+                                    <CustomTextField
+                                        name="categoryName"
+                                        value={values.categoryName}
+                                        onChange={handleChange}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} md={12}>
+                                    <InputLabel>Short Description</InputLabel>
+                                    <CustomTextField
+                                        name="shortDesc"
+                                        multiline
+                                        rows={3}
+                                        value={values.shortDesc}
+                                        onChange={handleChange}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} md={12}>
+                                    <Box mt={2}>
+                                        <Button
+                                            sx={{
+                                                borderRadius: 16,
+                                                px: 3,
+                                                backgroundColor: "#00A76F",
+                                                color: "#FFFFFF",
+                                                fontWeight: 600,
+                                                "&:hover": {
+                                                    borderRadius: 16,
+                                                    px: 3,
+                                                    backgroundColor: "#00A76F",
+                                                    color: "#FFFFFF",
+                                                    fontWeight: 600,
+                                                }
+                                            }}
+                                            onClick={handleSubmit}
+                                        >
+                                            Submit
+                                        </Button>
+                                    </Box>
+                                </Grid>
+                            </Grid>
+                        </Box>
+                    </Grid>
                 </Grid>
-                <Grid item xs={12} md={12}>
-                    <InputLabel>Short Description</InputLabel>
-                    <CustomTextField
-                        name="shortDesc"
-                        multiline
-                        rows={3}
-                        value={values.shortDesc}
-                        onChange={handleChange}
-                    />
-                </Grid>
-
-                <Grid item xs={12} md={12}>
-                    <Box mt={2}>
-                        <Button variant="contained" color="primary" onClick={handleSubmit}>
-                            Submit
-                        </Button>
-                    </Box>
-                </Grid>
-            </Grid>
+            </Box>
         </Box>
     );
 };
