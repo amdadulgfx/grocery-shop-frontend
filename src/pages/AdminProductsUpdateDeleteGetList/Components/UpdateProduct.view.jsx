@@ -224,7 +224,7 @@ const UpdateProduct = ({ product, handleCancel, setUpdateMode, setUpdate }) => {
                                     <InputLabel>Product Pictures</InputLabel>
                                     <CustomTextField
                                         name="productPicture"
-                                        // value={values.productPicture}
+                                        value={values.productPicture}
                                         onChange={handleChange}
                                         placeholder="Enter the image URL"
                                     />
