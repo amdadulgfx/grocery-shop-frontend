@@ -10,9 +10,9 @@ import { styled } from '@mui/material/styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SearchIcon from '@mui/icons-material/Search';
 
-const categories = ['Beverages', 'Biscuits & Snacks', 'Breads & Bakery', 'Breakfast & Dairy', 'Frozen Foods', 'Fruits & Vegetables', 'Grocery & Staples', 'Household Needs', 'Meats & Seafood'];
-const statuses = ['In Stock', 'On Sale'];
-const brands = ['Frito Lay', 'Oreo', "Welch's", "Nestle"];
+const categories1 = ['Beverages', 'Biscuits & Snacks', 'Breads & Bakery', 'Breakfast & Dairy', 'Frozen Foods', 'Fruits & Vegetables', 'Grocery & Staples', 'Household Needs', 'Meats & Seafood'];
+const brands1 = ['Frito Lay', 'Oreo', "Welch's", "Nestle"];
+const statuses = [{ label: 'In Stock', value: "countInStock" }, { label: 'On Sale', value: "discount" }];
 const sortingOptions = ['New Products', 'Price Low', 'Price High'];
 
 const ExpandMore = styled((props) => {
@@ -30,30 +30,48 @@ const Products = () => {
   const theme = useTheme();
   const location = useLocation();
   const mobileView = useMediaQuery(theme.breakpoints.down("md"));
-  const [categories, setCategories] = useState([]);
-  const [brands, setBrands] = useState([]);
+  const [categories, setCategories] = useState([...categories1]);
+  const [brands, setBrands] = useState([...brands1]);
+  const [masterDataLoading, setMasterDataLoading] = useState(true);
   const [products, setProducts] = useState([]);
   const [priceRange, setPriceRange] = useState([1, 50]);
   const [sortBy, setSortBy] = useState("");
   const [expanded, setExpanded] = useState(false);
-  const [categoryCheckboxes, setCategoryCheckboxes] = useState(
-    categories.reduce((options, option) => {
-      options[option] = false;
-      return options;
-    }, {})
-  );
-  const [statusesCheckboxes, setStatusesCheckboxes] = useState(
-    statuses.reduce((options, option) => {
-      options[option] = false;
-      return options;
-    }, {})
-  );
-  const [brandsCheckboxes, setBrandsCheckboxes] = useState(
-    brands.reduce((options, option) => {
-      options[option] = false;
-      return options;
-    }, {})
-  );
+  const [categoryCheckboxes, setCategoryCheckboxes] = useState({});
+  const [statusesCheckboxes, setStatusesCheckboxes] = useState({});
+  const [brandsCheckboxes, setBrandsCheckboxes] = useState({});
+  const state = location?.state || {};
+  const { hotProducts, bestSellerProducts, redirectFrom } = state || {};
+
+  useEffect(() => {
+    const categoriesApiUrl = `${process.env.REACT_APP_API_URI}category/`;
+    const brandsApiUrl = `${process.env.REACT_APP_API_URI}product/brand/`;
+    const fetchMasterData = async () => {
+      await axios.get(categoriesApiUrl)
+        .then((res) => setCategories(res?.data?.data))
+        .catch((error) => console.error('Error fetching data:', error));
+      await axios.get(brandsApiUrl)
+        .then((res) => setBrands(res?.data?.data))
+        .catch((error) => console.error('Error fetching data:', error))
+        .finally(() => setMasterDataLoading(false));
+    }
+    fetchMasterData();
+    if (redirectFrom?.length === 0 && redirectFrom === "New_Products") {
+      setCategories(categories.reduce((options, option) => {
+        options[option.name] = false;
+        return options;
+      }, {}));
+      setStatusesCheckboxes(statuses.reduce((options, option) => {
+        options[option] = false;
+        return options;
+      }, {}));
+      setBrands(brands.reduce((options, option) => {
+        options[option.brand] = false;
+        return options;
+      }, {}));
+    }
+
+  }, [])
 
   const handleChangeProductCategory = (checkedObject) => {
     const ArrayOfObjects = Object.keys(checkedObject).map((key) => ({
@@ -68,11 +86,9 @@ const Products = () => {
   const searchCategoriesString = handleChangeProductCategory(categoryCheckboxes);
   const searchStatusesString = handleChangeProductCategory(statusesCheckboxes);
   const searchBrandsString = handleChangeProductCategory(brandsCheckboxes);
-  const { state } = { ...location };
-  const { hotProducts, bestSellerProducts, redirectFrom } = { ...state };
 
-  console.log(categories);
-  console.log(brands);
+  // console.log(categories);
+  // console.log("brands1: ", brands);
 
   const handleSearchProducts = () => {
     const apiUrl = `${process.env.REACT_APP_API_URI}product/searchProduct?searchTerm=${searchCategoriesString}`;
@@ -80,6 +96,8 @@ const Products = () => {
       .then((res) => setProducts(res?.data?.data))
       .catch((error) => console.error('Error fetching data:', error));
   };
+
+  console.log(state)
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -200,6 +218,7 @@ const Products = () => {
     setBrandsCheckboxes,
     redirectFrom,
     handleClearNavigatedProductsFilter,
+    masterDataLoading,
   };
 
   return (

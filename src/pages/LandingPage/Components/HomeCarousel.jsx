@@ -96,7 +96,7 @@ const HomeCarousel = () => {
         }}
       >
         <Grid container spacing={2}>
-          <Grid item md={6}>
+          <Grid item xs={8} md={8}>
             <Typography className={classes.offerType} variant="subtitle2">
               {"Exclusive offer".toUpperCase()}
               <span className={classes.offerAmount}>
@@ -127,7 +127,7 @@ const HomeCarousel = () => {
               <ArrowRightAltIcon />
             </Button>
           </Grid>
-          <Grid item md={6} alignSelf="end">
+          <Grid item xs={12} md={2} alignSelf="end">
             <Box sx={{ mb: -7, position: "absolute", top: "50%", left: 10 }}>
               <IconButton
                 size="small"
