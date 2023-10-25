@@ -162,7 +162,7 @@ const AdminPostAProduct = () => {
                     </Typography>
                 </Breadcrumbs>
             </div>
-            <Typography sx={{ mt: 0.5, mb: 2, fontSize: { xs: "18px", sm: "24px" }, color: "#637381", fontWeight: 600 }}>
+            <Typography sx={{ mt: 0.5, mb: 2, fontSize: { xs: "18px", sm: "24px" }, color: "#637381", fontWeight: 600, textAlign: {xs: "center", md: "start"} }}>
                 Create a new product
             </Typography>
             <Box>
@@ -176,7 +176,7 @@ const AdminPostAProduct = () => {
                         </Typography>
                     </Grid>
                     <Grid item xs={12} sx={12} md={8.5}>
-                        <Box sx={{ boxShadow: "5px 5px 10px 10px whitesmoke", px: { xs: 1, md: 3 }, py: { xs: 1, md: 3 }, borderRadius: "6px" }}>
+                        <Box  sx={{ boxShadow: { xs: "", md: "5px 5px 10px 10px whitesmoke"}, border: { xs: "1px solid #00A76F", md: "none"}, px: { xs: 1.5, md: 3 }, py: { xs: 2, md: 3 }, borderRadius: "6px" }}>
                             <Grid container rowSpacing={2} columnSpacing={2}>
                                 <Grid item xs={12} md={12}>
                                     <InputLabel>Product Name</InputLabel>
@@ -230,7 +230,7 @@ const AdminPostAProduct = () => {
                         </Typography>
                     </Grid>
                     <Grid item xs={12} sx={12} md={8.5}>
-                        <Box sx={{ boxShadow: "5px 5px 10px 10px whitesmoke", px: { xs: 1, md: 3 }, py: { xs: 1, md: 3 }, borderRadius: "6px" }}>
+                        <Box sx={{ boxShadow: { xs: "", md: "5px 5px 10px 10px whitesmoke"}, border: { xs: "1px solid #00A76F", md: "none"}, px: { xs: 1.5, md: 3 }, py: { xs: 2, md: 3 }, borderRadius: "6px" }}>
                             <Grid container rowSpacing={2} columnSpacing={2}>
                                 <Grid item xs={12} md={12}>
                                     <InputLabel>Price</InputLabel>
@@ -266,7 +266,7 @@ const AdminPostAProduct = () => {
                         </Typography>
                     </Grid>
                     <Grid item xs={12} sx={12} md={8.5}>
-                        <Box sx={{ boxShadow: "5px 5px 10px 10px whitesmoke", px: { xs: 1, md: 3 }, py: { xs: 1, md: 3 }, borderRadius: "6px" }}>
+                        <Box sx={{ boxShadow: { xs: "", md: "5px 5px 10px 10px whitesmoke"}, border: { xs: "1px solid #00A76F", md: "none"}, px: { xs: 1.5, md: 3 }, py: { xs: 2, md: 3 }, borderRadius: "6px" }}>
                             <Grid container rowSpacing={2} columnSpacing={2}>
                                 <Grid item xs={12} md={12}>
                                     <InputLabel>Weight (g)</InputLabel>
@@ -404,7 +404,7 @@ const AdminPostAProduct = () => {
                                     </Select>
                                 </Grid>
                                 <Grid item xs={12} md={12}>
-                                    <Box mt={2}>
+                                    <Box mt={2} sx={{display:"flex", alignItems:"center", justifyContent:"center", mt: {xs: 1.2, md: 2}}}>
                                         <Button
                                             sx={{
                                                 borderRadius: 16,

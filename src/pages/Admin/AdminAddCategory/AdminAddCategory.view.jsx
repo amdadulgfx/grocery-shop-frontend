@@ -51,7 +51,7 @@ const AdminAddCategory = () => {
                     </Typography>
                 </Breadcrumbs>
             </div>
-            <Typography sx={{ mt: 0.5, mb: 2, fontSize: { xs: "18px", sm: "24px" }, color: "#637381", fontWeight: 600 }}>
+            <Typography sx={{ mt: 0.5, mb: 2, fontSize: { xs: "18px", sm: "24px" }, color: "#637381", fontWeight: 600, textAlign: {xs: "center", md: "start"} }}>
                 Create a new category
             </Typography>
             <Box>
@@ -65,7 +65,7 @@ const AdminAddCategory = () => {
                         </Typography>
                     </Grid>
                     <Grid item xs={12} sx={12} md={8.5}>
-                        <Box sx={{ boxShadow: "5px 5px 10px 10px whitesmoke", px: { xs: 1.5, md: 3 }, py: { xs: 2, md: 3 }, borderRadius: "6px" }}>
+                        <Box sx={{ boxShadow: { xs: "", md: "5px 5px 10px 10px whitesmoke"}, border: { xs: "1px solid #00A76F", md: "none"}, px: { xs: 1.5, md: 3 }, py: { xs: 2, md: 3 }, borderRadius: "6px" }}>
                             <Grid container spacing={2}>
                                 <Grid item xs={12} md={12}>
                                     <InputLabel>Category Name</InputLabel>
@@ -73,6 +73,7 @@ const AdminAddCategory = () => {
                                         name="categoryName"
                                         value={values.categoryName}
                                         onChange={handleChange}
+                                        placeholder="Enter category name"
                                     />
                                 </Grid>
                                 <Grid item xs={12} md={12}>
@@ -83,6 +84,7 @@ const AdminAddCategory = () => {
                                         rows={3}
                                         value={values.shortDesc}
                                         onChange={handleChange}
+                                        placeholder="Enter short description"
                                     />
                                 </Grid>
                                 <Grid item xs={12} md={12}>

@@ -8,6 +8,7 @@ import {
     Autocomplete,
     Box,
     Breadcrumbs,
+    InputLabel,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import CircleIcon from '@mui/icons-material/Circle';
@@ -61,7 +62,7 @@ const AdminAddSubCategory = () => {
                     </Typography>
                 </Breadcrumbs>
             </div>
-            <Typography sx={{ mt: 0.5, mb: 2, fontSize: { xs: "18px", sm: "24px" }, color: "#637381", fontWeight: 600 }}>
+            <Typography sx={{ mt: 0.5, mb: 2, fontSize: { xs: "18px", sm: "24px" }, color: "#637381", fontWeight: 600, textAlign: { xs: "center", md: "start" } }}>
                 Create a new subcategory
             </Typography>
             <Box>
@@ -75,29 +76,32 @@ const AdminAddSubCategory = () => {
                         </Typography>
                     </Grid>
                     <Grid item xs={12} sx={12} md={8.5}>
-                        <Box sx={{ boxShadow: "5px 5px 10px 10px whitesmoke", px: { xs: 1, md: 3 }, py: { xs: 1, md: 3 }, borderRadius: "6px" }}>
+                        <Box sx={{ boxShadow: { xs: "", md: "5px 5px 10px 10px whitesmoke" }, border: { xs: "1px solid #00A76F", md: "none" }, px: { xs: 1.5, md: 3 }, py: { xs: 2, md: 3 }, borderRadius: "6px" }}>
                             <Grid container spacing={2}>
                                 <Grid item xs={12}>
+                                    <InputLabel>Subcategory Name</InputLabel>
                                     <TextField
-                                        label="Name"
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
                                         fullWidth
                                         sx={{ mb: 2 }}
+                                        placeholder="Enter subcategory name"
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
+                                    <InputLabel>Short Description</InputLabel>
                                     <TextField
-                                        label="Short Description"
                                         value={shortDesc}
                                         onChange={(e) => setShortDesc(e.target.value)}
                                         fullWidth
                                         multiline
                                         rows={3}
                                         sx={{ mb: 2 }}
+                                        placeholder="Enter short description"
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
+                                    <InputLabel>Select Category</InputLabel>
                                     <Autocomplete
                                         id="category-autocomplete"
                                         options={categories}
@@ -105,30 +109,32 @@ const AdminAddSubCategory = () => {
                                         value={selectedCategory}
                                         onChange={handleCategoryChange}
                                         renderInput={(params) => (
-                                            <TextField {...params} label="Category" fullWidth />
+                                            <TextField {...params} placeholder="Select category" fullWidth />
                                         )}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <Button
-                                        sx={{
-                                            borderRadius: 16,
-                                            px: 3,
-                                            backgroundColor: "#00A76F",
-                                            color: "#FFFFFF",
-                                            fontWeight: 600,
-                                            "&:hover": {
+                                    <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", mt: { xs: 1.2, md: 2 } }}>
+                                        <Button
+                                            sx={{
                                                 borderRadius: 16,
                                                 px: 3,
                                                 backgroundColor: "#00A76F",
                                                 color: "#FFFFFF",
                                                 fontWeight: 600,
-                                            }
-                                        }}
-                                        onClick={handleAddSubCategory}
-                                    >
-                                        Submit
-                                    </Button>
+                                                "&:hover": {
+                                                    borderRadius: 16,
+                                                    px: 3,
+                                                    backgroundColor: "#00A76F",
+                                                    color: "#FFFFFF",
+                                                    fontWeight: 600,
+                                                }
+                                            }}
+                                            onClick={handleAddSubCategory}
+                                        >
+                                            Submit
+                                        </Button>
+                                    </Box>
                                 </Grid>
                             </Grid>
                         </Box>
