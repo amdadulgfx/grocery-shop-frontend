@@ -430,7 +430,6 @@ const AdminPostAProduct = () => {
                         </Box>
                     </Grid>
                 </Grid>
-
             </Box>
             <Snackbar
                 open={snackbarOpen}
