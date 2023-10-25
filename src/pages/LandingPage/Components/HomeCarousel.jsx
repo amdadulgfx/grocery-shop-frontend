@@ -90,7 +90,7 @@ const HomeCarousel = () => {
         style={{
           backgroundImage: `url(${carouselData[currentIndex]?.img})`,
           backgroundSize: "cover",
-          height: "auto",
+          height: "320px",
           padding: "60px 50px 100px",
           position: "relative"
         }}
@@ -110,9 +110,9 @@ const HomeCarousel = () => {
               Only this week. Don't miss...
             </Typography>
             <Typography className={classes.offerPrice} variant="h5">
-              <span style={{ fontSize: "14px", marginRight: "-5px" }}>from &nbsp;</span> 
+              <span style={{ fontSize: "14px", marginRight: "-5px" }}>from &nbsp;</span>
               ${carouselData[currentIndex]?.startPrice}
-              </Typography>
+            </Typography>
             <Button
               onClick={() => navigate(`/products/${carouselData[currentIndex]?.categoryId}`)}
               variant="contained"
