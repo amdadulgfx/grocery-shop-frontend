@@ -24,6 +24,7 @@ import { ResponsiveHeader } from "./HeaderMenus.view";
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, selectUser } from '../../reduxMine/features/authApi';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
+import { useGetCartListQuery } from "../../reduxMine/features/cart/cartAPIs";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -94,6 +95,9 @@ const Header = () => {
         handleClose,
     }
 
+    const { data } = useGetCartListQuery(undefined);
+    // console.log("data", data)
+
     return (
         <AppBar
             position="sticky"
@@ -158,6 +162,10 @@ const Header = () => {
                                             fontSize: "12px",
                                             px: 1,
                                             pb: 0.6,
+                                            cursor: "pointer",
+                                            "&:hover": {
+                                                color: "#121212",
+                                            }
                                         }}
                                     >
                                         {route.label}

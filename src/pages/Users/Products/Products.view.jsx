@@ -2,7 +2,7 @@ import { Box, Breadcrumbs, Button, Collapse, Grid, IconButton, MenuItem, Select,
 import React, { useState, useEffect } from 'react';
 import { ProductCard } from '../../../components';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import axios from 'axios';
 import SearchProductFilter from './SearchProductFilter';
@@ -10,8 +10,6 @@ import { styled } from '@mui/material/styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SearchIcon from '@mui/icons-material/Search';
 
-const categories1 = ['Beverages', 'Biscuits & Snacks', 'Breads & Bakery', 'Breakfast & Dairy', 'Frozen Foods', 'Fruits & Vegetables', 'Grocery & Staples', 'Household Needs', 'Meats & Seafood'];
-const brands1 = ['Frito Lay', 'Oreo', "Welch's", "Nestle"];
 const statuses = [{ label: 'In Stock', value: "countInStock" }, { label: 'On Sale', value: "discount" }];
 const sortingOptions = ['New Products', 'Price Low', 'Price High'];
 
@@ -26,15 +24,17 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const Products = () => {
+const Products = ({ history }) => {
   const theme = useTheme();
   const location = useLocation();
+  const navigate = useNavigate();
   const mobileView = useMediaQuery(theme.breakpoints.down("md"));
-  const [categories, setCategories] = useState([...categories1]);
-  const [brands, setBrands] = useState([...brands1]);
+  const [categories, setCategories] = useState([]);
+  const [brands, setBrands] = useState([]);
   const [masterDataLoading, setMasterDataLoading] = useState(true);
   const [products, setProducts] = useState([]);
   const [priceRange, setPriceRange] = useState([1, 50]);
+  const [changedPrice, setChangedPrice] = useState(false);
   const [sortBy, setSortBy] = useState("");
   const [expanded, setExpanded] = useState(false);
   const [categoryCheckboxes, setCategoryCheckboxes] = useState({});
@@ -48,62 +48,113 @@ const Products = () => {
     const brandsApiUrl = `${process.env.REACT_APP_API_URI}product/brand/`;
     const fetchMasterData = async () => {
       await axios.get(categoriesApiUrl)
-        .then((res) => setCategories(res?.data?.data))
+        .then((res) => {
+          setCategoryCheckboxes(res?.data?.data.reduce((options, option) => {
+            options[option.name] = false;
+            return options;
+          }, {}));
+          setCategories(res?.data?.data)
+        })
         .catch((error) => console.error('Error fetching data:', error));
       await axios.get(brandsApiUrl)
-        .then((res) => setBrands(res?.data?.data))
+        .then((res) => {
+          setBrandsCheckboxes(res?.data?.data.reduce((options, option) => {
+            options[option.brand] = false;
+            return options;
+          }, {}));
+          setBrands(res?.data?.data);
+        })
         .catch((error) => console.error('Error fetching data:', error))
         .finally(() => setMasterDataLoading(false));
+      setStatusesCheckboxes(statuses.reduce((options, option) => {
+        options[option?.label] = false;
+        return options;
+      }, {}));
     }
     fetchMasterData();
-    if (redirectFrom?.length === 0 && redirectFrom === "New_Products") {
-      setCategories(categories.reduce((options, option) => {
-        options[option.name] = false;
-        return options;
-      }, {}));
-      setStatusesCheckboxes(statuses.reduce((options, option) => {
-        options[option] = false;
-        return options;
-      }, {}));
-      setBrands(brands.reduce((options, option) => {
-        options[option.brand] = false;
-        return options;
-      }, {}));
-    }
-
   }, [])
 
-  const handleChangeProductCategory = (checkedObject) => {
+
+  const searchParams = new URLSearchParams();
+  const handleSearchProducts = () => {
+    searchParams.set('keywords', "");
+    if (searchCategories?.categoryIds?.length > 0) {
+      searchParams.set('categories', searchCategories?.categoryIds.join(','));
+    }
+    if (searchStatuses?.labels?.length > 0) {
+      searchParams.set('statuses', searchStatuses?.labels.join(','));
+    }
+    if (searchBrands?.length > 0) {
+      searchParams.set('brands', searchBrands.join(','));
+    }
+    if (searchBrands?.length > 0) {
+      searchParams.set('brands', searchBrands.join(','));
+    }
+    if (sortBy?.length > 0) {
+      searchParams.set('sortBy', sortBy);
+    }
+    navigate({ search: '?' + searchParams.toString() });
+    handleFetchSearch();
+  };
+
+  const filterProductByPrice = () => {
+    if(priceRange[0] !== 1 && priceRange[1] !== 50) {
+      if (priceRange[0] > 1) {
+        searchParams.set('min', String(priceRange[0]));
+      }
+      if (priceRange[1] < 50) {
+        searchParams.set('max', String(priceRange[1]));
+      }
+      setChangedPrice(true);
+      handleSearchProducts();
+    }
+  }
+
+  const handleChangeProductCategory = (mainArrayofObj, checkedObject, propertyName) => {
     const ArrayOfObjects = Object.keys(checkedObject).map((key) => ({
       key: key,
       value: checkedObject[key]
     }));
     const selectedOptions = ArrayOfObjects?.filter((option) => option.value === true);
     const itemsName = selectedOptions.map((item) => item.key);
-    return itemsName.join(',');
+    const selectedOptionObjects = mainArrayofObj.filter(item => itemsName.includes(item[propertyName]));
+    console.log(selectedOptionObjects);
+    if (propertyName === "name") {
+      return {
+        names: selectedOptionObjects.map((object) => object[propertyName]),
+        categoryIds: selectedOptionObjects.map((object) => object._id),
+      };
+    } else if (propertyName === "label") {
+      return {
+        labels: selectedOptionObjects.map((object) => object[propertyName]),
+        values: selectedOptionObjects.map((object) => object.value),
+      };
+    } else {
+      return selectedOptionObjects.map((object) => object[propertyName]);
+    }
   }
 
-  const searchCategoriesString = handleChangeProductCategory(categoryCheckboxes);
-  const searchStatusesString = handleChangeProductCategory(statusesCheckboxes);
-  const searchBrandsString = handleChangeProductCategory(brandsCheckboxes);
+  const searchCategories = handleChangeProductCategory(categories, categoryCheckboxes, "name");
+  const searchStatuses = handleChangeProductCategory(statuses, statusesCheckboxes, "label");
+  const searchBrands = handleChangeProductCategory(brands, brandsCheckboxes, "brand");
 
-  // console.log(categories);
-  // console.log("brands1: ", brands);
-
-  const handleSearchProducts = () => {
-    const apiUrl = `${process.env.REACT_APP_API_URI}product/searchProduct?searchTerm=${searchCategoriesString}`;
+  const handleFetchSearch = () => {
+    const apiUrl = `${process.env.REACT_APP_API_URI}product/searchProduct?searchTerm=${searchCategories?.categoryIds.join(",")}`;
     axios.get(apiUrl)
       .then((res) => setProducts(res?.data?.data))
       .catch((error) => console.error('Error fetching data:', error));
   };
-
-  console.log(state)
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [])
 
   useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const categoriesParam = queryParams.get('categories');
+    const statusesParam = queryParams.get('statuses');
+    const brandsParam = queryParams.get('brands');
+    const sortByParam = queryParams.get('sortBy');
     if (redirectFrom === "Hot_Product") {
       setCategoryCheckboxes({ "Hot Products": true });
       setProducts(hotProducts);
@@ -116,44 +167,21 @@ const Products = () => {
     } else {
       handleSearchProducts();
     }
+    if(changedPrice) {
+      filterProductByPrice();
+    } else {
+      setPriceRange([1, 50]);
+      setChangedPrice(false);
+    }
   }, [categoryCheckboxes, statusesCheckboxes, brandsCheckboxes]);
 
-  const sortByNewDate = (a, b) => {
-    const dateA = new Date(a.manufacturingDate);
-    const dateB = new Date(b.manufacturingDate);
-    return dateA.getTime() < dateB.getTime() ? 1 : -1;
-  }
 
-  const sortByPreviousDate = (a, b) => {
-    const dateA = new Date(a.manufacturingDate);
-    const dateB = new Date(b.manufacturingDate);
-    return dateA.getTime() > dateB.getTime() ? 1 : -1;
-  }
 
-  const sortByPriceLow = (a, b) => {
-    const priceA = parseInt(a.price);
-    const priceB = parseInt(b.price);
-    return priceA < priceB ? 1 : -1;
-  }
-
-  const sortByPriceHigh = (a, b) => {
-    const priceA = parseInt(a.price);
-    const priceB = parseInt(b.price);
-    return priceA > priceB ? 1 : -1;
-  }
-
-  const sortingFunctions = {
-    'New Date': sortByNewDate,
-    'Previous Date': sortByPreviousDate,
-    'Price Low': sortByPriceLow,
-    'Price High': sortByPriceHigh,
-  };
-
-  useEffect(() => {
-    if (sortingFunctions[sortBy]) {
-      products.sort(sortingFunctions[sortBy]);
-    }
-  }, [sortBy]);
+  // useEffect(() => {
+  //   if (sortingFunctions[sortBy]) {
+  //     products.sort(sortingFunctions[sortBy]);
+  //   }
+  // }, [sortBy]);
 
   const handleResetStates = () => {
     setSortBy("");
@@ -192,7 +220,7 @@ const Products = () => {
 
   const handleClearFilter = () => {
     handleResetStates();
-    handleSearchProducts();
+    handleFetchSearch();
     location.state.redirectFrom = "";
   }
 
@@ -202,6 +230,8 @@ const Products = () => {
     }
   }
 
+  console.log(searchStatuses?.labels)
+
   const propsData = {
     categories,
     handleCheckboxChange,
@@ -209,7 +239,7 @@ const Products = () => {
     setCategoryCheckboxes,
     priceRange,
     setPriceRange,
-    handleSearchProducts,
+    filterProductByPrice,
     statuses,
     statusesCheckboxes,
     setStatusesCheckboxes,
@@ -299,10 +329,10 @@ const Products = () => {
               spacing={5}
             >
               <Grid item md={8} xs={12}>
-                {searchCategoriesString?.length > 1 && (
+                {searchCategories?.names?.length > 0 && (
                   <Box>
-                    <Typography sx={{ fontWeight: "600" }} variant="subtitle2">Search For: </Typography>
-                    {searchCategoriesString.split(",").map((item, index) => (
+                    <Typography sx={{ fontWeight: "600" }} variant="subtitle2">Search In: </Typography>
+                    {searchCategories?.names.map((item, index) => (
                       <Typography
                         key={item}
                         variant='body2'
@@ -318,10 +348,11 @@ const Products = () => {
                     ))}
                   </Box>
                 )}
-                {searchStatusesString?.length > 1 && (
+
+                {searchStatuses?.labels?.length > 0 && (
                   <Box>
                     <Typography sx={{ fontWeight: "600" }} variant="subtitle2">Status With: </Typography>
-                    {searchStatusesString.split(",").map((item, index) => (
+                    {searchStatuses?.labels?.map((item, index) => (
                       <Typography
                         key={item}
                         variant='body2'
@@ -337,10 +368,10 @@ const Products = () => {
                     ))}
                   </Box>
                 )}
-                {searchBrandsString?.length > 1 && (
+                {searchBrands?.length > 0 && (
                   <Box sx={{ mb: 1 }}>
                     <Typography sx={{ fontWeight: "600" }} variant="subtitle2">Product From: </Typography>
-                    {searchBrandsString.split(",").map((item, index) => (
+                    {searchBrands.map((item, index) => (
                       <Typography
                         key={item}
                         variant='body2'
@@ -427,3 +458,33 @@ export default Products;
 
 
 
+/* const sortByNewDate = (a, b) => {
+    const dateA = new Date(a.manufacturingDate);
+    const dateB = new Date(b.manufacturingDate);
+    return dateA.getTime() < dateB.getTime() ? 1 : -1;
+  }
+
+  const sortByPreviousDate = (a, b) => {
+    const dateA = new Date(a.manufacturingDate);
+    const dateB = new Date(b.manufacturingDate);
+    return dateA.getTime() > dateB.getTime() ? 1 : -1;
+  }
+
+  const sortByPriceLow = (a, b) => {
+    const priceA = parseInt(a.price);
+    const priceB = parseInt(b.price);
+    return priceA < priceB ? 1 : -1;
+  }
+
+  const sortByPriceHigh = (a, b) => {
+    const priceA = parseInt(a.price);
+    const priceB = parseInt(b.price);
+    return priceA > priceB ? 1 : -1;
+  } 
+
+  const sortingFunctions = {
+    'New Date': sortByNewDate,
+    'Previous Date': sortByPreviousDate,
+    'Price Low': sortByPriceLow,
+    'Price High': sortByPriceHigh,
+  };*/

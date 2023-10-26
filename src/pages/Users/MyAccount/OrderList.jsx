@@ -20,7 +20,7 @@ export const OrderList = () => {
             setOrders(res?.data?.data)
             setLoader(true)
         }).catch((err) => {
-            console.log(err.message)
+            // console.log(err.message)
         })
     }, [])
     return (

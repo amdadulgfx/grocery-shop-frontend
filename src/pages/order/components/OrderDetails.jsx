@@ -32,7 +32,7 @@ const rows = [
 ]
 
 export default function OrderDetails({ orderInfos, orderProduct }) {
-    console.log(orderProduct, orderInfos)
+    // console.log(orderProduct, orderInfos)
     return (
         <Box>
             <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', boxShadow: 1, paddingY: '20px', paddingX: "10px", borderRadius: '10px' }}>

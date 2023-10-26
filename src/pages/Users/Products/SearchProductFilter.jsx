@@ -9,7 +9,7 @@ const SearchProductFilter = (props) => {
     setCategoryCheckboxes,
     priceRange,
     setPriceRange,
-    handleSearchProducts,
+    filterProductByPrice,
     statuses,
     statusesCheckboxes,
     setStatusesCheckboxes,
@@ -46,7 +46,7 @@ const SearchProductFilter = (props) => {
                   />
                 </FormControl>
               ) : (<></>)}
-              {    console.log(redirectFrom)}
+              {/* {    console.log(redirectFrom)} */}
               {(redirectFrom === "Best_Seller") ? (
                 <FormControl component="fieldset">
                   <FormControlLabel
@@ -114,7 +114,7 @@ const SearchProductFilter = (props) => {
                 <Button
                   sx={{ fontWeight: "600", textTransform: "none", }}
                   variant='text'
-                  onClick={() => handleSearchProducts()}
+                  onClick={() => filterProductByPrice()}
                 >
                   Filter
                 </Button>

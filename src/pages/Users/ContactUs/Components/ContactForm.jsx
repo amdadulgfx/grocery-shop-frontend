@@ -25,7 +25,7 @@ const ContactForm = () => {
 
     const handleSubmit = (values, { resetForm }) => {
         axios.post(`${process.env.REACT_APP_API_URI}contact-us/`, values).then(res => {
-            console.log(res?.data);
+            // console.log(res?.data);
             res?.data?.statusCode === 200 && setSnackbarOpen(true);
             resetForm();
         });

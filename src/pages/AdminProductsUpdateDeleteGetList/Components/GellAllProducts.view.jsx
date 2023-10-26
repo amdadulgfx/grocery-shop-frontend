@@ -8,7 +8,7 @@ const GellAllProducts = ({ product, handleUpdate, handleDelete }) => {
         month: 'short',
         year: 'numeric'
     });
-    console.log(product)
+    // console.log(product)
 
     return (
         <TableRow
