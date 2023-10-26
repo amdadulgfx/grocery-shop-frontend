@@ -51,6 +51,7 @@ const AdminProductsUpdateDeleteGetList = () => {
                 'Authorization': `${accessToken}`
             }
         };
+
         axios.delete(`${process.env.REACT_APP_API_URI}product/${selectedProduct}`, config)
             .then((response) => {
                 const newProducts = products?.filter(product => product?._id !== selectedProduct);
