@@ -13,9 +13,11 @@ import ROUTES from "./routes/index.js";
 
 function App() {
   const [pathname, setPathName] = useState();
+  const adminToken = localStorage.getItem("accessToken");
+
   useEffect(() => {
     setPathName(window.location.pathname);
-  }, [])
+  }, [adminToken])
 
 
   return (

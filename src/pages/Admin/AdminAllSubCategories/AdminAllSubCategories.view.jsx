@@ -249,7 +249,7 @@ const AdminAllSubCategories = () => {
                     <Typography sx={{ mt: 0.5, mb: 2, fontSize: { xs: "18px", sm: "24px" }, color: "#637381", fontWeight: 600, textAlign: { xs: "center", md: "start" } }}>
                         Subcategory List
                     </Typography>
-                    <Box sx={{ overflowX: "auto" }}>
+                    <Box>
                         <TableContainer>
                             <Table>
                                 <TableHead sx={{ backgroundColor: "#F4F6F8" }}>
