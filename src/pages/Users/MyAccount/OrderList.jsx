@@ -2,6 +2,7 @@ import { Box, Button, CircularProgress, Typography } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 export const OrderList = () => {
+    document.title = "Orders List | Grocery Heaven"
     const [orders, setOrders] = useState([]);
     const access_token = localStorage.getItem("accessToken");
     const dataFetchedRef = useRef(false);

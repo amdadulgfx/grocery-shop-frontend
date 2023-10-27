@@ -33,6 +33,7 @@ const AdminAllSubCategories = () => {
     const [selectedCategories, setSelectedCategories] = useState([]); // Initialize with empty array
     const [categories, setCategories] = useState([]);
     const [deleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
+    document.title = "Subcategories | Grocery Heaven"
 
     useEffect(() => {
         fetchSubCategories();

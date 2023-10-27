@@ -21,6 +21,7 @@ const WishLists = () => {
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
     const [snackbarSeverity, setSnackbarSeverity] = useState('success');
+    document.title = "Wishlists | Grocery Heaven"
 
     const handleAddToCart = (productID) => {
         const existingProduct = data?.data?.find((product) => product?.productId?._id === productID);

@@ -12,6 +12,7 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 const AboutUs = () => {
     const matches = useMediaQuery("(max-width: 900px)");
+    document.title = "About Us | Grocery Heaven"
 
     useEffect(() => {
         window?.scrollTo(0, 0);

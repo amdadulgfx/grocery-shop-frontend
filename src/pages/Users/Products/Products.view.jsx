@@ -42,6 +42,7 @@ const Products = ({ history }) => {
   const [brandsCheckboxes, setBrandsCheckboxes] = useState({});
   const state = location?.state || {};
   const { hotProducts, bestSellerProducts, redirectFrom } = state || {};
+  document.title = "Products | Grocery Heaven"
 
   useEffect(() => {
     const categoriesApiUrl = `${process.env.REACT_APP_API_URI}category/`;

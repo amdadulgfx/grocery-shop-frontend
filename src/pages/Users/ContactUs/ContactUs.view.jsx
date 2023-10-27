@@ -7,6 +7,8 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import ContactForm from './Components/ContactForm';
 
 const ContactUs = () => {
+  document.title = "Contact Us | Grocery Heaven"
+
   return (
     <Box sx={{ bgcolor: "#FAFAFA", pb: 10, px: 2 }}>
       <Box maxWidth="lg" sx={{ mx: "auto" }}>

@@ -17,6 +17,7 @@ const defaultTheme = createTheme();
 
 const AdminSignIn = () => {
   const navigate = useNavigate();
+  document.title = "Admin Sign in | Grocery Heaven"
 
   const handleSubmit = async (event) => {
     event.preventDefault();

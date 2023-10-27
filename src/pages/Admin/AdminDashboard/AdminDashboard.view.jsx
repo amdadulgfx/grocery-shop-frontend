@@ -15,6 +15,7 @@ import AddRoadOutlinedIcon from '@mui/icons-material/AddRoadOutlined';
 
 const drawerWidth = 240;
 const AdminDashboard = (props) => {
+  document.title = "Admin Dashboard | Grocery Heaven"
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const outlet = useOutlet();

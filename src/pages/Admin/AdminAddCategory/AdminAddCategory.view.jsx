@@ -7,6 +7,7 @@ import CircleIcon from '@mui/icons-material/Circle';
 
 
 const AdminAddCategory = () => {
+    document.title = "Post Category | Grocery Heaven"
     const [values, setValues] = useState({
         categoryName: '',
         shortDesc: '',

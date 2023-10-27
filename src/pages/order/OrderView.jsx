@@ -6,6 +6,7 @@ import OrderStatus from './components/OrderStatus'
 import CustomBreadcumbs from './components/breadcumbs'
 
 export const OrderView = () => {
+  document.title = "Orders | Grocery Heaven"
   const [oderDetails, setOderDetals] = useState({});
   const [orderProducts, setOrderProducts] = useState({});
   const locationDeta = useLocation();

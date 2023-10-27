@@ -15,6 +15,7 @@ import HotProducts from "./Components/HotProducts";
 const LandingPage = () => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down('md'));
+  document.title = "Grocery Heaven"
 
   return (
     <Container maxWidth="lg">

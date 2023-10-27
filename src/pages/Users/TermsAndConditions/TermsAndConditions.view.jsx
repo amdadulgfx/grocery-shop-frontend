@@ -3,6 +3,8 @@ import React from 'react';
 import { Container, Typography, List, ListItem, ListItemText, Divider } from '@mui/material';
 
 const TermsAndConditions = () => {
+  document.title = "Terms & Conditions | Grocery Heaven"
+
   return (
     <Container>
       <Typography variant="h4" mt={2} gutterBottom>

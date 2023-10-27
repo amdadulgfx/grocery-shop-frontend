@@ -54,7 +54,7 @@ const validationSchema = yup.object({
 
 });
 export const CheckoutView = () => {
-
+    document.title = "Checkout | Grocery Heaven"
     // console.log(useLocation())
     const dataFetchedRef = useRef(false);
     const { data } = useGetCartListQuery(undefined);

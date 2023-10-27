@@ -102,9 +102,9 @@ const FooterContactAndApp = (props) => {
                 </Grid>
                 <Grid item xs={12} sm={6} md={6}>
                     <Box sx={{ display: "flex", alignItems: !mobileView && "center", justifyContent: !mobileView && "center", mt: mobileView ? 2 : 4 }}>
-                        <Link style={linkStyle} to="/">Privacy Policy</Link>
+                        <Link style={linkStyle} to="/privacy-policy">Privacy Policy</Link>
                         <Link style={linkStyle} to="/terms-&-conditions">Terms and Conditions</Link>
-                        <Link style={linkStyle} to="/">Cookie</Link>
+                        <Link style={linkStyle} to="/faq">FAQ</Link>
                     </Box>
                 </Grid>
             </Grid>

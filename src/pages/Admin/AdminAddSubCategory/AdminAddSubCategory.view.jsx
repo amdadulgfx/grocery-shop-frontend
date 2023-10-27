@@ -18,6 +18,7 @@ const AdminAddSubCategory = () => {
     const [shortDesc, setShortDesc] = useState('');
     const [selectedCategory, setSelectedCategory] = useState(null); // Change to single category
     const [categories, setCategories] = useState([]);
+    document.title = "Post Subcategory | Grocery Heaven"
 
     useEffect(() => {
         // Fetch categories from API

@@ -18,6 +18,7 @@ const AdminAllCategories = () => {
     });
     const [deleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
     const [selectedCategoryId, setSelectedCategoryId] = useState('');
+    document.title = "Categories | Grocery Heaven"
 
     useEffect(() => {
         fetchCategories();

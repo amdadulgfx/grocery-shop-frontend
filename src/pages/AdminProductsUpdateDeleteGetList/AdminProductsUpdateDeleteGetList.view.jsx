@@ -15,6 +15,7 @@ const AdminProductsUpdateDeleteGetList = () => {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [update, setUpdate] = useState(false);
     const accessToken = localStorage.getItem('accessToken');
+    document.title = "Products List | Grocery Heaven"
 
     const handleUpdate = (product) => {
         setSelectedProduct(product);

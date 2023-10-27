@@ -12,6 +12,7 @@ const ProductCartLists = () => {
   const { data } = useGetCartListQuery(undefined);
   const [deleteItemFromCart] = useDeleteItemFromCartMutation();
   const [updateCartItemQuantity] = useUpdateCartItemQuantityMutation();
+  document.title = "Carts List | Grocery Heaven"
 
   const handleDeleteItem = (productID) => {
     if (productID) {

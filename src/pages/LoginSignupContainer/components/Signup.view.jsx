@@ -29,6 +29,7 @@ const accountDetails = {
 };
 
 const Signup = () => {
+    document.title = "Sign Up | Grocery Heaven"
     // const [initialValues, setinInitialValues] = useState(accountDetails);
     const [successAlert, setSuccessAlert] = useState(false);
     const navigate = useNavigate();

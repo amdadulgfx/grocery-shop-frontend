@@ -328,6 +328,7 @@ const AccountDetailsForm = () => {
 };
 
 export default function MyAccount() {
+    document.title = "My Account | Grocery Heaven"
     return (
         <Box sx={{ m: 4 }}>
             <AdditionalDetailsTab />

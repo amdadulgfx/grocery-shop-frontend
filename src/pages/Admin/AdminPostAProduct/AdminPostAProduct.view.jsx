@@ -49,6 +49,7 @@ const AdminPostAProduct = () => {
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarSeverity, setSnackbarSeverity] = useState("success");
     const [snackbarMessage, setSnackbarMessage] = useState("");
+    document.title = "Post Product | Grocery Heaven"
 
     useEffect(() => {
         axios

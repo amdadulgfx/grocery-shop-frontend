@@ -34,12 +34,12 @@ const InfoRoutes = [
     { label: "About Us", path: "/about-us" },
     { label: "My Account", path: "/my-account" },
     { label: "Wishlist", path: "/wishlists" },
-    { label: "Order Tracking", path: "/my-account" },
+    { label: "FAQ", path: "/faq" },
 ];
 
 const MainNavigation = [
     { label: "Products", path: "/products" },
-    { label: "Blog", path: "/blog" },
+    // { label: "Blog", path: "/blog" },
     { label: "Contact", path: "/contact-us" },
     // { label: "More", path: "/saved" },
 ];
