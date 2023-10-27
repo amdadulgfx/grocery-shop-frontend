@@ -23,7 +23,7 @@ const FooterContactAndApp = (props) => {
                             <PhoneInTalkIcon sx={{ border: "0.5px solid #395987", borderRadius: "50%", p: 1, color: "#395987" }} />
                         </Box>
                         <Box sx={{ ml: 2 }}>
-                            <Typography sx={{ ...downloadAppStyle, fontSize: "1.25rem" }}>+8801401257859</Typography>
+                            <Typography sx={{ ...downloadAppStyle, fontSize: "1.25rem" }}>+8801400000000</Typography>
                             <Typography sx={CopyrightTextStyle}>Working 8:00 - 22:00</Typography>
                         </Box>
                     </Box>
@@ -97,7 +97,7 @@ const FooterContactAndApp = (props) => {
             <Grid container sx={{ px: mobileView && "16px" }}>
                 <Grid item xs={12} sm={6} md={6}>
                     <Box sx={{ mt: mobileView ? 2 : 4 }}>
-                        <Typography sx={CopyrightTextStyle} >Copyright 2023 © All rights reserved. Powered by Team Hexa.</Typography>
+                        <Typography sx={CopyrightTextStyle} >Copyright 2023 © All rights reserved. Powered by Grocery Heaven.</Typography>
                     </Box>
                 </Grid>
                 <Grid item xs={12} sm={6} md={6}>
