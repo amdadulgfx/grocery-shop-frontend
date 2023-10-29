@@ -1,13 +1,25 @@
 import { Typography, Box, TableRow, TableCell, IconButton } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const GellAllProducts = ({ product, handleUpdate, handleDelete }) => {
+    const [categories, setCategories] = useState([]);
     const formattedDate = new Date(`${product?.manufacturingDate}`)?.toLocaleDateString('en-US', {
         day: 'numeric',
         month: 'short',
         year: 'numeric'
     });
+    const foundCategory = categories.find(category => category._id === product?.category);
+
+    useEffect(() => {
+        // Fetch categories from API
+        axios
+            .get(`${process.env.REACT_APP_API_URI}category/`)
+            .then((response) => setCategories(response?.data?.data))
+            .catch((error) => console.error("Error fetching categories", error));
+    }, []);
     // console.log(product)
 
     return (
@@ -24,6 +36,7 @@ const GellAllProducts = ({ product, handleUpdate, handleDelete }) => {
                 </Box>
             </TableCell>
             <TableCell align="start" sx={tableBodyStyle}>{formattedDate}</TableCell>
+            <TableCell align="start" sx={tableBodyStyle}>{foundCategory?.name}</TableCell>
             <TableCell align="start" sx={tableBodyStyle}>{product?.countInStock}<span style={{ fontSize: { xs: "10px", md: "12px" }, fontWeight: "400px", color: "gray", marginLeft: "5px" }}>in stock</span></TableCell>
             <TableCell align="start" sx={tableBodyStyle}>${product?.price?.toFixed(2)}</TableCell>
             <TableCell align="center" sx={tableBodyStyle}>

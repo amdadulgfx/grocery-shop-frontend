@@ -15,7 +15,6 @@ import {
 import axios from "axios";
 import MuiAlert from "@mui/material/Alert";
 import CustomTextField from "../../../CustomTags/CustomTextField.view";
-import { Link } from "react-router-dom";
 import CircleIcon from '@mui/icons-material/Circle';
 
 const initialValues = {
@@ -38,8 +37,8 @@ const initialValues = {
 };
 
 const statusOptions = ["In Stock", "Out Of Stock"];
-const typeOptions = ["Recommended", "Organic"];
-const productPlanOptions = ["Recommended", "Organic"];
+const typeOptions = ["Organic"];
+const productPlanOptions = ["Recommended", "Regular"];
 
 const UpdateProduct = ({ product, handleCancel, setUpdateMode, setUpdate }) => {
     const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -148,7 +147,7 @@ const UpdateProduct = ({ product, handleCancel, setUpdateMode, setUpdate }) => {
             setValues({
                 productName: "",
                 brand: "",
-                productPicture: null,
+                productPicture: [],
                 description: "",
                 weight: "",
                 price: "",
@@ -178,7 +177,7 @@ const UpdateProduct = ({ product, handleCancel, setUpdateMode, setUpdate }) => {
         <div>
             <div style={{ marginBottom: "6px" }}>
                 <Breadcrumbs aria-label="breadcrumb" separator={<CircleIcon sx={{ fontSize: "8px", color: "#637381" }} />}>
-                    <Typography component={Link} to="/admin-dashboard" sx={{ textDecoration: "none", color: "#637381" }}>
+                    <Typography sx={{ textDecoration: "none", color: "#637381" }}>
                         Dashboard
                     </Typography>
                     <Typography sx={{ color: "#637381" }}>

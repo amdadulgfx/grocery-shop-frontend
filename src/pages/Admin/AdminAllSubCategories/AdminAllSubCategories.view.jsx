@@ -18,7 +18,6 @@ import {
     InputLabel
 } from '@mui/material';
 import { DeleteConfirmationDialog } from '../../../CustomTags';
-import { Link } from 'react-router-dom';
 import CircleIcon from '@mui/icons-material/Circle';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -124,7 +123,7 @@ const AdminAllSubCategories = () => {
                 <Box>
                     <div style={{ marginBottom: "6px" }}>
                         <Breadcrumbs aria-label="breadcrumb" separator={<CircleIcon sx={{ fontSize: "8px", color: "#637381" }} />} >
-                            <Typography component={Link} to="/admin-dashboard" sx={{ textDecoration: "none", color: "#637381" }}>
+                            <Typography sx={{ textDecoration: "none", color: "#637381" }}>
                                 Dashboard
                             </Typography>
                             <Typography sx={{ color: "#637381" }}>
@@ -239,7 +238,7 @@ const AdminAllSubCategories = () => {
                 <Box>
                     <div style={{ marginBottom: "6px" }}>
                         <Breadcrumbs aria-label="breadcrumb" separator={<CircleIcon sx={{ fontSize: "8px", color: "#637381" }} />}>
-                            <Typography component={Link} to="/admin-dashboard" sx={{ textDecoration: "none", color: "#637381" }}>
+                            <Typography sx={{ textDecoration: "none", color: "#637381" }}>
                                 Dashboard
                             </Typography>
                             <Typography sx={{ color: "#637381" }}>
