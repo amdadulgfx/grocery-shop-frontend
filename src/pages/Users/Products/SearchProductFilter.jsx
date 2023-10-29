@@ -46,7 +46,6 @@ const SearchProductFilter = (props) => {
                   />
                 </FormControl>
               ) : (<></>)}
-              {/* {    console.log(redirectFrom)} */}
               {(redirectFrom === "Best_Seller") ? (
                 <FormControl component="fieldset">
                   <FormControlLabel

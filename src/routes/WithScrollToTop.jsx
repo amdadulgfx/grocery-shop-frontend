@@ -15,6 +15,12 @@ const WithScrollToTop = ({children}) => {
     };
   }, [navigate]);
 
+    useEffect(() => {
+        if(location.pathname !== "/products"){
+          sessionStorage.clear();
+        }
+    }, [location]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);

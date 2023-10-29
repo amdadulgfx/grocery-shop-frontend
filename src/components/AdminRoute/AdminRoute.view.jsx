@@ -7,7 +7,7 @@ const AdminRoute = ({ children }) => {
     if (accessToken) {
         return children;
     } else {
-        return <Navigate to="/admin-login" state={{ from: location }} />;
+        return (<Navigate to="/admin-login" state={{ from: location }} />);
     }
 
 };

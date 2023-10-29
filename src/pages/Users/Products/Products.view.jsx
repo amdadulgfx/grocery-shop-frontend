@@ -2,7 +2,7 @@ import { Box, Breadcrumbs, Button, Collapse, Grid, IconButton, MenuItem, Select,
 import React, { useState, useEffect } from 'react';
 import { ProductCard } from '../../../components';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import axios from 'axios';
 import SearchProductFilter from './SearchProductFilter';
@@ -28,6 +28,7 @@ const Products = ({ history }) => {
   const theme = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const mobileView = useMediaQuery(theme.breakpoints.down("md"));
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
@@ -41,6 +42,7 @@ const Products = ({ history }) => {
   const [statusesCheckboxes, setStatusesCheckboxes] = useState({});
   const [brandsCheckboxes, setBrandsCheckboxes] = useState({});
   const state = location?.state || {};
+  let searchProductQueries = {};
   const { hotProducts, bestSellerProducts, redirectFrom } = state || {};
   document.title = "Products | Grocery Heaven"
 
@@ -50,88 +52,141 @@ const Products = ({ history }) => {
     const fetchMasterData = async () => {
       await axios.get(categoriesApiUrl)
         .then((res) => {
-          setCategoryCheckboxes(res?.data?.data.reduce((options, option) => {
-            options[option.name] = false;
+          const prevCategories = sessionStorage.getItem("categories");
+          const categoryIds = JSON.parse(prevCategories);
+          setCategoryCheckboxes(res?.data?.data?.reduce((options, option) => {
+            if (categoryIds?.includes(option?._id)) {
+              options[option?.name] = true;
+            } else {
+              options[option?.name] = false;
+            }
             return options;
           }, {}));
-          setCategories(res?.data?.data)
+          setCategories(res?.data?.data);
         })
         .catch((error) => console.error('Error fetching data:', error));
       await axios.get(brandsApiUrl)
         .then((res) => {
-          setBrandsCheckboxes(res?.data?.data.reduce((options, option) => {
-            options[option.brand] = false;
+          const prevBrands = sessionStorage?.getItem("brands");
+          const brandsNames = JSON.parse(prevBrands);
+          setBrandsCheckboxes(res?.data?.data?.reduce((options, option) => {
+            if (brandsNames?.includes(option?.brand)) {
+              options[option?.brand] = true;
+            } else {
+              options[option?.brand] = false;
+            }
             return options;
           }, {}));
           setBrands(res?.data?.data);
         })
         .catch((error) => console.error('Error fetching data:', error))
         .finally(() => setMasterDataLoading(false));
-      setStatusesCheckboxes(statuses.reduce((options, option) => {
-        options[option?.label] = false;
-        return options;
-      }, {}));
+      if (statuses?.length > 0) {
+        const prevStatuses = sessionStorage?.getItem("statuses");
+        const statuesValues = JSON.parse(prevStatuses);
+        setStatusesCheckboxes(statuses?.reduce((options, option) => {
+          if (statuesValues?.includes(option?.value)) {
+            options[option?.label] = true;
+          } else {
+            options[option?.label] = false;
+          }
+          return options;
+        }, {}));
+      }
+      if (sortBy === "") {
+        const sortedBy = JSON.parse(sessionStorage?.getItem("sortBy")) || [""];
+        setSortBy(sortedBy[0]);
+        searchProductQueries = {...searchProductQueries, sortBy: sortedBy[0]}
+        setSearchParams({ ...searchProductQueries});
+      }
+      if (priceRange[0] === 1 && priceRange[1] === 50) {
+        const selectedRange = JSON.parse(sessionStorage?.getItem("priceRange")) || [0, 50];
+        setPriceRange(selectedRange);
+      }
     }
     fetchMasterData();
   }, [])
 
-
-  const searchParams = new URLSearchParams();
   const handleSearchProducts = () => {
-    searchParams.set('keywords', "");
+    searchProductQueries = { ...searchProductQueries, keywords: "" }
+    setSearchParams({ ...searchProductQueries });
+    const categoryIds = searchCategories?.categoryIds;
     if (searchCategories?.categoryIds?.length > 0) {
-      searchParams.set('categories', searchCategories?.categoryIds.join(','));
+      searchProductQueries = { ...searchProductQueries, categories: categoryIds }
+      setSearchParams({ ...searchProductQueries });
+      sessionStorage.setItem("categories", JSON.stringify(categoryIds));
+    } else {
+      if (categories?.length > 0) {
+        delete searchProductQueries?.categories;
+        setSearchParams({ ...searchProductQueries });
+        sessionStorage.setItem("categories", JSON.stringify(categoryIds));
+      }
     }
-    if (searchStatuses?.labels?.length > 0) {
-      searchParams.set('statuses', searchStatuses?.labels.join(','));
+    const statusValues = searchStatuses?.values;
+    if (searchStatuses?.values?.length > 0) {
+      searchProductQueries = { ...searchProductQueries, statuses: statusValues }
+      setSearchParams({ ...searchProductQueries });
+      sessionStorage.setItem("statuses", JSON.stringify(statusValues));
+    } else if (statusesCheckboxes["In Stock"] === false && statusesCheckboxes["On Sale"] === false) {
+      delete searchProductQueries.statuses;
+      setSearchParams({ ...searchProductQueries });
+      sessionStorage.setItem("statuses", JSON.stringify(statusValues));
     }
     if (searchBrands?.length > 0) {
-      searchParams.set('brands', searchBrands.join(','));
-    }
-    if (searchBrands?.length > 0) {
-      searchParams.set('brands', searchBrands.join(','));
+      searchProductQueries = { ...searchProductQueries, brands: searchBrands }
+      setSearchParams({ ...searchProductQueries });
+      sessionStorage.setItem("brands", JSON.stringify(searchBrands));
+    } else {
+      if (brands?.length > 0) {
+        delete searchProductQueries.brands;
+        setSearchParams({ ...searchProductQueries });
+        sessionStorage.setItem("brands", JSON.stringify(searchBrands))
+      }
     }
     if (sortBy?.length > 0) {
-      searchParams.set('sortBy', sortBy);
+      searchProductQueries = { ...searchProductQueries, sortBy: searchBrands }
+      setSearchParams({ ...searchProductQueries });
+      sessionStorage.setItem("sortBy", JSON.stringify([sortBy]));
     }
-    navigate({ search: '?' + searchParams.toString() });
     handleFetchSearch();
   };
 
   const filterProductByPrice = () => {
-    if(priceRange[0] !== 1 && priceRange[1] !== 50) {
+    if (priceRange[0] !== 1 || priceRange[1] !== 50) {
       if (priceRange[0] > 1) {
-        searchParams.set('min', String(priceRange[0]));
+        searchProductQueries = { ...searchProductQueries, min: priceRange[0] }
+        setSearchParams({ ...searchProductQueries });
       }
       if (priceRange[1] < 50) {
-        searchParams.set('max', String(priceRange[1]));
+        searchProductQueries = { ...searchProductQueries, max: priceRange[1] }
+        setSearchParams({ ...searchProductQueries });
       }
+      sessionStorage.setItem("priceRange", JSON.stringify(priceRange));
       setChangedPrice(true);
       handleSearchProducts();
     }
   }
 
   const handleChangeProductCategory = (mainArrayofObj, checkedObject, propertyName) => {
-    const ArrayOfObjects = Object.keys(checkedObject).map((key) => ({
+    const ArrayOfObjects = Object.keys(checkedObject)?.map((key) => ({
       key: key,
       value: checkedObject[key]
     }));
-    const selectedOptions = ArrayOfObjects?.filter((option) => option.value === true);
-    const itemsName = selectedOptions.map((item) => item.key);
-    const selectedOptionObjects = mainArrayofObj.filter(item => itemsName.includes(item[propertyName]));
-    console.log(selectedOptionObjects);
+    const selectedOptions = ArrayOfObjects?.filter((option) => option?.value === true);
+    const itemsName = selectedOptions?.map((item) => item.key);
+    const selectedOptionObjects = mainArrayofObj?.filter(item => itemsName?.includes(item[propertyName]));
     if (propertyName === "name") {
       return {
-        names: selectedOptionObjects.map((object) => object[propertyName]),
-        categoryIds: selectedOptionObjects.map((object) => object._id),
+        names: selectedOptionObjects?.map((object) => object[propertyName]),
+        categoryIds: selectedOptionObjects?.map((object) => object._id),
       };
     } else if (propertyName === "label") {
       return {
-        labels: selectedOptionObjects.map((object) => object[propertyName]),
-        values: selectedOptionObjects.map((object) => object.value),
+        labels: selectedOptionObjects?.map((object) => object[propertyName]),
+        values: selectedOptionObjects?.map((object) => object?.value),
       };
     } else {
-      return selectedOptionObjects.map((object) => object[propertyName]);
+      return selectedOptionObjects?.map((object) => object[propertyName]);
     }
   }
 
@@ -140,7 +195,7 @@ const Products = ({ history }) => {
   const searchBrands = handleChangeProductCategory(brands, brandsCheckboxes, "brand");
 
   const handleFetchSearch = () => {
-    const apiUrl = `${process.env.REACT_APP_API_URI}product/searchProduct?searchTerm=${searchCategories?.categoryIds.join(",")}`;
+    const apiUrl = `${process.env.REACT_APP_API_URI}product/searchProduct?searchTerm=${searchCategories?.categoryIds?.join(",")}`;
     axios.get(apiUrl)
       .then((res) => setProducts(res?.data?.data))
       .catch((error) => console.error('Error fetching data:', error));
@@ -168,40 +223,31 @@ const Products = ({ history }) => {
     } else {
       handleSearchProducts();
     }
-    if(changedPrice) {
+    if (changedPrice) {
       filterProductByPrice();
     } else {
-      setPriceRange([1, 50]);
       setChangedPrice(false);
     }
-  }, [categoryCheckboxes, statusesCheckboxes, brandsCheckboxes]);
-
-
-
-  // useEffect(() => {
-  //   if (sortingFunctions[sortBy]) {
-  //     products.sort(sortingFunctions[sortBy]);
-  //   }
-  // }, [sortBy]);
+  }, [categoryCheckboxes, statusesCheckboxes, brandsCheckboxes, sortBy]);
 
   const handleResetStates = () => {
     setSortBy("");
     setPriceRange([1, 50]);
     setCategoryCheckboxes(
       categories.reduce((options, option) => {
-        options[option] = false;
+        options[option.name] = false;
         return options;
       }, {})
     );
     setStatusesCheckboxes(
       statuses.reduce((options, option) => {
-        options[option] = false;
+        options[option.label] = false;
         return options;
       }, {})
     );
     setBrandsCheckboxes(
       brands.reduce((options, option) => {
-        options[option] = false;
+        options[option.brand] = false;
         return options;
       }, {})
     );
@@ -222,7 +268,7 @@ const Products = ({ history }) => {
   const handleClearFilter = () => {
     handleResetStates();
     handleFetchSearch();
-    location.state.redirectFrom = "";
+    // location.state.redirectFrom = "";
   }
 
   const handleClearNavigatedProductsFilter = (event) => {
@@ -230,8 +276,6 @@ const Products = ({ history }) => {
       handleClearFilter();
     }
   }
-
-  console.log(searchStatuses?.labels)
 
   const propsData = {
     categories,
