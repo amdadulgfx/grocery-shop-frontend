@@ -1,19 +1,47 @@
 import { Box, Grid, Typography } from '@mui/material';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { useKeywords } from '../../../context/searchContext';
 
 const FooterRoutes = (props) => {
+    const navigate = useNavigate();
+    const { setSearchKeyword } = useKeywords();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const pathname = window.location.pathname;
 
+    const handleSearchRedirect = (section) => {
+        setSearchKeyword(section?.name);
+        sessionStorage.setItem("searchKeyword", JSON.stringify({ searchKeyword: section?.name }));
+        if (pathname === "/products") {
+            const searchProductQueries = JSON.parse(sessionStorage.getItem("searchProductQueries")) || {};
+            setSearchParams({ ...searchProductQueries, keywords: section?.name });
+            window.scrollTo(0, 0);
+        } else {
+            navigate("/products");
+        }
+    }
     return (
         <Box sx={boxStyle}>
             <Grid container rowSpacing={4.5} columnSpacing={3}>
                 {footerLinks?.map((footerlink) => (
-                    <Grid key={footerlink?.id} item xs={12} sm={6} md={2.4}>
+                    <Grid key={footerlink?.id} item xs={12} sm={6} md={3}>
                         <Typography sx={linkTitleStyle} >{footerlink?.title}</Typography>
                         <Box>
                             {footerlink?.links?.map((section) => (
-                                <Box key={section?.id} sx={{marginBottom: 1}}>
-                                    <Link to={section.path} style={linkStyle} >{section?.name}</Link>
+                                <Box key={section?.id} sx={{ marginBottom: 1 }}>
+                                    <Typography
+                                        variant="body2"
+                                        onClick={() => handleSearchRedirect(section)}
+                                        sx={{
+                                            ...linkStyle,
+                                            cursor: "pointer",
+                                            "&:hover": {
+                                                color: "#313131"
+                                            },
+                                        }}
+                                    >
+                                        {section?.name}
+                                    </Typography>
                                 </Box>
                             ))}
                         </Box>
@@ -40,7 +68,7 @@ const footerLinks = [
         ],
         id: 1
     },
-    {
+   /*  {
         title: "BREAKFAST & DAIRY",
         links: [
             { name: "Milk & Flavoured Milk", path: "/", id: 1 },
@@ -53,7 +81,7 @@ const footerLinks = [
             // { name: "Yogurt", path: "/", id: 8 },
         ],
         id: 2
-    },
+    }, */
     {
         title: "MEAT & SEAFOOD",
         links: [
@@ -102,18 +130,18 @@ const footerLinks = [
 
 const boxStyle = {
     px: { xs: 2, sm: 2, md: 6 },
-    py: { xs: 4, sm: 4, md: 6 }, 
-    backgroundColor:"#F7F8FD"
+    py: { xs: 4, sm: 4, md: 6 },
+    backgroundColor: "#F7F8FD"
 };
 
 const linkTitleStyle = {
-    mb: 1.25, 
-    fontSize:".9375rem", 
-    fontWeight: 600, 
-    color:"#202435"
+    mb: 1.25,
+    fontSize: ".9375rem",
+    fontWeight: 600,
+    color: "#202435"
 };
 
 const linkStyle = {
-    color:"#7177AA", 
-    textDecoration:"none"
+    color: "#7177AA",
+    textDecoration: "none"
 }

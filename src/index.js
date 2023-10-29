@@ -8,6 +8,7 @@ import { persistor, store } from './reduxMine/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import jwt from 'jwt-decode'
 import { login } from './reduxMine/features/authApi';
+import SearchContext from './context/searchContext';
 
 let accessToken = localStorage.getItem("accessToken");
 let storedUser;
@@ -24,7 +25,9 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <App />
+        <SearchContext>
+          <App />
+        </SearchContext>
       </PersistGate>
     </Provider>
   </React.StrictMode>

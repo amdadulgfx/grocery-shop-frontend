@@ -7,6 +7,8 @@ import { CustomSnackbar } from "../../CustomTags";
 import { useNavigate } from "react-router-dom";
 import { useAddToCartMutation, useGetCartListQuery, useUpdateCartItemQuantityMutation } from "../../reduxMine/features/cart/cartAPIs";
 import { useAddToWishListMutation, useDeleteFromWishListMutation, useGetWishListQuery } from "../../reduxMine/features/wishList/wishListSlice";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../reduxMine/features/authApi";
 
 const ProductCard = ({ product }) => {
   const classes = useStyles();
@@ -20,10 +22,11 @@ const ProductCard = ({ product }) => {
   const [addToWishList] = useAddToWishListMutation();
   const [deleteFromWishList] = useDeleteFromWishListMutation();
   const { data: wishList } = useGetWishListQuery(undefined);
+  const user = useSelector(selectUser);
 
   const handleAddToCart = (productID) => {
+    if(user?.email){
     const existingProduct = data?.data?.find((product) => product?.productId?._id === productID);
-
     const option = {
       productId: productID,
       quantity: 1
@@ -40,6 +43,9 @@ const ProductCard = ({ product }) => {
     } else {
       addToCart(option);
     }
+  } else {
+    navigate("/login")
+  }
   };
 
   const handleCloseSnackbar = (event, reason) => {

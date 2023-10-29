@@ -9,6 +9,7 @@ import SearchProductFilter from './SearchProductFilter';
 import { styled } from '@mui/material/styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SearchIcon from '@mui/icons-material/Search';
+import { useKeywords } from '../../../context/searchContext';
 
 const statuses = [{ label: 'In Stock', value: "countInStock" }, { label: 'On Sale', value: "discount" }];
 const sortingOptions = ['New Products', 'Price Low', 'Price High'];
@@ -27,14 +28,14 @@ const ExpandMore = styled((props) => {
 const Products = ({ history }) => {
   const theme = useTheme();
   const location = useLocation();
-  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const mobileView = useMediaQuery(theme.breakpoints.down("md"));
+  const { searchKeyword, setSearchKeyword } = useKeywords();
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
   const [masterDataLoading, setMasterDataLoading] = useState(true);
   const [products, setProducts] = useState([]);
-  const [priceRange, setPriceRange] = useState([1, 50]);
+  const [priceRange, setPriceRange] = useState([1, 5000]);
   const [changedPrice, setChangedPrice] = useState(false);
   const [sortBy, setSortBy] = useState("");
   const [expanded, setExpanded] = useState(false);
@@ -50,6 +51,9 @@ const Products = ({ history }) => {
     const categoriesApiUrl = `${process.env.REACT_APP_API_URI}category/`;
     const brandsApiUrl = `${process.env.REACT_APP_API_URI}product/brand/`;
     const fetchMasterData = async () => {
+      const prevKeyword = sessionStorage.getItem("searchKeyword");
+      const { searchKeyword } = JSON.parse(prevKeyword) || { searchKeyword: "" };
+      setSearchKeyword(searchKeyword);
       await axios.get(categoriesApiUrl)
         .then((res) => {
           const prevCategories = sessionStorage.getItem("categories");
@@ -96,11 +100,9 @@ const Products = ({ history }) => {
       if (sortBy === "") {
         const sortedBy = JSON.parse(sessionStorage?.getItem("sortBy")) || [""];
         setSortBy(sortedBy[0]);
-        searchProductQueries = {...searchProductQueries, sortBy: sortedBy[0]}
-        setSearchParams({ ...searchProductQueries});
       }
-      if (priceRange[0] === 1 && priceRange[1] === 50) {
-        const selectedRange = JSON.parse(sessionStorage?.getItem("priceRange")) || [0, 50];
+      if (priceRange[0] === 1 && priceRange[1] === 5000) {
+        const selectedRange = JSON.parse(sessionStorage?.getItem("priceRange")) || [0, 5000];
         setPriceRange(selectedRange);
       }
     }
@@ -108,7 +110,7 @@ const Products = ({ history }) => {
   }, [])
 
   const handleSearchProducts = () => {
-    searchProductQueries = { ...searchProductQueries, keywords: "" }
+    searchProductQueries = { ...searchProductQueries, keywords: searchKeyword }
     setSearchParams({ ...searchProductQueries });
     const categoryIds = searchCategories?.categoryIds;
     if (searchCategories?.categoryIds?.length > 0) {
@@ -144,20 +146,30 @@ const Products = ({ history }) => {
       }
     }
     if (sortBy?.length > 0) {
-      searchProductQueries = { ...searchProductQueries, sortBy: searchBrands }
+      searchProductQueries = { ...searchProductQueries, sortBy: sortBy }
       setSearchParams({ ...searchProductQueries });
       sessionStorage.setItem("sortBy", JSON.stringify([sortBy]));
+    }
+    if (priceRange[0] === 1 || priceRange[1] === 5000) {
+      if (priceRange[0] > 1) {
+        searchProductQueries = { ...searchProductQueries, min: priceRange[0] }
+        setSearchParams({ ...searchProductQueries });
+      }
+      if (priceRange[1] < 5000) {
+        searchProductQueries = { ...searchProductQueries, max: priceRange[1] }
+        setSearchParams({ ...searchProductQueries });
+      }
     }
     handleFetchSearch();
   };
 
   const filterProductByPrice = () => {
-    if (priceRange[0] !== 1 || priceRange[1] !== 50) {
+    if (priceRange[0] !== 1 || priceRange[1] !== 5000) {
       if (priceRange[0] > 1) {
         searchProductQueries = { ...searchProductQueries, min: priceRange[0] }
         setSearchParams({ ...searchProductQueries });
       }
-      if (priceRange[1] < 50) {
+      if (priceRange[1] < 5000) {
         searchProductQueries = { ...searchProductQueries, max: priceRange[1] }
         setSearchParams({ ...searchProductQueries });
       }
@@ -195,7 +207,7 @@ const Products = ({ history }) => {
   const searchBrands = handleChangeProductCategory(brands, brandsCheckboxes, "brand");
 
   const handleFetchSearch = () => {
-    const apiUrl = `${process.env.REACT_APP_API_URI}product/searchProduct?searchTerm=${searchCategories?.categoryIds?.join(",")}`;
+    const apiUrl = `${process.env.REACT_APP_API_URI}/product/searchProduct?searchTerm=${searchCategories?.categoryIds?.join(",")}`;
     axios.get(apiUrl)
       .then((res) => setProducts(res?.data?.data))
       .catch((error) => console.error('Error fetching data:', error));
@@ -206,11 +218,6 @@ const Products = ({ history }) => {
   }, [])
 
   useEffect(() => {
-    const queryParams = new URLSearchParams(location.search);
-    const categoriesParam = queryParams.get('categories');
-    const statusesParam = queryParams.get('statuses');
-    const brandsParam = queryParams.get('brands');
-    const sortByParam = queryParams.get('sortBy');
     if (redirectFrom === "Hot_Product") {
       setCategoryCheckboxes({ "Hot Products": true });
       setProducts(hotProducts);
@@ -228,11 +235,13 @@ const Products = ({ history }) => {
     } else {
       setChangedPrice(false);
     }
+    sessionStorage.setItem("searchProductQueries", JSON.stringify(searchProductQueries));
   }, [categoryCheckboxes, statusesCheckboxes, brandsCheckboxes, sortBy]);
 
   const handleResetStates = () => {
     setSortBy("");
-    setPriceRange([1, 50]);
+    setPriceRange([1, 5000]);
+    setSearchKeyword("");
     setCategoryCheckboxes(
       categories.reduce((options, option) => {
         options[option.name] = false;
@@ -268,7 +277,6 @@ const Products = ({ history }) => {
   const handleClearFilter = () => {
     handleResetStates();
     handleFetchSearch();
-    // location.state.redirectFrom = "";
   }
 
   const handleClearNavigatedProductsFilter = (event) => {
@@ -500,36 +508,3 @@ const Products = ({ history }) => {
 };
 
 export default Products;
-
-
-
-/* const sortByNewDate = (a, b) => {
-    const dateA = new Date(a.manufacturingDate);
-    const dateB = new Date(b.manufacturingDate);
-    return dateA.getTime() < dateB.getTime() ? 1 : -1;
-  }
-
-  const sortByPreviousDate = (a, b) => {
-    const dateA = new Date(a.manufacturingDate);
-    const dateB = new Date(b.manufacturingDate);
-    return dateA.getTime() > dateB.getTime() ? 1 : -1;
-  }
-
-  const sortByPriceLow = (a, b) => {
-    const priceA = parseInt(a.price);
-    const priceB = parseInt(b.price);
-    return priceA < priceB ? 1 : -1;
-  }
-
-  const sortByPriceHigh = (a, b) => {
-    const priceA = parseInt(a.price);
-    const priceB = parseInt(b.price);
-    return priceA > priceB ? 1 : -1;
-  } 
-
-  const sortingFunctions = {
-    'New Date': sortByNewDate,
-    'Previous Date': sortByPreviousDate,
-    'Price Low': sortByPriceLow,
-    'Price High': sortByPriceHigh,
-  };*/

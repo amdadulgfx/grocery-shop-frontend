@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Box, Grid, Typography } from '@mui/material';
 import axios from 'axios';
 import { KeyboardArrowRight } from '@material-ui/icons';
+import { useNavigate } from 'react-router-dom';
 
 const AllCategoriesAds = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [categories, setCategories] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch categories from API
@@ -19,19 +21,46 @@ const AllCategoriesAds = () => {
       });
   }, []);
 
+  const handleCategoryRedirect = (category) => {
+    // setSelectedCategory(selectedCategory === category?._id ? null : category?._id);
+    sessionStorage.setItem("categories", JSON.stringify([category?._id]));
+    navigate("/products");
+  }
+
   return (
     <Box sx={{ border: "1px solid lightgrey", borderRadius: "0px 0px 6px 6px", mt: 2 }}>
       <Grid container>
         {categories?.map((category) => (
-          <Grid item xs={12} key={category._id}>
+          <Grid item xs={12} key={category?._id}>
             <Box
-              onMouseEnter={() => setSelectedCategory(category._id)}
-              onMouseLeave={() => setSelectedCategory(null)}
-              onClick={() => setSelectedCategory(selectedCategory === category?._id ? null : category?._id)}
-              sx={{ borderBottom: "1px solid lightgrey", px: "20px", py: "10px", display: "flex", alignItems: "center", justifyContent: "space-between" }}
+              // onMouseEnter={() => setSelectedCategory(category._id)}
+              // onMouseLeave={() => setSelectedCategory(null)}
+              onClick={() => handleCategoryRedirect(category)}
+              sx={{
+                borderBottom: "1px solid lightgrey",
+                px: "20px", py: "10px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                cursor: "pointer",
+
+              }}
             >
               <Box>
-                <Typography sx={{ fontSize: "1rem", fontWeight: 400, color: "#333444" }}>{category.name}</Typography>
+                <Typography
+                  variant='body1'
+                  sx={{
+                    fontSize: "1rem",
+                    fontWeight: 400,
+                    color: "#333444",
+                    "&:hover": {
+                      color: "#555444",
+                      fontWeight: 600,
+                    },
+                  }}
+                >
+                  {category.name}
+                </Typography>
                 {/* {selectedCategory === category?._id &&
                   category?.subcategory?.map((subCategory, index) => (
                     <Box key={index} >

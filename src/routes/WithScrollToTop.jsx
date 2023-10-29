@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-const WithScrollToTop = ({children}) => {
+const WithScrollToTop = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -15,11 +15,11 @@ const WithScrollToTop = ({children}) => {
     };
   }, [navigate]);
 
-    useEffect(() => {
-        if(location.pathname !== "/products"){
-          sessionStorage.clear();
-        }
-    }, [location]);
+  useEffect(() => {
+    if (location.pathname !== "/products") {
+      sessionStorage.clear();
+    }
+  }, [location]);
 
   useEffect(() => {
     window.scrollTo(0, 0);

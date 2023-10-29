@@ -18,6 +18,11 @@ const NewProducts = () => {
       .catch((error) => console.error('Error fetching Hot Products', error));
   }, [])
 
+  const handleGoToProducts = () => {
+    sessionStorage.setItem("sortBy", JSON.stringify(['New Products']));
+    navigate("/products", /* { state: { redirectFrom: "New_Products" } } */) 
+  } 
+
   return (
     <Box sx={{ mt: 4, mb: 10 }}>
       <Box
@@ -49,7 +54,7 @@ const NewProducts = () => {
         </Box>
         <Box>
           <Button
-            onClick={() => navigate("/products", { state: { redirectFrom: "New_Products" } })}
+            onClick={handleGoToProducts}
             variant="outlined"
             sx={{
               textTransform: "none",

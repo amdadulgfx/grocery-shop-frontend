@@ -14,7 +14,7 @@ import {
     MenuItem,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import MuiAlert from "@mui/material/Alert";
 import HandshakeIcon from '@mui/icons-material/Handshake';
 import HeaderLogo from "../../assets/Logos/header_logo.png"
@@ -25,6 +25,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout, selectUser } from '../../reduxMine/features/authApi';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import { useGetCartListQuery } from "../../reduxMine/features/cart/cartAPIs";
+import { useKeywords } from "../../context/searchContext";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -44,25 +45,31 @@ const MainNavigation = [
     // { label: "More", path: "/saved" },
 ];
 
-const options = [
+{/**** Don't Remove ****/ }
+/* const options = [
     'Show all notification content',
     'Hide sensitive notification content',
     'Hide all notification content',
-];
+]; 
+
+   // const [anchorEl, setAnchorEl] = useState(null);
+    // const open = Boolean(anchorEl);
+*/
 
 const Header = () => {
     const navigate = useNavigate();
     const theme = useTheme();
+    const location = useLocation();
     const matches = useMediaQuery(theme.breakpoints.down('md'));
     const tabMode = useMediaQuery(theme.breakpoints.down('lg'));
+    const [searchParams, setSearchParams] = useSearchParams();
+    const { searchKeyword, setSearchKeyword } = useKeywords();
     const [showSearchBar, setShowSearchBar] = useState(false);
-    const [searchKeyword, setSearchKeyword] = useState('');
     const [openDrawer, setOpenDrawer] = useState(false);
-    const [anchorEl, setAnchorEl] = useState(null);
-    const open = Boolean(anchorEl);
-    const pathname = window.location.pathname
+    const pathname = window.location.pathname;
     const user = useSelector(selectUser);
     const dispatch = useDispatch();
+    const { data } = useGetCartListQuery();
 
     useEffect(() => {
         pathname === "/products" ? setShowSearchBar(true) : setShowSearchBar(false);
@@ -72,12 +79,28 @@ const Header = () => {
         if (searchKeyword === "") {
             setShowSearchBar((prev) => !prev);
         } else {
-            setAnchorEl(event.currentTarget);
+            sessionStorage.setItem("searchKeyword", JSON.stringify({ searchKeyword }));
+            if (pathname === "/products") {
+                const searchProductQueries = JSON.parse(sessionStorage.getItem("searchProductQueries")) || {};
+                setSearchParams({ ...searchProductQueries, keywords: searchKeyword });
+            } else {
+                navigate("/products");
+            }
         }
-
     }
+
+    useEffect(() => {
+        if (location.pathname !== "/products") {
+            setSearchKeyword("");
+            setShowSearchBar(false);
+        }
+    }, [location]);
+
+    const handleChange = (event) => {
+        setSearchKeyword(event.target.value);
+    }
+
     const handleClose = () => {
-        setAnchorEl(null);
         setOpenDrawer(false);
     };
 
@@ -94,9 +117,6 @@ const Header = () => {
         handleLogout,
         handleClose,
     }
-
-    const { data } = useGetCartListQuery(undefined);
-    // console.log("data", data)
 
     return (
         <AppBar
@@ -276,13 +296,13 @@ const Header = () => {
                                                 }}
                                                 disableUnderline
                                                 placeholder="Search Product"
-                                                onChange={(event) => setSearchKeyword(event.target.value)}
+                                                onChange={handleChange}
                                                 value={searchKeyword}
                                                 id="lock-button"
                                                 aria-haspopup="listbox"
                                                 aria-controls="lock-menu"
                                                 aria-label="when device is locked"
-                                                aria-expanded={open ? 'true' : undefined}
+                                                // aria-expanded={open ? 'true' : undefined}
                                                 endAdornment={
                                                     <InputAdornment position="end" style={{ outline: "none" }}>
                                                         <IconButton
@@ -296,7 +316,8 @@ const Header = () => {
                                                 }
                                             />
                                         </form>
-                                        <Menu
+                                        {/**** Don't Remove ****/}
+                                        {/* <Menu
                                             id="lock-menu"
                                             anchorEl={anchorEl}
                                             open={open}
@@ -310,7 +331,7 @@ const Header = () => {
                                                     {option}
                                                 </MenuItem>
                                             ))}
-                                        </Menu>
+                                        </Menu> */}
                                     </Box>
                                 ) : (
                                     <IconButton
@@ -340,7 +361,7 @@ const Header = () => {
                                             onClick={() => navigate("/carts")}
                                         >
 
-                                            <LocalMallIcon /> <span style={{ marginBottom: "-3px" }}>Cart</span>
+                                            <LocalMallIcon /> <span style={{ marginBottom: "-3px" }}>Cart({data?.data?.length}) </span>
                                         </Button>
                                         <Button
                                             variant="contained"

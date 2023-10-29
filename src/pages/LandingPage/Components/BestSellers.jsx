@@ -52,7 +52,7 @@ const BestSellers = () => {
             sx={{
               textTransform: "none",
               borderRadius: 16,
-              // visibility: "hidden"
+              visibility: "hidden"
             }}
           >
             View All&nbsp;
