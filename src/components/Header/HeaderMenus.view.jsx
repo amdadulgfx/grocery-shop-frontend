@@ -1,19 +1,18 @@
-import { Box, Button, Divider, Drawer, IconButton, Input, InputAdornment, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import { Box, Button, Divider, Drawer, Typography } from '@mui/material';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import SearchSharpIcon from '@mui/icons-material/SearchSharp';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
+import { useGetCartListQuery } from '../../reduxMine/features/cart/cartAPIs';
 
 const InfoRoutes = [
   { label: "About Us", path: "/about" },
   { label: "My Account", path: "/my-account" },
   { label: "Wishlist", path: "/saved" },
-  { label: "Order Tracking", path: "/tracking" },
+  { label: "FAQ", path: "/faq" },
 ];
 
 const MainNavigation = [
   { label: "Products", path: "/products" },
-  { label: "Blog", path: "/blog" },
   { label: "Contact", path: "/contact-us" },
   // { label: "More", path: "/saved" },
 ];
@@ -21,6 +20,7 @@ const MainNavigation = [
 export const ResponsiveHeader = (props) => {
   const navigate = useNavigate();
   const { openDrawer, setOpenDrawer, user, handleLogout, handleClose } = props || {};
+  const { data } = useGetCartListQuery();
 
   return (
     <Drawer
@@ -30,7 +30,7 @@ export const ResponsiveHeader = (props) => {
       sx={{}}
     >
 
-      <Box sx={{ minWidth: "310px", }}>
+      <Box sx={{ minWidth: "300px", }}>
         <Box
           sx={{
             display: "flex",
@@ -47,7 +47,7 @@ export const ResponsiveHeader = (props) => {
                 <Typography
                   variant="subtitle1"
                   key={route.path}
-                  onClick={() => navigate(route.path)}
+                  onClick={() => {navigate(route.path); handleClose();}}
                   sx={{
                     display: "block",
                     color: "#757575",
@@ -89,7 +89,7 @@ export const ResponsiveHeader = (props) => {
                   onClick={() => { navigate("/carts"); handleClose(); }}
                 >
 
-                  <LocalMallIcon /> <span style={{ marginBottom: "-3px" }}>Cart</span>
+                  <LocalMallIcon /> <span style={{ marginBottom: "-3px" }}>Cart{data?.data?.length > 0 && <>({data?.data?.length})</>}</span>
                 </Button>
                 <Button
                   variant="contained"
@@ -240,7 +240,7 @@ export const ResponsiveHeader = (props) => {
               }}
             >
               <span>Need help? Call Us:</span>
-              <span style={{ color: "#2BBEF9", fontWeight: "600" }}>+0020 500</span>
+              <span style={{ color: "#2BBEF9", fontWeight: "600" }}>+8801000000000</span>
             </Typography>
           </Box>
         </Box>

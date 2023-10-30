@@ -23,7 +23,7 @@ const FooterContactAndApp = (props) => {
                             <PhoneInTalkIcon sx={{ border: "0.5px solid #395987", borderRadius: "50%", p: 1, color: "#395987" }} />
                         </Box>
                         <Box sx={{ ml: 2 }}>
-                            <Typography sx={{ ...downloadAppStyle, fontSize: "1.25rem" }}>+8801400000000</Typography>
+                            <Typography sx={{ ...downloadAppStyle, fontSize: "1.25rem" }}>+8801000000000</Typography>
                             <Typography sx={CopyrightTextStyle}>Working 8:00 - 22:00</Typography>
                         </Box>
                     </Box>

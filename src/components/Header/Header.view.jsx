@@ -9,13 +9,10 @@ import {
     IconButton,
     Input,
     InputAdornment,
-    Container,
-    Menu,
-    MenuItem,
+    Container
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import MuiAlert from "@mui/material/Alert";
 import HandshakeIcon from '@mui/icons-material/Handshake';
 import HeaderLogo from "../../assets/Logos/header_logo.png"
 import SearchSharpIcon from '@mui/icons-material/SearchSharp';
@@ -26,10 +23,6 @@ import { logout, selectUser } from '../../reduxMine/features/authApi';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import { useGetCartListQuery } from "../../reduxMine/features/cart/cartAPIs";
 import { useKeywords } from "../../context/searchContext";
-
-const Alert = React.forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
 
 const InfoRoutes = [
     { label: "About Us", path: "/about-us" },
@@ -227,7 +220,7 @@ const Header = () => {
                                     }}
                                 >
                                     <span>Need help? Call Us:</span>
-                                    <span style={{ color: "#2BBEF9", fontWeight: "600" }}>+0020 500</span>
+                                    <span style={{ color: "#2BBEF9", fontWeight: "600" }}>+8801000000000</span>
                                 </Typography>
                             </Box>
                         </Box>
@@ -361,7 +354,7 @@ const Header = () => {
                                             onClick={() => navigate("/carts")}
                                         >
 
-                                            <LocalMallIcon /> <span style={{ marginBottom: "-3px" }}>Cart({data?.data?.length}) </span>
+                                            <LocalMallIcon /> <span style={{ marginBottom: "-3px" }}>Cart {data?.data?.length > 0 && <>({data?.data?.length})</>} </span>
                                         </Button>
                                         <Button
                                             variant="contained"
