@@ -2,11 +2,13 @@ import { Box, Grid, Typography } from '@mui/material';
 import React from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useKeywords } from '../../../context/searchContext';
+import { useSearchProductsListMutation } from '../../../reduxMine/features/searchProducts/searchProductsAPI';
 
 const FooterRoutes = (props) => {
     const navigate = useNavigate();
-    const { setSearchKeyword } = useKeywords();
+    const { setSearchKeyword, setProducts, handleSearchProductLists } = useKeywords();
     const [searchParams, setSearchParams] = useSearchParams();
+    const [searchProductsList, { data }] = useSearchProductsListMutation();
     const pathname = window.location.pathname;
 
     const handleSearchRedirect = (section) => {
@@ -14,7 +16,9 @@ const FooterRoutes = (props) => {
         sessionStorage.setItem("searchKeyword", JSON.stringify({ searchKeyword: section?.name }));
         if (pathname === "/products") {
             const searchProductQueries = JSON.parse(sessionStorage.getItem("searchProductQueries")) || {};
+            const searchQueries = JSON.parse(sessionStorage.getItem("searchQueries")) || {};
             setSearchParams({ ...searchProductQueries, keywords: section?.name });
+            handleSearchProductLists({ ...searchQueries, keyword: section?.name?.replace("&", "%26")?.replace(/ /g, "+") || "" });
             window.scrollTo(0, 0);
         } else {
             navigate("/products");
@@ -68,20 +72,20 @@ const footerLinks = [
         ],
         id: 1
     },
-   /*  {
-        title: "BREAKFAST & DAIRY",
-        links: [
-            { name: "Milk & Flavoured Milk", path: "/", id: 1 },
-            { name: "Butter and Margarine", path: "/", id: 2 },
-            { name: "Cheese", path: "/", id: 3 },
-            { name: "Eggs Substitutes", path: "/", id: 4 },
-            // { name: "Honey", path: "/", id: 5 },
-            // { name: "Marmalades", path: "/", id: 6 },
-            // { name: "Sour Cream and Dips", path: "/", id: 7 },
-            // { name: "Yogurt", path: "/", id: 8 },
-        ],
-        id: 2
-    }, */
+    /*  {
+         title: "BREAKFAST & DAIRY",
+         links: [
+             { name: "Milk & Flavoured Milk", path: "/", id: 1 },
+             { name: "Butter and Margarine", path: "/", id: 2 },
+             { name: "Cheese", path: "/", id: 3 },
+             { name: "Eggs Substitutes", path: "/", id: 4 },
+             // { name: "Honey", path: "/", id: 5 },
+             // { name: "Marmalades", path: "/", id: 6 },
+             // { name: "Sour Cream and Dips", path: "/", id: 7 },
+             // { name: "Yogurt", path: "/", id: 8 },
+         ],
+         id: 2
+     }, */
     {
         title: "MEAT & SEAFOOD",
         links: [
