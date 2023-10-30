@@ -60,8 +60,6 @@ export default TrendingProductsAds;
 
 const root = {
   backgroundColor: '#F5F5F5',
-  minHeight: '100vh',
-  display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
