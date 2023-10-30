@@ -65,8 +65,8 @@ const Signup = () => {
 
     return (
         <div>
-            <form onSubmit={formik.handleSubmit} style={{ padding: "2.5rem", textAlign: "center" }}>
-                <Grid container spacing={3}>
+            <form onSubmit={formik.handleSubmit} style={{textAlign: "center" }}>
+                <Grid container spacing={2} sx={{ padding: {xs:"10px", md:"40px"}}}>
                     <Grid item xs={12}>
                         <TextField
                             label="Email"

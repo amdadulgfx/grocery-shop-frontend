@@ -666,7 +666,7 @@ const SingupForm = (props) => {
                                     </Box>
                                     <Box>
                                         <InputLabel sx={{ py: 0.5 }}>
-                                            Password xxx <span style={{ color: "red" }}>*</span>
+                                            Password <span style={{ color: "red" }}>*</span>
                                         </InputLabel>
                                         <TextField
                                             sx={{

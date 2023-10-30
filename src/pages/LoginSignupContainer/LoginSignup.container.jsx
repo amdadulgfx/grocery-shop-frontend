@@ -1,4 +1,4 @@
-import { Box, Button, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Button, Container, Tab, Tabs, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -55,67 +55,69 @@ function LoginSignup() {
     };
 
     return (
-        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
-            <Box sx={{ width: '34rem', mx: 2, background: '#FFFFFF', borderRadius: 2, border: "1px solid #e4e5ee" }}>
-                <Box sx={{ borderBottom: 0, borderColor: "#395987", color: "var(--clr-blue-footer)", display: "flex", justifyContent: "center" }}>
-                    <Tabs variant="scrollable"
-                        value={value}
-                        onChange={handleChange}
-                        scrollButtons="auto"
-                        allowScrollButtonsMobile={true}
-                        aria-label="basic tabs"
-                        textColor="inherit"
-                        TabIndicatorProps={{
-                            sx: {
-                                backgroundColor: "#395987",
-                                height: "4px",
-                                borderBottom: 0,
-                                borderTopLeftRadius: 16,
-                                borderTopRightRadius: 16,
-                            },
-                        }}
+        <Container>
+            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
+                <Box sx={{ width: {md: '34rem'}, mx: {md: 2}, background: '#FFFFFF', borderRadius: 2, border: "1px solid #e4e5ee" }}>
+                    <Box sx={{ borderBottom: 0, borderColor: "#395987", color: "var(--clr-blue-footer)", display: "flex", justifyContent: "center" }}>
+                        <Tabs variant="scrollable"
+                            value={value}
+                            onChange={handleChange}
+                            scrollButtons="auto"
+                            allowScrollButtonsMobile={true}
+                            aria-label="basic tabs"
+                            textColor="inherit"
+                            TabIndicatorProps={{
+                                sx: {
+                                    backgroundColor: "#395987",
+                                    height: "4px",
+                                    borderBottom: 0,
+                                    borderTopLeftRadius: 16,
+                                    borderTopRightRadius: 16,
+                                },
+                            }}
+                            sx={{
+                                ".MuiTabs-flexContainer": {
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    color: '#395987'
+                                }
+                            }}
+                        >
+                            <Tab style={{ ...tabStyle }} label="Login" key="Login" />
+                            <Tab style={{ ...tabStyle }} label="Sign Up" key="Sign Up" />
+                        </Tabs>
+                    </Box>
+                    <Box sx={{ border: '1px solid #E4EEF5', width: '100%', mt: 1.3 }} />
+                    <TabPanel value={value} index={0} key={'Login'}>
+                        {/* <SingupForm pageType="LogIn" source='signup' /> */}
+                        <Login />
+                    </TabPanel>
+                    <TabPanel value={value} index={1} key={'Sign Up'}>
+                        <Signup />
+                    </TabPanel>
+                </Box>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Typography
+                        variant="body1"
+                        component="p"
+                        sx={{ color: "#333333", fontSize: ".8rem" }}
+                    >
+                        Are you an admin?
+                    </Typography>
+                    <Button
+                        variant="text"
+                        onClick={() => navigate("/admin-login")}
                         sx={{
-                            ".MuiTabs-flexContainer": {
-                                display: "flex",
-                                justifyContent: "space-between",
-                                color: '#395987'
-                            }
+                            fontWeight: 600,
+                            fontSize: "0.7rem",
+                            textDecoration: "underline",
                         }}
                     >
-                        <Tab style={{ ...tabStyle }} label="Login" key="Login" />
-                        <Tab style={{ ...tabStyle }} label="Sign Up" key="Sign Up" />
-                    </Tabs>
+                        Click Here
+                    </Button>
                 </Box>
-                <Box sx={{ border: '1px solid #E4EEF5', width: '100%', mt: 1.3 }} />
-                <TabPanel value={value} index={0} key={'Login'}>
-                    {/* <SingupForm pageType="LogIn" source='signup' /> */}
-                    <Login />
-                </TabPanel>
-                <TabPanel value={value} index={1} key={'Sign Up'}>
-                    <Signup />
-                </TabPanel>
             </Box>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Typography
-                    variant="body1"
-                    component="p"
-                    sx={{ color: "#333333", fontSize: ".8rem" }}
-                >
-                    Are you an admin?
-                </Typography>
-                <Button
-                    variant="text"
-                    onClick={() => navigate("/admin-login")}
-                    sx={{
-                        fontWeight: 600,
-                        fontSize: "0.7rem",
-                        textDecoration: "underline",
-                    }}
-                >
-                    Click Here
-                </Button>
-            </Box>
-        </Box>
+        </Container>
     )
 }
 
