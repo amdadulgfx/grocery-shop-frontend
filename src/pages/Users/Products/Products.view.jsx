@@ -1,4 +1,4 @@
-import { Box, Breadcrumbs, Button, Collapse, Grid, IconButton, MenuItem, Select, Typography, useMediaQuery, useTheme, } from '@mui/material';
+import { Box, Breadcrumbs, Button, CircularProgress, Collapse, Grid, IconButton, MenuItem, Select, Typography, useMediaQuery, useTheme, } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import { ProductCard } from '../../../components';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -10,6 +10,7 @@ import { styled } from '@mui/material/styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SearchIcon from '@mui/icons-material/Search';
 import { useKeywords } from '../../../context/searchContext';
+import { useSearchProductsListMutation } from '../../../reduxMine/features/searchProducts/searchProductsAPI';
 
 const statuses = [{ label: 'In Stock', value: "countInStock" }, { label: 'On Sale', value: "discount" }];
 const sortingOptions = ['New Products', 'Price Low', 'Price High'];
@@ -30,11 +31,10 @@ const Products = ({ history }) => {
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const mobileView = useMediaQuery(theme.breakpoints.down("md"));
-  const { searchKeyword, setSearchKeyword } = useKeywords();
+  const { searchKeyword, setSearchKeyword, products, setProducts, handleSearchProductLists, isLoading } = useKeywords();
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
   const [masterDataLoading, setMasterDataLoading] = useState(true);
-  const [products, setProducts] = useState([]);
   const [priceRange, setPriceRange] = useState([1, 5000]);
   const [changedPrice, setChangedPrice] = useState(false);
   const [sortBy, setSortBy] = useState("");
@@ -207,15 +207,35 @@ const Products = ({ history }) => {
   const searchBrands = handleChangeProductCategory(brands, brandsCheckboxes, "brand");
 
   const handleFetchSearch = () => {
-    const apiUrl = `${process.env.REACT_APP_API_URI}/product/searchProduct?searchTerm=${searchCategories?.categoryIds?.join(",")}`;
-    axios.get(apiUrl)
-      .then((res) => setProducts(res?.data?.data))
-      .catch((error) => console.error('Error fetching data:', error));
+    let sorting;
+    let sortOrder;
+    if (sortBy.includes("Price")) {
+      sorting = "price";
+      if (sortBy === "Price Low") {
+        sortOrder = "asc";
+      } else {
+        sortOrder = "desc";
+      }
+    } else {
+      sorting = "createdAt";
+      sortOrder = "desc";
+    }
+    const searchQueries = {
+      keyword: searchKeyword?.replace("&", "%26")?.replace(/ /g, "+") || "",
+      categories: searchCategories?.categoryIds || [],
+      statuses: searchStatuses?.values || [],
+      brands: searchBrands || [],
+      price: priceRange?.join(",") || "",
+      sortBy: sorting || "",
+      sortOrder,
+    }
+    sessionStorage.setItem("searchQueries", JSON.stringify(searchQueries));
+    handleSearchProductLists(searchQueries);
   };
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (redirectFrom === "Hot_Product") {
@@ -242,6 +262,7 @@ const Products = ({ history }) => {
     setSortBy("");
     setPriceRange([1, 5000]);
     setSearchKeyword("");
+    sessionStorage.removeItem("searchKeyword");
     setCategoryCheckboxes(
       categories.reduce((options, option) => {
         options[option.name] = false;
@@ -491,14 +512,41 @@ const Products = ({ history }) => {
               container
               rowSpacing={4}
               columnSpacing={0}
-              justifyContent="center"
+              justifyContent="flex-start"
               alignItems="stretch"
             >
-              {products?.map((item) => (
-                <Grid key={item.productCode} item xs={12} sm={6} md={3}>
-                  <ProductCard product={item} />
-                </Grid>
-              ))}
+              {!isLoading ? (
+                <>
+                  {products?.length > 0 ? products?.map((item) => (
+                    <Grid key={item.productCode} item xs={12} sm={6} md={3}>
+                      <ProductCard product={item} />
+                    </Grid>
+                  )) : (
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Typography variant='subtitle1'
+                        sx={{
+                          fontSize: "1.5rem",
+                          fontWeight: 600,
+                          color: "#202435",
+                          mx: "auto",
+                        }}
+                      >
+                        Search result not found!
+                      </Typography>
+                    </Box>
+                  )}
+                </>
+              ) : (
+                <Box sx={{ mx: "auto", mt: "5rem", pr: { md: 20, xs: 5, sm: 8 } }}>
+                  <CircularProgress disableShrink />
+                </Box>
+              )}
             </Grid>
           </Box>
         </Grid>

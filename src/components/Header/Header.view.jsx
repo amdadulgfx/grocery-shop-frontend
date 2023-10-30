@@ -26,6 +26,7 @@ import { logout, selectUser } from '../../reduxMine/features/authApi';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import { useGetCartListQuery } from "../../reduxMine/features/cart/cartAPIs";
 import { useKeywords } from "../../context/searchContext";
+import { useSearchProductsListMutation } from "../../reduxMine/features/searchProducts/searchProductsAPI";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -63,7 +64,7 @@ const Header = () => {
     const matches = useMediaQuery(theme.breakpoints.down('md'));
     const tabMode = useMediaQuery(theme.breakpoints.down('lg'));
     const [searchParams, setSearchParams] = useSearchParams();
-    const { searchKeyword, setSearchKeyword } = useKeywords();
+    const { searchKeyword, setSearchKeyword, handleSearchProductLists } = useKeywords();
     const [showSearchBar, setShowSearchBar] = useState(false);
     const [openDrawer, setOpenDrawer] = useState(false);
     const pathname = window.location.pathname;
@@ -76,13 +77,17 @@ const Header = () => {
     }, [pathname]);
 
     const handleShowSearchBar = (event) => {
+        event.preventDefault();
         if (searchKeyword === "") {
             setShowSearchBar((prev) => !prev);
         } else {
             sessionStorage.setItem("searchKeyword", JSON.stringify({ searchKeyword }));
             if (pathname === "/products") {
                 const searchProductQueries = JSON.parse(sessionStorage.getItem("searchProductQueries")) || {};
+                const searchQueries = JSON.parse(sessionStorage.getItem("searchQueries")) || {};
                 setSearchParams({ ...searchProductQueries, keywords: searchKeyword });
+                handleSearchProductLists({ ...searchQueries, keyword: searchKeyword?.replace("&", "%26")?.replace(/ /g, "+") || "" });
+                window.scrollTo(0, 0);
             } else {
                 navigate("/products");
             }
@@ -286,36 +291,34 @@ const Header = () => {
                             >
                                 {showSearchBar ? (
                                     <Box maxWidth="md" sx={{ mx: "auto", px: matches ? "16px" : "" }}>
-                                        <form /* onSubmit={handleJobsSearch} */>
-                                            <Input
-                                                sx={{
-                                                    borderRadius: 16,
-                                                    padding: "5px 0px 5px 27px  !important",
-                                                    backgroundColor: "#F3F4F7",
-                                                    width: tabMode ? 195 : 300,
-                                                }}
-                                                disableUnderline
-                                                placeholder="Search Product"
-                                                onChange={handleChange}
-                                                value={searchKeyword}
-                                                id="lock-button"
-                                                aria-haspopup="listbox"
-                                                aria-controls="lock-menu"
-                                                aria-label="when device is locked"
-                                                // aria-expanded={open ? 'true' : undefined}
-                                                endAdornment={
-                                                    <InputAdornment position="end" style={{ outline: "none" }}>
-                                                        <IconButton
-                                                            size="small"
-                                                            sx={{ border: "2px solid #2BBEF9" }}
-                                                            onClick={handleShowSearchBar}
-                                                        >
-                                                            <SearchSharpIcon sx={{ color: "#2BBEF9" }} />
-                                                        </IconButton>
-                                                    </InputAdornment>
-                                                }
-                                            />
-                                        </form>
+                                        <Input
+                                            sx={{
+                                                borderRadius: 16,
+                                                padding: "5px 0px 5px 27px  !important",
+                                                backgroundColor: "#F3F4F7",
+                                                width: tabMode ? 195 : 300,
+                                            }}
+                                            disableUnderline
+                                            placeholder="Search Product"
+                                            onChange={handleChange}
+                                            value={searchKeyword}
+                                            id="lock-button"
+                                            aria-haspopup="listbox"
+                                            aria-controls="lock-menu"
+                                            aria-label="when device is locked"
+                                            // aria-expanded={open ? 'true' : undefined}
+                                            endAdornment={
+                                                <InputAdornment position="end" style={{ outline: "none" }}>
+                                                    <IconButton
+                                                        size="small"
+                                                        sx={{ border: "2px solid #2BBEF9" }}
+                                                        onClick={handleShowSearchBar}
+                                                    >
+                                                        <SearchSharpIcon sx={{ color: "#2BBEF9" }} />
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            }
+                                        />
                                         {/**** Don't Remove ****/}
                                         {/* <Menu
                                             id="lock-menu"
