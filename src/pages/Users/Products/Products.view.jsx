@@ -527,6 +527,8 @@ const Products = ({ history }) => {
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
+                        mt: 10,
+                        mx: "auto"
                       }}
                     >
                       <Typography variant='subtitle1'
