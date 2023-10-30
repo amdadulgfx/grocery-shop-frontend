@@ -539,7 +539,7 @@ const Products = ({ history }) => {
                           mx: "auto",
                         }}
                       >
-                        Search result not found!
+                        No results found!
                       </Typography>
                     </Box>
                   )}
