@@ -1,6 +1,5 @@
 import { Box, Container, Grid, useMediaQuery, useTheme } from "@mui/material";
-import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import HealthTips from "./Components/HealthTips";
 import Coupon from "./Components/Coupon";
 import Categories from "./Components/CategoriesBottom";
@@ -19,7 +18,7 @@ const LandingPage = () => {
 
   return (
     <Container maxWidth="lg">
-      <Box sx={{ mb: 4, mx: -3}}>
+      <Box sx={{ mb: 4}}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={3} order={matches ? 2 : 1}>
             <AdvertisementAndAllCategory />

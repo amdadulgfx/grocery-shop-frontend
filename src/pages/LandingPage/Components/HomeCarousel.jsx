@@ -103,13 +103,13 @@ const HomeCarousel = () => {
                 -{carouselData[currentIndex]?.offerPercentage}% OFF
               </span>
             </Typography>
-            <Typography className={classes.offerHeading} variant="h3">
+            <Typography className={classes.offerHeading} sx={{fontSize: {xs: "24px", md: "30px"}}}>
               {carouselData[currentIndex]?.title}
             </Typography>
             <Typography className={classes.offerSubTitle} variant="subtitle1">
               Only this week. Don't miss...
             </Typography>
-            <Typography className={classes.offerPrice} variant="h5">
+            <Typography className={classes.offerPrice} sx={{fontSize: {xs: "18px", md: "24px"}}}>
               <span style={{ fontSize: "14px", marginRight: "-5px" }}>from &nbsp;</span>
               ${carouselData[currentIndex]?.startPrice}
             </Typography>
