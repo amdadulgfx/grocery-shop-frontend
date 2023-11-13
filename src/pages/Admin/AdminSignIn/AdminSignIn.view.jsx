@@ -70,6 +70,7 @@ const AdminSignIn = () => {
               id="email"
               label="Email Address"
               name="email"
+              defaultValue="salehtheadmin@dailygrocery.com"
               autoComplete="email"
               autoFocus
             />
@@ -79,6 +80,7 @@ const AdminSignIn = () => {
               fullWidth
               name="password"
               label="Password"
+              defaultValue="123"
               type="password"
               id="password"
               autoComplete="current-password"
